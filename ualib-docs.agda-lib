@@ -1,0 +1,3 @@
+name: ualib-docs
+depend: standard-library-1.7
+include: src
