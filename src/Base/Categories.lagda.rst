@@ -30,7 +30,7 @@ consolidate such redundancy.
 
   module Base.Categories where
 
-  open import Base.Categories.Functors
+  open import Base.Categories.Functors public
 
 
 .. toctree::

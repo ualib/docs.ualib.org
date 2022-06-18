@@ -1,12 +1,20 @@
-Introduction
-============
+.. FILE      : Demos/HSP.lagda.rst
+.. DATE      : 13 Jan 2021
+.. UPDATED   : 06 Jun 2022
+.. UPDATED   : 02 Jun 2022
+.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
 
-The Agda Universal Algebra Library ([agda-algebras][]) formalizes the
-foundations of universal algebra in intensional Martin-Löf type theory
-([MLTT][]) using [Agda][] ()  [@Norell:2007; @agdaref]. The library
-includes a collection of definitions and verified theorems originated in
-classical (set-theory based) universal algebra and equational logic, but
-adapted to [MLTT][].
+The HSP Theorem
+---------------
+
+Introduction
+~~~~~~~~~~~~
+
+The `Agda Universal Algebra Library`_ (agda-algebras_) formalizes the foundations
+of universal algebra in intensional Martin-Löf type theory (MLTT_) using Agda_
+:cite:`Norell:2007,agdaref`. The library includes a collection of definitions and
+verified theorems originated in classical (set-theory based) universal algebra and
+equational logic, but adapted to MLTT_.
 
 The first major milestone of the project is a complete formalization of
 *Birkhoff’s variety theorem* (also known as the *HSP

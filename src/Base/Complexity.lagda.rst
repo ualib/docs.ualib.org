@@ -11,17 +11,17 @@ Complexity
 
 This is the `Base.Complexity`_ module of the `Agda Universal Algebra Library`_.
 
+.. toctree::
+   :maxdepth: 2
+
+   Complexity/Basic
+
 ::
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
   module Base.Complexity where
 
-  open import Base.Complexity.Basic
-
-.. toctree::
-   :maxdepth: 2
-
-   Complexity/Basic
+  open import Base.Complexity.Basic public
 
 

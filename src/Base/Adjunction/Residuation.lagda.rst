@@ -18,16 +18,14 @@ This is the `Base.Adjunction.Residuation`_ module of the `Agda Universal Algebra
   module Base.Adjunction.Residuation where
 
   -- Imports from Agda and the Agda Standard Library --------------------------------------
-  open import Agda.Primitive           using ( _⊔_ ;  Level ; lsuc) renaming ( Set to Type )
-  open import Function.Base            using ( _on_ ; _∘_ )
-  open import Relation.Binary.Bundles  using ( Poset )
-  open import Relation.Binary.Core     using ( _Preserves_⟶_ )
+  open import Agda.Primitive   using ( _⊔_ ;  Level ; lsuc) renaming ( Set to Type )
+  open import Function.Base    using ( _on_ ; _∘_ )
+  open import Relation.Binary  using ( Poset ; _Preserves_⟶_ )
 
   -- Imports from the Agda Universal Algebra Library --------------------------------------
-  open import Base.Relations.Discrete using ( PointWise )
+  open import Base.Relations   using ( PointWise )
 
-  private variable
-   α ιᵃ ρᵃ β ιᵇ ρᵇ : Level
+  private variable α ιᵃ ρᵃ β ιᵇ ρᵇ : Level
 
   module _ (A : Poset α ιᵃ ρᵃ)(B : Poset β ιᵇ ρᵇ) where
    open Poset

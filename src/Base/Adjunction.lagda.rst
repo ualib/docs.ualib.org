@@ -9,21 +9,21 @@ Adjunction
 
 This is the `Base.Adjunction`_ module of the `Agda Universal Algebra Library`_.
 
-::
-
-  {-# OPTIONS --without-K --exact-split --safe #-}
-
-  module Base.Adjunction where
-
-  open import Base.Adjunction.Closure
-  open import Base.Adjunction.Galois
-  open import Base.Adjunction.Residuation
-
 .. toctree::
    :maxdepth: 2
 
    Adjunction/Closure
    Adjunction/Galois
    Adjunction/Residuation
+
+::
+
+  {-# OPTIONS --without-K --exact-split --safe #-}
+
+  module Base.Adjunction where
+
+  open import Base.Adjunction.Closure      public
+  open import Base.Adjunction.Galois       public
+  open import Base.Adjunction.Residuation  public
 
 

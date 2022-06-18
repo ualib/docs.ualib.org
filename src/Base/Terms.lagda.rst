@@ -16,9 +16,9 @@ This is the `Base.Terms`_ module of the `Agda Universal Algebra Library`_
 
   module Base.Terms where
 
-  open import Base.Terms.Basic
-  open import Base.Terms.Properties
-  open import Base.Terms.Operations
+  open import Base.Terms.Basic       public
+  open import Base.Terms.Properties  public
+  open import Base.Terms.Operations  public
 
 .. toctree::
    :maxdepth: 2

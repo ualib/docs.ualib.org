@@ -38,13 +38,12 @@ that the theorems hold directly in MLTT_ without extra axioms. The present
 work makes no appeal to functional extensionality or classical axioms like Choice
 or Excluded Middle. [2]_
 
-
 .. toctree::
    :maxdepth: 2
 
-   Setoid/Level
-   Setoid/Functions
+   Setoid/Levels
    Setoid/Relations
+   Setoid/Functions
    Setoid/Algebras
    Setoid/Homomorphisms
    Setoid/Terms
@@ -57,14 +56,14 @@ or Excluded Middle. [2]_
 
   module Setoid where
 
-  open import Setoid.Preliminaries
-  open import Setoid.Functions
-  open import Setoid.Relations
-  open import Setoid.Algebras
-  open import Setoid.Homomorphisms
-  open import Setoid.Terms
-  open import Setoid.Subalgebras
-  open import Setoid.Varieties
+  open import Setoid.Levels         public
+  open import Setoid.Functions      public
+  open import Setoid.Relations      public
+  open import Setoid.Algebras       public
+  open import Setoid.Homomorphisms  public
+  open import Setoid.Terms          public
+  open import Setoid.Subalgebras    public
+  open import Setoid.Varieties      public
 
 -----------------------------------------
 

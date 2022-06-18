@@ -14,29 +14,18 @@ The Agda Universal Algebra Library Documentation
 .. toctree::
    :maxdepth: 2
 
-   src/Preface
+   src/Overture
    src/Base
    src/Setoid
+   src/Demos
+   src/Examples
+   src/Appendix
    
-Appendix
-========
-
-   ..
-      toctree
-   ..
-      refs
-      appendix_prerequisites.rst
-      misc_notes.lagda.rst
-      alternatives.lagda.rst
-      acronyms_and_symbols.rst
-      glossary
-      genindex
 
 References
 ==========
 
-.. bibliography::
-
+.. bibliography:: src/_includes/ualib_refs.bib
 
 Indices
 =======
@@ -45,4 +34,19 @@ Indices
 * :ref:`search`
 
 
+..
+   Indices and tables
+   ==================
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
+
+
+..
+   appendix_prerequisites.rst
+   misc_notes.lagda.rst
+   alternatives.lagda.rst
+   acronyms_and_symbols.rst
+   glossary
+   genindex
 

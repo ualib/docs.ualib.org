@@ -1,31 +1,43 @@
-Types for Homomorphism of Setoid Algebras
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. FILE      : Setoid/Homomorphisms.lagda.rst
+.. AUTHOR    : William DeMeo
+.. DATE      : 17 Sep 2021
+.. UPDATED   : 09 Jun 2022
+.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
 
-This is the [Setoid.Homomorphisms][] module of the [Agda Universal
-Algebra Library][].
+.. highlight:: agda
+.. role:: code
 
-.. raw:: latex
+.. _homomorphism-of-setoid-algebras:
 
-   \begin{code}
+Homomorphism of Setoid Algebras
+-------------------------------
 
-   {-# OPTIONS --without-K --exact-split --safe #-}
+This is the `Setoid.Homomorphisms`_ module of the `Agda Universal Algebra Library`_.
 
-   module Setoid.Homomorphisms where
+.. toctree::
+   :maxdepth: 2
 
-   open import Setoid.Homomorphisms.Basic
-   open import Setoid.Homomorphisms.Properties
-   open import Setoid.Homomorphisms.Kernels
-   open import Setoid.Homomorphisms.Products
-   open import Setoid.Homomorphisms.Noether
-   open import Setoid.Homomorphisms.Factor
-   open import Setoid.Homomorphisms.Isomorphisms
-   open import Setoid.Homomorphisms.HomomorphicImages
+   Setoid/Homomorphisms/Basic
+   Setoid/Homomorphisms/Properties
+   Setoid/Homomorphisms/Kernels
+   Setoid/Homomorphisms/Products
+   Setoid/Homomorphisms/Noether
+   Setoid/Homomorphisms/Factor
+   Setoid/Homomorphisms/Isomorphisms
+   Setoid/Homomorphisms/HomomorphicImages
 
-   \end{code}
 
---------------
+::
 
-`← Setoid.Algebras.Congruences <Setoid.Algebras.Congruences.html>`__
-`Setoid.Homomorphisms.Basic → <Setoid.Homomorphisms.Basic.html>`__
+  {-# OPTIONS --without-K --exact-split --safe #-}
 
-{% include UALib.Links.md %}
+  module Setoid.Homomorphisms where
+
+  open import Setoid.Homomorphisms.Basic              public
+  open import Setoid.Homomorphisms.Properties         public
+  open import Setoid.Homomorphisms.Kernels            public
+  open import Setoid.Homomorphisms.Products           public
+  open import Setoid.Homomorphisms.Noether            public
+  open import Setoid.Homomorphisms.Factor             public
+  open import Setoid.Homomorphisms.Isomorphisms       public
+  open import Setoid.Homomorphisms.HomomorphicImages  public

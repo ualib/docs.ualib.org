@@ -18,12 +18,11 @@ This is the `Base.Adjunction.Galois`_ module of the `Agda Universal Algebra Libr
   module Base.Adjunction.Galois where
 
   -- Imports from Agda and the Agda Standard Library --------------------------------------
-  open import Agda.Primitive           using ( _⊔_ ;  Level ; lsuc) renaming ( Set to Type )
-  open import Data.Product             using ( _,_ ; _×_ ; swap ) renaming ( proj₁ to fst )
-  open import Function.Base            using ( _∘_ ; id )
-  open import Relation.Binary.Bundles  using ( Poset )
-  open import Relation.Binary.Core     using ( REL ; Rel ; _⇒_ ; _Preserves_⟶_ )
-  open import Relation.Unary           using ( _⊆_ ;  _∈_ ; Pred   )
+  open import Agda.Primitive   using ( _⊔_ ;  Level ; lsuc) renaming ( Set to Type )
+  open import Data.Product     using ( _,_ ; _×_ ; swap ) renaming ( proj₁ to fst )
+  open import Function.Base    using ( _∘_ ; id )
+  open import Relation.Binary  using ( Poset ; REL ; Rel ; _⇒_ ; _Preserves_⟶_ )
+  open import Relation.Unary   using ( _⊆_ ;  _∈_ ; Pred   )
 
   import Relation.Binary.Structures as BS
 
@@ -146,4 +145,3 @@ more level polymorphic.
                        ; G = R ⃖_
                        ; GF≥id = λ _ → ←→≥id
                        ; FG≥id = λ _ → →←≥id }
-

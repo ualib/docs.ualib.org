@@ -45,8 +45,8 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
                               using ( _≡_ ; module ≡-Reasoning ; cong ; sym ; refl )
 
   -- Imports from the Agda Universal Algebra Library ---------------------------------------------
-  open import Base.Overture.Preliminaries     using ( ∣_∣ ; ∥_∥ )
-  open import Base.Relations.Continuous       using ( Rel )
+  open import Base.Overture                   using ( ∣_∣ ; ∥_∥ )
+  open import Base.Relations                  using ( Rel )
   open import Base.Structures.Basic           using ( signature ; structure )
   open import Base.Structures.Homs            using ( hom ; is-hom-rel ; is-hom-op )
   open import Examples.Structures.Signatures  using ( S∅ )
@@ -55,9 +55,9 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
   open structure
   open _⊎_
 
-  Gr-sig : signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀
+  Gr₀-sig : signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀
 
-  Gr-sig 𝐹 𝑅 = record  { symbol = symbol 𝑅 ⊎ symbol 𝐹
+  Gr₀-sig 𝐹 𝑅 = record  { symbol = symbol 𝑅 ⊎ symbol 𝐹
                        ; arity  = ar }
    where
    ar : symbol 𝑅 ⊎ symbol 𝐹 → Type ℓ₀
@@ -66,10 +66,10 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
 
   private variable 𝐹 𝑅 : signature ℓ₀ ℓ₀
 
-  Gr : structure 𝐹 𝑅 {ℓ₀} {ℓ₀} → structure S∅ (Gr-sig 𝐹 𝑅) {ℓ₀} {ℓ₀}
-  Gr {𝐹}{𝑅} 𝑨 = record { carrier = carrier 𝑨 ; op = λ () ; rel = split }
+  Gr₀ : structure 𝐹 𝑅 {ℓ₀} {ℓ₀} → structure S∅ (Gr₀-sig 𝐹 𝑅) {ℓ₀} {ℓ₀}
+  Gr₀ {𝐹}{𝑅} 𝑨 = record { carrier = carrier 𝑨 ; op = λ () ; rel = split }
     where
-    split : (s : symbol 𝑅 ⊎ symbol 𝐹) → Rel (carrier 𝑨) (arity (Gr-sig 𝐹 𝑅) s) {ℓ₀}
+    split : (s : symbol 𝑅 ⊎ symbol 𝐹) → Rel (carrier 𝑨) (arity (Gr₀-sig 𝐹 𝑅) s) {ℓ₀}
     split (inl 𝑟) arg = rel 𝑨 𝑟 arg
     split (inr 𝑓) args = op 𝑨 𝑓 (args ∘ inl) ≡ args (inr tt)
 
@@ -77,10 +77,10 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
 
   module _ {𝑨 𝑩 : structure 𝐹 𝑅 {ℓ₀}{ℓ₀}} where
 
-   hom→Grhom : hom 𝑨 𝑩 → hom (Gr 𝑨) (Gr 𝑩)
-   hom→Grhom (h , hhom) = h , (i , ii)
+   hom→Gr₀hom : hom 𝑨 𝑩 → hom (Gr₀ 𝑨) (Gr₀ 𝑩)
+   hom→Gr₀hom (h , hhom) = h , (i , ii)
     where
-    i : is-hom-rel (Gr 𝑨) (Gr 𝑩) h
+    i : is-hom-rel (Gr₀ 𝑨) (Gr₀ 𝑩) h
     i (inl 𝑟) a x = ∣ hhom ∣ 𝑟 a x
     i (inr 𝑓) a x = goal
      where
@@ -92,11 +92,11 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
              h (op 𝑨 𝑓 (a ∘ inl))    ≡⟨ cong h x ⟩
              h (a (inr tt))          ∎
 
-    ii : is-hom-op (Gr 𝑨) (Gr 𝑩) h
+    ii : is-hom-op (Gr₀ 𝑨) (Gr₀ 𝑩) h
     ii = λ ()
 
-   Grhom→hom : hom (Gr 𝑨) (Gr 𝑩) → hom 𝑨 𝑩
-   Grhom→hom (h , hhom) = h , (i , ii)
+   Gr₀hom→hom : hom (Gr₀ 𝑨) (Gr₀ 𝑩) → hom 𝑨 𝑩
+   Gr₀hom→hom (h , hhom) = h , (i , ii)
     where
     i : is-hom-rel 𝑨 𝑩 h
     i R a x = ∣ hhom ∣ (inl R) a x

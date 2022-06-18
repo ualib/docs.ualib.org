@@ -17,9 +17,9 @@ This is the `Base.Equality`_ module of the `Agda Universal Algebra Library`_.
 
   module Base.Equality where
 
-  open import Base.Equality.Welldefined public
-  open import Base.Equality.Truncation public
-  open import Base.Equality.Extensionality public
+  open import Base.Equality.Welldefined     public
+  open import Base.Equality.Truncation      public
+  open import Base.Equality.Extensionality  public
 
 .. toctree::
    :maxdepth: 2

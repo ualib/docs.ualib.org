@@ -1,25 +1,31 @@
-Relations on setoids
---------------------
+.. FILE      : Setoid/Relations.lagda.rst
+.. AUTHOR    : William DeMeo
+.. DATE      : 17 Sep 2021
+.. UPDATED   : 09 Jun 2022
+.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
 
-This is the [Setoid.Relations][] module of the [Agda Universal Algebra
-Library][].
+.. highlight:: agda
+.. role:: code
 
-.. raw:: latex
+.. _setoid-relations:
 
-   \begin{code}
+Setoid relations
+----------------
 
-   {-# OPTIONS --without-K --exact-split --safe #-}
+This is the `Setoid.Relations`_ module of the `Agda Universal Algebra Library`_.
 
-   module Setoid.Relations where
+.. toctree::
+   :maxdepth: 2
 
-   open import Setoid.Relations.Discrete public
-   open import Setoid.Relations.Quotients public
+   Setoid/Relations/Discrete   public
+   Setoid/Relations/Quotients  public
 
-   \end{code}
+::
 
---------------
+  {-# OPTIONS --without-K --exact-split --safe #-}
 
-`← Setoid.Overture.Transformers <Setoid.Overture.Transformers.html>`__
-`Setoid.Relations.Discrete → <Setoid.Relations.Discrete.html>`__
+  module Setoid.Relations where
 
-{% include UALib.Links.md %}
+  open import Setoid.Relations.Discrete public
+  open import Setoid.Relations.Quotients public
+

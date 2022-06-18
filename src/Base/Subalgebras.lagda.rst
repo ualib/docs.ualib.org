@@ -16,9 +16,9 @@ This is the `Base.Subalgebras`_ module of the `Agda Universal Algebra Library`_.
 
   module Base.Subalgebras where
 
-  open import Base.Subalgebras.Subuniverses
-  open import Base.Subalgebras.Subalgebras
-  open import Base.Subalgebras.Properties
+  open import Base.Subalgebras.Subuniverses  public
+  open import Base.Subalgebras.Subalgebras   public
+  open import Base.Subalgebras.Properties    public
 
 .. toctree::
    :maxdepth: 2

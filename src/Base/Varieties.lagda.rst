@@ -19,11 +19,11 @@ and we prove properties of these types.
 
   module Base.Varieties where
 
-  open import Base.Varieties.EquationalLogic
-  open import Base.Varieties.Closure
-  open import Base.Varieties.Properties
-  open import Base.Varieties.Preservation
-  open import Base.Varieties.FreeAlgebras
+  open import Base.Varieties.EquationalLogic  public
+  open import Base.Varieties.Closure          public
+  open import Base.Varieties.Properties       public
+  open import Base.Varieties.Preservation     public
+  open import Base.Varieties.FreeAlgebras     public
 
 .. toctree::
    :maxdepth: 2

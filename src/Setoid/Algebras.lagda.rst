@@ -1,23 +1,33 @@
+.. FILE      : Setoid/Algebras.lagda.rst
+.. AUTHOR    : William DeMeo
+.. DATE      : 12 Dec 2021
+.. UPDATED   : 09 Jun 2022
+.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+
+.. highlight:: agda
+.. role:: code
+
+.. _setoid-representation-of-algebras:
+
 Setoid Representation of Algebras
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
-.. raw:: latex
+.. toctree::
+   :maxdepth: 2
 
-   \begin{code}
+   Setoid/Algebras/Basic
+   Setoid/Algebras/Products
+   Setoid/Algebras/Congruences
 
-   {-# OPTIONS --without-K --exact-split --safe #-}
+::
 
-   module Setoid.Algebras where
+  {-# OPTIONS --without-K --exact-split --safe #-}
 
-   open import Setoid.Algebras.Basic
-   open import Setoid.Algebras.Products
-   open import Setoid.Algebras.Congruences
+  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature)
 
-   \end{code}
+  module Setoid.Algebras {𝑆 : Signature 𝓞 𝓥} where
 
---------------
+  open import Setoid.Algebras.Basic        {𝑆  = 𝑆} public
+  open import Setoid.Algebras.Products     {𝑆  = 𝑆} public
+  open import Setoid.Algebras.Congruences  {𝑆  = 𝑆} public
 
-`← Setoid.Relations.Quotients <Setoid.Relations.Quotients.html>`__
-`Setoid.Algebras.Basic → <Setoid.Algebras.Basic.html>`__
-
-{% include UALib.Links.md %}

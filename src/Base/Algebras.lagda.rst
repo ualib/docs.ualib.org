@@ -22,9 +22,9 @@ and Agda_ to codify the most basic objects of universal algebra, such as *signat
 
   module Base.Algebras where
 
-  open import Base.Algebras.Basic
-  open import Base.Algebras.Products
-  open import Base.Algebras.Congruences
+  open import Base.Algebras.Basic        public
+  open import Base.Algebras.Products     public
+  open import Base.Algebras.Congruences  public
 
 .. toctree::
    :maxdepth: 2

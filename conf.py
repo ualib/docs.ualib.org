@@ -7,8 +7,8 @@
 # http://www.sphinx-doc.org/en/master/config
 
 def setup(app):
-    app.add_stylesheet('_static/custom.css')
-    app.add_stylesheet('_static/mathconf.js')
+    app.add_stylesheet('src/_static/custom.css')
+    app.add_stylesheet('src/_static/mathconf.js')
 
 # -- Path setup --------------------------------------------------------------
 
@@ -19,8 +19,9 @@ def setup(app):
 import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
-sys.path.append(os.path.abspath('./src'))
-sys.path.append(os.path.abspath('./_includes'))
+sys.path.append(os.path.abspath('src'))
+sys.path.append(os.path.abspath('src/_includes'))
+sys.path.append(os.path.abspath('src/_static'))
 
 # -- Project information -----------------------------------------------------
 
@@ -55,6 +56,8 @@ extensions = [
     'sphinxcontrib.proof' #, 'sphinxcontrib.tikz'
 ]
 
+bibtex_bibfiles = ['ualib_refs.bib']
+
 proof_theorem_types = {
     "axiom": "Axiom",
     "conjecture": "Conjecture",
@@ -75,11 +78,13 @@ proof_theorem_types = {
     "agda-note": "Agda Note",
 }
 
+
+
 # use numbering for section references with :numref:, e.g. 'Section 3.2'.
 numfig = True
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['src/_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -99,13 +104,15 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', '_includes', 'agda', 'auto', 'Setoid', '.DS_Store', '.venv', 'exclude', 'Thumbs.db', 'links.rst']
+exclude_patterns = ['_build', 'agda', 'auto', '.DS_Store', '.venv', '_exclude', 'Thumbs.db', 'links.rst']
 
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 highlight_language = 'Agda'
 
+# If true, `todo` and `todoList` produce output, else they produce nothing.
+todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -159,10 +166,10 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['src/_static']
 
 #html_logo = '_static/lambda.jpg'
-html_favicon = '_static/favicon.ico'
+html_favicon = 'src/_static/favicon.ico'
 html_show_sourcelink = True
 
 #html_output_encoding = 'ascii'

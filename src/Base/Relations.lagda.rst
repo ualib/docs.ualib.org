@@ -20,17 +20,6 @@ relations) and they can be defined over arbitrary families of types
 (dependent relations). Finally, in `Base.Relations.Quotients`_ we define
 quotient types.
 
-::
-
-  {-# OPTIONS --without-K --exact-split --safe #-}
-
-  module Base.Relations where
-
-  open import Base.Relations.Discrete
-  open import Base.Relations.Continuous
-  open import Base.Relations.Properties
-  open import Base.Relations.Quotients
-
 .. toctree::
    :maxdepth: 2
 
@@ -39,5 +28,14 @@ quotient types.
    Relations/Properties
    Relations/Quotients
 
+::
 
+  {-# OPTIONS --without-K --exact-split --safe #-}
+
+  module Base.Relations where
+
+  open import Base.Relations.Discrete    public
+  open import Base.Relations.Continuous  public
+  open import Base.Relations.Properties  public
+  open import Base.Relations.Quotients   public
 

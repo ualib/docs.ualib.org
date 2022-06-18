@@ -30,13 +30,10 @@ This is the `Base.Homomorphisms.Noether`_ module of the `Agda Universal Algebra 
                               using ( module ≡-Reasoning ; _≡_ ; cong ; refl ; cong-app )
 
   -- Imports from agda-algebras --------------------------------------------------------------
-  open import Base.Overture.Preliminaries        using ( ∣_∣ ; ∥_∥ ; _⁻¹ )
-  open import Base.Overture.Inverses             using ( Image_∋_ )
-  open import Base.Overture.Injective            using ( IsInjective )
-  open import Base.Overture.Surjective           using ( IsSurjective ; SurjInv ; SurjInvIsInverseʳ )
-  open import Base.Relations.Quotients           using ( ⌞_⌟ ; mkblk ; ⟪_⟫ )
-  open import Base.Equality.Welldefined          using ( swelldef )
-  open import Base.Equality.Truncation           using ( is-set ; blk-uip ; is-embedding ; monic-is-embedding|Set )
+  open import Base.Overture   using ( ∣_∣ ; ∥_∥ ; _⁻¹ ; Image_∋_ ; IsInjective ; IsSurjective )
+                              using ( SurjInv ; SurjInvIsInverseʳ )
+  open import Base.Relations  using ( ⌞_⌟ ; mkblk ; ⟪_⟫ )
+  open import Base.Equality   using ( swelldef ; is-set ; blk-uip ; is-embedding ; monic-is-embedding|Set )
   open import Base.Equality.Extensionality       using ( pred-ext ; block-ext|uip )
   open import Base.Algebras.Basic                using ( Algebra ; _̂_)
   open import Base.Algebras.Congruences  {𝑆 = 𝑆} using ( Con ; IsCongruence )

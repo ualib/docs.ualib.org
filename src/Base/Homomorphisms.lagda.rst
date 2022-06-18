@@ -11,21 +11,6 @@ Homomorphisms
 
 This is the `Base.Homomorphisms`_ module of the `Agda Universal Algebra Library`_.
 
-::
-
-  {-# OPTIONS --without-K --exact-split --safe #-}
-
-  module Base.Homomorphisms where
-
-  open import Base.Homomorphisms.Basic
-  open import Base.Homomorphisms.Properties
-  open import Base.Homomorphisms.Kernels
-  open import Base.Homomorphisms.Products
-  open import Base.Homomorphisms.Noether
-  open import Base.Homomorphisms.Factor
-  open import Base.Homomorphisms.Isomorphisms
-  open import Base.Homomorphisms.HomomorphicImages
-
 .. toctree::
    :maxdepth: 2
 
@@ -37,4 +22,19 @@ This is the `Base.Homomorphisms`_ module of the `Agda Universal Algebra Library`
    Homomorphisms/Factor
    Homomorphisms/Isomorphisms
    Homomorphisms/HomomorphicImages
+
+::
+
+  {-# OPTIONS --without-K --exact-split --safe #-}
+
+  module Base.Homomorphisms where
+
+  open import Base.Homomorphisms.Basic              public
+  open import Base.Homomorphisms.Properties         public
+  open import Base.Homomorphisms.Kernels            public
+  open import Base.Homomorphisms.Products           public
+  open import Base.Homomorphisms.Noether            public
+  open import Base.Homomorphisms.Factor             public
+  open import Base.Homomorphisms.Isomorphisms       public
+  open import Base.Homomorphisms.HomomorphicImages  public
 
