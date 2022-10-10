@@ -1,9 +1,12 @@
 .. FILE      : Base/Structures.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 22 Jun 2021
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _graph-structures-again:
+.. highlight:: agda
+.. role:: code
+
+.. _base-structures-graph-structures-again:
 
 Graph Structures (again)
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,7 +17,7 @@ N.B. This module differs from `Graphs.lagda`_ in that here we assume some
 universes are level zero (i.e., ``ℓ₀``). This simplifies some things; e.g., we
 avoid having to use lift and lower (cf. `Base.Structures.Graphs.lagda`_)
 
-.. _definition:
+.. _base-structures-definition:
 
 Definition
 ^^^^^^^^^^
@@ -33,7 +36,7 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
   module Base.Structures.Graphs0 where
 
   -- Imports from Agda and the Agda Standard Library -------------------------------------------
-  open import Agda.Primitive  using ( _⊔_ ; Level ) renaming ( Set to Type ; lzero to ℓ₀ )
+  open import Agda.Primitive  using () renaming ( Set to Type ; lzero to ℓ₀ )
   open import Data.Product    using ( _,_ ; _×_ ; Σ-syntax )
   open import Data.Sum.Base   using ( _⊎_ ) renaming ( inj₁ to inl ; inj₂ to inr )
   open import Data.Fin.Base   using ( Fin )
@@ -45,19 +48,17 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
                               using ( _≡_ ; module ≡-Reasoning ; cong ; sym ; refl )
 
   -- Imports from the Agda Universal Algebra Library ---------------------------------------------
-  open import Base.Overture                   using ( ∣_∣ ; ∥_∥ )
+  open import Overture                        using ( ∣_∣ ; ∥_∥ )
   open import Base.Relations                  using ( Rel )
   open import Base.Structures.Basic           using ( signature ; structure )
   open import Base.Structures.Homs            using ( hom ; is-hom-rel ; is-hom-op )
   open import Examples.Structures.Signatures  using ( S∅ )
 
-  open signature
-  open structure
-  open _⊎_
+  open signature ; open structure ; open _⊎_
 
-  Gr₀-sig : signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀
+  Gr-sig : signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀
 
-  Gr₀-sig 𝐹 𝑅 = record  { symbol = symbol 𝑅 ⊎ symbol 𝐹
+  Gr-sig 𝐹 𝑅 = record  { symbol = symbol 𝑅 ⊎ symbol 𝐹
                        ; arity  = ar }
    where
    ar : symbol 𝑅 ⊎ symbol 𝐹 → Type ℓ₀
@@ -66,10 +67,10 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
 
   private variable 𝐹 𝑅 : signature ℓ₀ ℓ₀
 
-  Gr₀ : structure 𝐹 𝑅 {ℓ₀} {ℓ₀} → structure S∅ (Gr₀-sig 𝐹 𝑅) {ℓ₀} {ℓ₀}
-  Gr₀ {𝐹}{𝑅} 𝑨 = record { carrier = carrier 𝑨 ; op = λ () ; rel = split }
+  Gr : structure 𝐹 𝑅 {ℓ₀} {ℓ₀} → structure S∅ (Gr-sig 𝐹 𝑅) {ℓ₀} {ℓ₀}
+  Gr {𝐹}{𝑅} 𝑨 = record { carrier = carrier 𝑨 ; op = λ () ; rel = split }
     where
-    split : (s : symbol 𝑅 ⊎ symbol 𝐹) → Rel (carrier 𝑨) (arity (Gr₀-sig 𝐹 𝑅) s) {ℓ₀}
+    split : (s : symbol 𝑅 ⊎ symbol 𝐹) → Rel (carrier 𝑨) (arity (Gr-sig 𝐹 𝑅) s) {ℓ₀}
     split (inl 𝑟) arg = rel 𝑨 𝑟 arg
     split (inr 𝑓) args = op 𝑨 𝑓 (args ∘ inl) ≡ args (inr tt)
 
@@ -77,10 +78,10 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
 
   module _ {𝑨 𝑩 : structure 𝐹 𝑅 {ℓ₀}{ℓ₀}} where
 
-   hom→Gr₀hom : hom 𝑨 𝑩 → hom (Gr₀ 𝑨) (Gr₀ 𝑩)
-   hom→Gr₀hom (h , hhom) = h , (i , ii)
+   hom→Grhom : hom 𝑨 𝑩 → hom (Gr 𝑨) (Gr 𝑩)
+   hom→Grhom (h , hhom) = h , (i , ii)
     where
-    i : is-hom-rel (Gr₀ 𝑨) (Gr₀ 𝑩) h
+    i : is-hom-rel (Gr 𝑨) (Gr 𝑩) h
     i (inl 𝑟) a x = ∣ hhom ∣ 𝑟 a x
     i (inr 𝑓) a x = goal
      where
@@ -92,11 +93,11 @@ each ``𝑓 ∈ 𝐹`` of arity ``k``, which is interpreted in ``Gr 𝑨`` as al
              h (op 𝑨 𝑓 (a ∘ inl))    ≡⟨ cong h x ⟩
              h (a (inr tt))          ∎
 
-    ii : is-hom-op (Gr₀ 𝑨) (Gr₀ 𝑩) h
+    ii : is-hom-op (Gr 𝑨) (Gr 𝑩) h
     ii = λ ()
 
-   Gr₀hom→hom : hom (Gr₀ 𝑨) (Gr₀ 𝑩) → hom 𝑨 𝑩
-   Gr₀hom→hom (h , hhom) = h , (i , ii)
+   Grhom→hom : hom (Gr 𝑨) (Gr 𝑩) → hom 𝑨 𝑩
+   Grhom→hom (h , hhom) = h , (i , ii)
     where
     i : is-hom-rel 𝑨 𝑩 h
     i R a x = ∣ hhom ∣ (inl R) a x
@@ -148,13 +149,15 @@ time that is bounded by a polynomial in the size of ``𝑩``.
     to∼from : ∀ h → (to ∘ from) h ≡ h
     from∼to : ∀ h → (from ∘ to) h ≡ h
 
-   -- TODO: formalize Lemma III.1
+TODO:  Formalize Lemma III.1  
+       Maybe start with something like...
+
+::
+
    -- module _ {χ : Level}{X : Type χ}
    --          {𝑨 : structure 𝐹 𝑅 {ℓ₀} {ℓ₀}} where
    -- LEMMAIII1 : {n : ℕ}(ℰ : Fin n → (Term X × Term X))(𝑨 ∈ fMod ℰ)
    --  →          ∀(𝑩 : structure 𝐹 𝑅) → Σ[ 𝑪 ∈ structure 𝐹 𝑅 ] (𝑪 ∈ fMod ℰ × (𝑩 ⇛ 𝑨 ⇚ 𝑪))
    -- LEMMAIII1 ℰ 𝑨⊧ℰ 𝑩 = {!!} , {!!}
-
---------------
 
 

@@ -1,8 +1,7 @@
 .. FILE      : Setoid.lagda.rst
-.. AUTHOR    : William DeMeo
+.. AUTHOR    : William DeMeo <williamdemeo@gmail.com>
 .. DATE      : 12 Dec 2021
-.. UPDATED   : 05 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
@@ -16,8 +15,6 @@ This is the Setoid_ module where we collect all submodules of the
 `Agda Universal Algebra Library`_ based on *setoids* (cf. the Base_
 module which collects analogous submodules based on "bare" types).
 
-Setoid preliminaries
---------------------
 A *setoid* is a pair consisting of a type and an equivalence relation on that
 type. Setoids are useful for representing a set with an explicit, "local" notion
 of equivalence, instead of relying on an implicit, "global" one as is more common
@@ -49,6 +46,7 @@ or Excluded Middle. [2]_
    Setoid/Terms
    Setoid/Subalgebras
    Setoid/Varieties
+   Setoid/Complexity
 
 ::
 
@@ -56,14 +54,15 @@ or Excluded Middle. [2]_
 
   module Setoid where
 
-  open import Setoid.Levels         public
-  open import Setoid.Functions      public
-  open import Setoid.Relations      public
-  open import Setoid.Algebras       public
-  open import Setoid.Homomorphisms  public
-  open import Setoid.Terms          public
-  open import Setoid.Subalgebras    public
-  open import Setoid.Varieties      public
+  open import Setoid.Levels
+  open import Setoid.Relations
+  open import Setoid.Functions
+  open import Setoid.Algebras
+  open import Setoid.Homomorphisms
+  open import Setoid.Terms
+  open import Setoid.Subalgebras
+  open import Setoid.Varieties
+  open import Setoid.Complexity
 
 -----------------------------------------
 

@@ -1,8 +1,13 @@
 .. FILE      : Base/Relations/Quotients.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. UPDATED   : 23 Jun 2022
+
+.. highlight:: agda
+.. role:: code
+
+.. _base-relations-quotients:
+
 
 Quotients
 ~~~~~~~~~
@@ -26,15 +31,14 @@ This is the `Base.Relations.Quotients`_ module of the agda-algebras library.
                               using ( _≡_ )
 
   -- Imports from agda-algebras ---------------------------------------------------------------------
-  open import Base.Overture.Preliminaries  using  ( ∣_∣ )
-  open import Base.Relations.Discrete      using  ( ker ; 0[_] ; kerlift )
-  open import Base.Relations.Properties       using  ( Reflexive ; Symmetric ; Transitive )
+  open import Overture                   using ( ∣_∣ )
+  open import Base.Relations.Discrete    using ( ker ; 0[_] ; kerlift )
+  open import Base.Relations.Properties  using ( Reflexive ; Symmetric ; Transitive )
 
-  private variable
-   α β χ : Level
+  private variable α β χ : Level
 
 
-.. _equivalence-relations:
+.. _base-relations-equivalence-relations:
 
 Equivalence relations
 ^^^^^^^^^^^^^^^^^^^^^
@@ -80,7 +84,7 @@ binary relation over ``A`` and ``p`` is of record type
 ``IsEquivalence R`` with fields containing the three proofs showing that
 ``R`` is an equivalence relation.
 
-.. _kernels:
+.. _base-relations-quotients-kernels:
 
 Kernels
 ^^^^^^^
@@ -104,7 +108,7 @@ function.
                                     }
 
 
-.. _equivalence-classes-blocks:
+.. _base-relations-equivalence-classes-blocks:
 
 Equivalence classes (blocks)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -200,7 +204,7 @@ Finally, we define some handy utility functions.
    ⊇-[] x y yx = yx (IsEquivalence.refl (snd R))
 
 An example application of these is the ``block-ext`` type in the
-`Base.Relations.Extensionality`_ module.
+`Base.Equality.Extensionality`_ module.
 
 Recall, from Base.Relations.Discrete, the zero (or “identity”) relation is
 
@@ -232,6 +236,5 @@ This is obviously an equivalence relation, as we now confirm.
   ≡→⊆ : {A : Type α}{ρ : Level}(Q R : Pred A ρ) → Q ≡ R → Q ⊆ R
   ≡→⊆ Q .Q PE.refl {x} Qx = Qx
 
---------------
 
 

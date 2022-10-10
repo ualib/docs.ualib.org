@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Terms/Properties.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 18 Sep 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-
-.. _properties-of-terms-on-setoids:
+.. _setoid-terms-properties-of-terms-on-setoids:
 
 Properties of terms on setoids
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,10 +1,12 @@
 .. FILE      : Base/Relations/Continuous.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _continuous-relations:
+.. highlight:: agda
+.. role:: code
+
+.. _base-relations-continuous-relations:
 
 Continuous Relations
 ~~~~~~~~~~~~~~~~~~~~
@@ -21,13 +23,13 @@ This is the `Base.Relations.Continuous`_ module of the agda-algebras_ library.
   open import Agda.Primitive using ( _⊔_ ; lsuc ; Level ) renaming ( Set to Type )
 
   -- Imports from agda-algebras ----------------------------------------------------
-  open import Base.Overture.Preliminaries using ( Π ; Π-syntax )
+  open import Overture.Basic using ( Π ; Π-syntax )
   open import Base.Relations.Discrete     using ( Op ; arity[_] )
 
   private variable α ρ : Level
 
 
-.. _motivation:
+.. _base-relations-motivation:
 
 Motivation
 ^^^^^^^^^^
@@ -80,7 +82,7 @@ importing with a line like this
 
 ``open import Relation.Binary  renaming ( REL to BinREL ; Rel to BinRel )``
 
-.. _continuous-and-dependent-relations:
+.. _base-relations-continuous-and-dependent-relations:
 
 Continuous and dependent relations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,7 +130,7 @@ below for a more detailed explanation.
    infix 6 REL-syntax
 
 
-.. _compatibility-with-general-relations:
+.. _base-relations-compatibility-with-general-relations:
 
 Compatibility with general relations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -150,7 +152,7 @@ the result of applying ``f`` to sections of ``t`` also belongs to ``R``.
    -- (inferred type of t is I → J → A)
 
 
-.. _compatibility-of-operations-with-dependent-relations:
+.. _base-relations-compatibility-of-operations-with-dependent-relations:
 
 Compatibility of operations with dependent relations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -179,7 +181,7 @@ relation. The second definition, compatible-REL, denotes compatibility
 of an operation with a continuous relation.
 
 
-.. _detailed-explanation-of-the-dependent-relation-type:
+.. _base-relations-detailed-explanation-of-the-dependent-relation-type:
 
 Detailed explanation of the dependent relation type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -218,7 +220,5 @@ original relation ``R``. Finally, ``compatible-REL`` takes
 -  an ``I``-tuple (``𝒶 : I → J → A``) of ``J``-tuples and determines
    whether the ``I``-tuple ``λ i → (𝑓 i) (𝑎 i)`` belongs to ``R``.
 
-
---------------
 
 

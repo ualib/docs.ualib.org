@@ -6,7 +6,7 @@
 .. highlight:: agda
 .. role:: code
 
-.. _properties-of-the-models-relation:
+.. _setoid-varieties-properties-of-the-models-relation:
 
 Properties of the models relation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +64,7 @@ proof the Birkhoff HSP Theorem).
   open Algebra  using ( Domain )
 
 
-.. _algebraic-invariance-of-the-models-relation:
+.. _setoid-varieties-algebraic-invariance-of-the-models-relation:
 
 Algebraic invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -95,7 +95,7 @@ invariant* (i.e., invariant under isomorphism), so let us establish this propert
 As the proof makes clear, we show ``𝑩 ⊧ p ≈ q`` by showing that ``𝑩 ⟦ p ⟧ ≡ 𝑩 ⟦ q ⟧``
 holds *extensionally*, that is, ``∀ x, 𝑩 ⟦ p ⟧ x ≡ 𝑩 ⟦q ⟧ x``.
 
-.. _lift-invariance-of-models:
+.. _setoid-varieties-lift-invariance-of-models:
 
 Lift-invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^
@@ -112,7 +112,7 @@ The models relation, ⊧, is also invariant under the algebraic lift and lower o
    ⊧-lower-invar : (p q : Term X) → Lift-Algˡ 𝑨 β ⊧ (p ≈̇ q)  →  𝑨 ⊧ (p ≈̇ q)
    ⊧-lower-invar p q lApq = ⊧-I-invar 𝑨 p q lApq (≅-sym Lift-≅ˡ)
 
-.. _homomorphic-invariance-of-models:
+.. _setoid-varieties-homomorphic-invariance-of-models:
 
 Homomorphic invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -141,7 +141,7 @@ of ``𝑨``, which fact can be formalized as follows.
     open Environment 𝑩  using ( ⟦_⟧ )
     open SetoidReasoning 𝔻[ 𝑩 ]
 
-.. _subalgebraic-invariance-of-models:
+.. _setoid-varieties-subalgebraic-invariance-of-models:
 
 Subalgebraic invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -187,7 +187,7 @@ all ``𝑨 ∈ 𝒦`` is also satisfied by every subalgebra of a member of ``�
     →                 𝑩 ⊧ (p ≈̇ q)
    ⊧-S-class-invar Kpq (𝑩 , 𝑨 , kA , B≤A) = ⊧-S-invar{p = p}{q} (Kpq 𝑨 kA) B≤A
 
-.. _product-invariance-of-models
+.. _setoid-varieties-product-invariance-of-models:
 
 Product invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -238,7 +238,7 @@ algebras models (p ≈̇ q) if the lift of each algebra in the collection models
     Aipq : ∀ i → (𝒜 i) ⊧ (p ≈̇ q)
     Aipq i = ⊧-lower-invar{𝑨 = (𝒜 i)} p q (α i)
 
-.. _homomorphic-invariance-of-1:
+.. _setoid-varieties-homomorphic-invariance-of-1:
 
 Homomorphic invariance of ⊧
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

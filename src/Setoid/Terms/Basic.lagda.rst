@@ -6,7 +6,7 @@
 .. highlight:: agda
 .. role:: code
 
-.. _basic-definitions:
+.. _setoid-terms-basic-definitions:
 
 Basic definitions
 ~~~~~~~~~~~~~~~~~
@@ -47,7 +47,7 @@ This is the `Setoid.Terms.Basic`_ module of the `Agda Universal Algebra Library`
    X Y : Type χ
 
 
-.. _equality-of-terms:
+.. _setoid-terms-equality-of-terms:
 
 Equality of terms
 ^^^^^^^^^^^^^^^^^
@@ -95,7 +95,7 @@ algebra as a Algebra whose carrier is the setoid of terms.
   Interp (𝑻 X) ⟨$⟩ (f , ts) = node f ts
   cong (Interp (𝑻 X)) (≡.refl , ss≐ts) = gnl ss≐ts
 
-.. _interpretation-of-terms-in-setoid-algebras:
+.. _setoid-terms-interpretation-of-terms-in-setoid-algebras:
 
 Interpretation of terms in setoid algebras
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,12 +1,12 @@
 .. FILE      : Setoid/Varieties/Preservation.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 18 Jul 2021
-.. UPDATED   : 22 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _equation-preservation-for-setoid-algebras:
+.. _setoid-varieties-equation-preservation-for-setoid-algebras:
 
 Equation preservation for setoid algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,7 +71,7 @@ where we show that the classes `H 𝒦`, `S 𝒦`, `P 𝒦`, and `V 𝒦` satisf
   open Algebra  using ( Domain )
 
 
-.. _closure-properties:
+.. _setoid-varieties-closure-properties:
 
 Closure properties
 ^^^^^^^^^^^^^^^^^^
@@ -125,7 +125,7 @@ algebras in a class 𝒦 is a subalgebra of a product of algebras in 𝒦.
     Goal : 𝑩 ∈ S{β = oaℓ}{oaℓ}oaℓ (P {β = oaℓ}{oaℓ} ℓ oaℓ 𝒦)
     Goal = ⨅ ℬ , (I , (ℬ , (kB , ≅-refl))) , (≅-trans-≤ B≅⨅A ⨅A≤⨅B)
 
-.. _h-preserves-identities:
+.. _setoid-varieties-h-preserves-identities:
 
 H preserves identities
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -152,7 +152,7 @@ with. Nonetheless, we formalize it for completeness.
    H-id2 : H ℓ 𝒦 ⊫ (p ≈̇ q) → 𝒦 ⊫ (p ≈̇ q)
    H-id2 Hpq 𝑨 kA = Hpq 𝑨 (𝑨 , (kA , IdHomImage))
 
-.. _s-preserves-identities:
+.. _setoid-varieties-s-preserves-identities:
 
 S preserves identities
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -165,7 +165,7 @@ S preserves identities
    S-id2 : S ℓ 𝒦 ⊫ (p ≈̇ q) → 𝒦 ⊫ (p ≈̇ q)
    S-id2 Spq 𝑨 kA = Spq 𝑨 (𝑨 , (kA , ≤-reflexive))
 
-.. _p-preserves-identities:
+.. _setoid-varieties-p-preserves-identities:
 
 P preserves identities
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -184,7 +184,7 @@ P preserves identities
    P-id2{ι} PKpq 𝑨 kA = PKpq 𝑨 (P-expa {ℓ = ℓ}{ι} kA)
 
 
-.. _v-preserves-identities:
+.. _setoid-varieties-v-preserves-identities:
 
 V preserves identities
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -221,7 +221,7 @@ operator ``V``.
     Goal : ⟦ p ⟧ ⟨$⟩ ρ ≈ ⟦ q ⟧ ⟨$⟩ ρ
     Goal = ⊧-I-invar 𝑨 p q (pKq 𝑩 kB) B≅A ρ
 
-.. _class-identities:
+.. _setoid-varieties-class-identities:
 
 Class identities
 ^^^^^^^^^^^^^^^^

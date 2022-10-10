@@ -1,10 +1,12 @@
 .. FILE      : Base/Homomorphism/Basic.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 13 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _basic-definitions:
+.. highlight:: agda
+.. role:: code
+
+.. _base-homomorphisms-basic-definitions:
 
 Basic Definitions
 ~~~~~~~~~~~~~~~~~
@@ -15,26 +17,28 @@ This is the `Base.Homomorphisms.Basic`_ module of the `Agda Universal Algebra Li
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic
+  open import Overture using ( Signature; 𝓞 ; 𝓥 )
 
   module Base.Homomorphisms.Basic {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library --------------------------------
-  open import Agda.Primitive using ( _⊔_ ; lsuc ) renaming ( Set to Type )
-  open import Data.Product   using ( _,_ ; Σ ;  _×_ ; Σ-syntax) renaming ( proj₁ to fst )
-  open import Function.Base  using ( _∘_ ; id )
-  open import Level          using ( Level )
+  open import Agda.Primitive  renaming ( Set to Type )   using ()
+  open import Data.Product    renaming ( proj₁ to fst )
+                              using ( _,_ ; Σ ;  _×_ ; Σ-syntax)
+  open import Function        using ( _∘_ ; id )
+  open import Level           using ( Level ; _⊔_ )
+
   open import Relation.Binary.PropositionalEquality using ( _≡_ ; refl )
 
   -- Imports from the Agda Universal Algebras Library --------------------------------
-  open import Base.Overture.Preliminaries using ( ∣_∣ ; ∥_∥ )
-  open import Base.Overture.Injective     using ( IsInjective )
-  open import Base.Overture.Surjective    using ( IsSurjective )
+  open import Overture               using ( ∣_∣ ; ∥_∥ )
+  open import Base.Functions         using ( IsInjective ; IsSurjective )
+  open import Base.Algebras {𝑆 = 𝑆}  using ( Algebra ; _̂_ ; Lift-Alg )
 
   private variable α β : Level
 
 
-.. _homomorphisms:
+.. _base-homomorphisms-homomorphisms:
 
 Homomorphisms
 ^^^^^^^^^^^^^
@@ -56,7 +60,7 @@ expressed unadulterated.
 
 ::
 
-  module _ (𝑨 : Algebra α 𝑆)(𝑩 : Algebra β 𝑆) where
+  module _ (𝑨 : Algebra α)(𝑩 : Algebra β) where
 
    compatible-op-map : ∣ 𝑆 ∣ → (∣ 𝑨 ∣ → ∣ 𝑩 ∣) → Type(α ⊔ 𝓥 ⊔ β)
    compatible-op-map 𝑓 h = ∀ 𝑎 → h ((𝑓 ̂ 𝑨) 𝑎) ≡ (𝑓 ̂ 𝑩) (h ∘ 𝑎)
@@ -77,7 +81,7 @@ homomorphism.
    hom : Type(𝓞 ⊔ 𝓥 ⊔ α ⊔ β)
    hom = Σ (∣ 𝑨 ∣ → ∣ 𝑩 ∣) is-homomorphism
 
-.. _important-examples-of-homomorphisms:
+.. _base-homomorphisms-important-examples-of-homomorphisms:
 
 Important examples of homomorphisms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -91,7 +95,7 @@ map of) a homomorphism as follows.
 
 ::
 
-  𝒾𝒹 : (𝑨 : Algebra α 𝑆) → hom 𝑨 𝑨
+  𝒾𝒹 : (𝑨 : Algebra α) → hom 𝑨 𝑨
   𝒾𝒹 _ = id , λ 𝑓 𝑎 → refl
 
 Next, the lifting of an algebra to a higher universe level is, in fact, a
@@ -102,14 +106,14 @@ level is a homomorphism.
 
   open Level
 
-  𝓁𝒾𝒻𝓉 : {β : Level}(𝑨 : Algebra α 𝑆) → hom 𝑨 (Lift-Alg 𝑨 β)
+  𝓁𝒾𝒻𝓉 : {β : Level}(𝑨 : Algebra α) → hom 𝑨 (Lift-Alg 𝑨 β)
   𝓁𝒾𝒻𝓉 _ = lift , λ 𝑓 𝑎 → refl
 
-  𝓁ℴ𝓌ℯ𝓇 : {β : Level}(𝑨 : Algebra α 𝑆) → hom (Lift-Alg 𝑨 β) 𝑨
+  𝓁ℴ𝓌ℯ𝓇 : {β : Level}(𝑨 : Algebra α) → hom (Lift-Alg 𝑨 β) 𝑨
   𝓁ℴ𝓌ℯ𝓇 _ = lower , λ 𝑓 𝑎 → refl
 
 
-.. _monomorphisms-and-epimorphisms:
+.. _base-homomorphisms-monomorphisms-and-epimorphisms:
 
 Monomorphisms and epimorphisms
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -120,16 +124,16 @@ the following types.
 
 ::
 
-  is-monomorphism : (𝑨 : Algebra α 𝑆)(𝑩 : Algebra β 𝑆) → (∣ 𝑨 ∣ → ∣ 𝑩 ∣) → Type _
+  is-monomorphism : (𝑨 : Algebra α)(𝑩 : Algebra β) → (∣ 𝑨 ∣ → ∣ 𝑩 ∣) → Type _
   is-monomorphism 𝑨 𝑩 g = is-homomorphism 𝑨 𝑩 g × IsInjective g
 
-  mon : Algebra α 𝑆 → Algebra β 𝑆  → Type _
+  mon : Algebra α → Algebra β → Type _
   mon 𝑨 𝑩 = Σ[ g ∈ (∣ 𝑨 ∣ → ∣ 𝑩 ∣) ] is-monomorphism 𝑨 𝑩 g
 
-  is-epimorphism : (𝑨 : Algebra α 𝑆)(𝑩 : Algebra β 𝑆) → (∣ 𝑨 ∣ → ∣ 𝑩 ∣) → Type _
+  is-epimorphism : (𝑨 : Algebra α)(𝑩 : Algebra β) → (∣ 𝑨 ∣ → ∣ 𝑩 ∣) → Type _
   is-epimorphism 𝑨 𝑩 g = is-homomorphism 𝑨 𝑩 g × IsSurjective g
 
-  epi : Algebra α 𝑆 → Algebra β 𝑆  → Type _
+  epi : Algebra α → Algebra β → Type _
   epi 𝑨 𝑩 = Σ[ g ∈ (∣ 𝑨 ∣ → ∣ 𝑩 ∣) ] is-epimorphism 𝑨 𝑩 g
 
 (Evidently, Agda_ is able to infer the return type of each of the last four
@@ -141,9 +145,9 @@ consisting of the map and a proof that the map is a homomorphism).
 
 ::
 
-  mon→hom : (𝑨 : Algebra α 𝑆){𝑩 : Algebra β 𝑆} → mon 𝑨 𝑩 → hom 𝑨 𝑩
+  mon→hom : (𝑨 : Algebra α){𝑩 : Algebra β} → mon 𝑨 𝑩 → hom 𝑨 𝑩
   mon→hom 𝑨 ϕ = ∣ ϕ ∣ , fst ∥ ϕ ∥
 
-  epi→hom : {𝑨 : Algebra α 𝑆}(𝑩 : Algebra β 𝑆) → epi 𝑨 𝑩 → hom 𝑨 𝑩
+  epi→hom : {𝑨 : Algebra α}(𝑩 : Algebra β) → epi 𝑨 𝑩 → hom 𝑨 𝑩
   epi→hom _ ϕ = ∣ ϕ ∣ , fst ∥ ϕ ∥
 

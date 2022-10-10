@@ -1,8 +1,12 @@
 .. FILE      : Base/Relations/Properties.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. UPDATED   : 23 Jun 2022
+
+.. highlight:: agda
+.. role:: code
+
+.. _base-relations-properties-of-binary-predicates:
 
 Properties of binary predicates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,10 +91,3 @@ This is the `Base.Relations.Properties`_ module of the agda-algebras_ library.
 
   Total : Pred (A × A) ℓ → Type _
   Total P = Connex P P
-
-
-
-
---------------
-
-

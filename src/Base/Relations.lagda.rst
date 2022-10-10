@@ -1,10 +1,12 @@
 .. FILE      : Base/Relations.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _relations:
+.. highlight:: agda
+.. role:: code
+
+.. _base-relations:
 
 Relations
 ---------

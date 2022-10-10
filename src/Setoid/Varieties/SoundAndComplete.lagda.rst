@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Varieties/EquationalLogic.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 14 Jan 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-
-.. _entailment-soundness-and-completeness:
+.. _setoid-varieties-entailment-soundness-and-completeness:
 
 Entailment, soundness and completeness
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -109,7 +108,7 @@ completeness theorem <http://www.cse.chalmers.se/~abela/agda/MultiSortedAlgebra.
    _⊃_ : (E : I → Eq{χ}) (eq : Eq{χ}) → Type _
    E ⊃ eq = (M : Algebra α ρᵃ) → M ⊨ E → M ⊧ eq
 
-.. _derivations-in-a-context:
+.. _setoid-varieties-derivations-in-a-context:
 
 Derivations in a context
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,7 +132,7 @@ theorem <http://www.cse.chalmers.se/~abela/agda/MultiSortedAlgebra.pdf>`__.)
    ⊢▹≈IsEquiv = record { refl = refl ; sym = sym ; trans = trans }
 
 
-.. _soundness-of-the-inference-rules:
+.. _setoid-varieties-soundness-of-the-inference-rules:
 
 Soundness of the inference rules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -181,7 +180,7 @@ E ⊢ X ▹ p ≈ q.
 
 We will prove that result next.
 
-.. _birkhoffs-completeness-theorem:
+.. _setoid-varieties-birkhoffs-completeness-theorem:
 
 Birkhoff’s completeness theorem
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

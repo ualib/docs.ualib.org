@@ -1,10 +1,12 @@
 .. FILE      : Base/Equality/Welldefined.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 15 Jul 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _notions-of-well-definedness:
+.. highlight:: agda
+.. role:: code
+
+.. _base-equality-notions-of-well-definedness:
 
 Notions of well-definedness
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,27 +18,26 @@ Notions of well-definedness
   module Base.Equality.Welldefined where
 
   -- Imports from Agda and the Agda Standard Library  -------------------------------------
-  open import Agda.Primitive        using ( _⊔_ ; lsuc ; Level )
-                                    renaming ( Set to Type ; Setω to Typeω )
-  open import Axiom.Extensionality.Propositional
-                                    using () renaming ( Extensionality to funext )
-  open import Data.Fin.Base         using ( Fin ; toℕ)
-  open import Data.Product          using ( _,_ ; _×_ )
-  open import Data.List.Base        using ( List ; [] ; [_] ; _∷_ ; _++_ )
-  open import Function.Base         using ( _$_ ; _∘_ ; id )
-  open import Relation.Binary.PropositionalEquality
-                                    using ( _≡_ ; refl ; module ≡-Reasoning ; cong )
+  open import Agda.Primitive  using () renaming ( Set to Type ; Setω to Typeω )
+  open import Data.Fin        using ( Fin ; toℕ )
+  open import Data.Product    using ( _,_ ; _×_ )
+  open import Data.List       using ( List ; [] ; [_] ; _∷_ ; _++_ )
+  open import Function        using ( _$_ ; _∘_ ; id )
+  open import Level           using ( _⊔_ ; suc ; Level )
 
+  open  import Axiom.Extensionality.Propositional
+        using () renaming ( Extensionality to funext )
+
+  open  import Relation.Binary.PropositionalEquality
+        using ( _≡_ ; refl ; module ≡-Reasoning ; cong )
 
   -- Imports from agda-algebras -----------------------------------------------------------
-  open import Base.Overture.Preliminaries using ( _≈_ ; _⁻¹)
-  open import Base.Relations.Discrete     using ( Op )
-  open import Base.Overture.Transformers  using ( A×A→B-to-Fin2A→B ;  UncurryFin2 ; UncurryFin3 )
+  open import Overture        using ( _≈_ ; _⁻¹ ; Op )
+  open import Base.Functions  using ( A×A→B-to-Fin2A→B ; UncurryFin2 ; UncurryFin3 )
 
   private variable  ι α β 𝓥 ρ : Level
 
-
-.. _strongly-well-defined-operations:
+.. _base-equality-strongly-well-defined-operations:
 
 Strongly well-defined operations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -66,7 +67,7 @@ We call this formalize this notation in the following type.
 
 ::
 
-  swelldef : ∀ ι α → Type (lsuc (α ⊔ ι))
+  swelldef : ∀ ι α → Type (suc (α ⊔ ι))
   swelldef ι α =  ∀ {I : Type ι}{A : Type α}(f : Op A I)(u v : I → A)
    →              u ≈ v → f u ≡ f v
 
@@ -87,12 +88,12 @@ Here are the more general versions of the foregoing that are not restricted to
 
 ::
 
-  swelldef' : ∀ ι α β → Type (lsuc (ι ⊔ α ⊔ β))
+  swelldef' : ∀ ι α β → Type (suc (ι ⊔ α ⊔ β))
   swelldef' ι α β =  ∀ {I : Type ι} {A : Type α} {B : Type β}
    →                 (f : (I → A) → B) {u v : I → A}
    →                 u ≈ v → f u ≡ f v
 
-  funext' : ∀ α β → Type (lsuc (α ⊔ β))
+  funext' : ∀ α β → Type (suc (α ⊔ β))
   funext' α β =  ∀ {A : Type α } {B : Type β } {f g : A → B}
    →             f ≈ g → f ≡ g
 
@@ -104,7 +105,7 @@ Here are the more general versions of the foregoing that are not restricted to
   swelldef'→funext' : swelldef' ι α (ι ⊔ α) → funext' ι α
   swelldef'→funext' wd ptweq = wd _$_ ptweq
 
-.. _questions:
+.. _base-equality-questions:
 
 Questions
 ^^^^^^^^^
@@ -132,7 +133,7 @@ In the agda-algebras_ library, ``swelldef`` is used exclusively on operation
 type, so that ``B ≡ A``. I believe there is no way to prove that
 ``swelldef ι α α`` implies ``funext ι α``.
 
-.. _some-new-ideas:
+.. _base-equality-some-new-ideas:
 
 Some new ideas
 ^^^^^^^^^^^^^^
@@ -272,6 +273,3 @@ out to be nontrivial.
    CurryListA' : (List A → B) → (A → List A → B)
    CurryListA' f a [] = f [ a ]
    CurryListA' f a (x ∷ l) = f ([ a ] ++ (x ∷ l))
-
---------------
-

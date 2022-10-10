@@ -1,27 +1,35 @@
+.. FILE      : Setoid/Subalgebras.lagda.rst
+.. AUTHOR    : William DeMeo
+.. DATE      : 26 Jul 2021
+.. UPDATED   : 18 Jun 2022
+
+.. highlight:: agda
+.. role:: code
+
+.. _subalgebras-over-setoids:
+
 Subalgebras over setoids
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the [Setoid.Subalgebras][] module of the [Agda Universal Algebra
-Library][].
+This is the `Setoid.Subalgebras`_ module of the `Agda Universal Algebra Library`_.
 
-.. raw:: latex
 
-   \begin{code}
+.. toctree::
+   :maxdepth: 2
 
-   {-# OPTIONS --without-K --exact-split --safe #-}
+   Subalgebras/Subuniverses
+   Subalgebras/Subalgebras
+   Subalgebras/Properties
 
-   module Setoid.Subalgebras where
 
-   open import Setoid.Subalgebras.Subuniverses
-   open import Setoid.Subalgebras.Subalgebras
-   open import Setoid.Subalgebras.Properties
+::
 
-   \end{code}
+  {-# OPTIONS --without-K --exact-split --safe #-}
 
---------------
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
-`← Setoid.Terms.Properties <Setoid.Terms.Properties.html>`__
-`Setoid.Subalgebras.Subuniverses
-→ <Setoid.Subalgebras.Subuniverses.html>`__
+  module Setoid.Subalgebras {𝑆 : Signature 𝓞 𝓥} where
 
-{% include UALib.Links.md %}
+  open import Setoid.Subalgebras.Subuniverses  {𝑆 = 𝑆} public
+  open import Setoid.Subalgebras.Subalgebras   {𝑆 = 𝑆} public
+  open import Setoid.Subalgebras.Properties    {𝑆 = 𝑆} public

@@ -1,10 +1,12 @@
 .. FILE      : Base/Homomorphisms/HomomorphicImages.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 14 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _homomorphic-images:
+.. highlight:: agda
+.. role:: code
+
+.. _basic-homomorphisms-homomorphic-images:
 
 Homomorphic Images
 ~~~~~~~~~~~~~~~~~~
@@ -15,27 +17,29 @@ This is the `Base.Homomorphisms.HomomorphicImages`_ module of the `Agda Universa
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic
+  open import Overture using ( Signature ; 𝓞 ; 𝓥 )
 
   module Base.Homomorphisms.HomomorphicImages {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library ------------------------------------------
-  open import Agda.Primitive using ( _⊔_ ; lsuc ) renaming ( Set to Type )
-  open import Data.Product   using ( _,_ ; Σ-syntax ; Σ ; _×_ )
-  open import Level          using ( Level )
-  open import Relation.Binary.PropositionalEquality
-                             using ( _≡_ ; module ≡-Reasoning ; cong ; cong-app ; sym )
-  open import Relation.Unary using ( Pred ; _∈_ )
+  open import Agda.Primitive  using () renaming ( Set to Type )
+  open import Data.Product    using ( _,_ ; Σ-syntax ; Σ ; _×_ )
+  open import Level           using ( Level ;  _⊔_ ; suc )
+  open import Relation.Unary  using ( Pred ; _∈_ )
+  open import Relation.Binary.PropositionalEquality as ≡
+                              using ( _≡_ ; module ≡-Reasoning )
 
   -- Imports from the Agda Universal Algebra Library ------------------------------------------
-  open import Base.Overture.Preliminaries      using ( 𝑖𝑑 ; ∣_∣ ; ∥_∥ ; lower∼lift ; lift∼lower )
-  open import Base.Overture.Inverses           using ( Image_∋_ ; Inv ; InvIsInverseʳ ; eq )
-  open import Base.Overture.Surjective         using ( IsSurjective )
-  open import Base.Algebras.Products   {𝑆 = 𝑆} using ( ov )
-  open import Base.Homomorphisms.Basic {𝑆 = 𝑆} using ( hom ; 𝓁𝒾𝒻𝓉 ; 𝓁ℴ𝓌ℯ𝓇 )
-  open import Base.Homomorphisms.Properties {𝑆 = 𝑆} using ( Lift-hom )
+  open import Overture  using ( 𝑖𝑑 ; ∣_∣ ; ∥_∥ ; lower∼lift ; lift∼lower )
+  open import Base.Functions
+                        using ( Image_∋_ ; Inv ; InvIsInverseʳ ; eq ; IsSurjective )
+  open import Base.Algebras {𝑆 = 𝑆}
+                        using ( Algebra ; Level-of-Carrier ; Lift-Alg ; ov )
 
-.. _images-of-a-single-algebra:
+  open import Base.Homomorphisms.Basic       {𝑆 = 𝑆} using ( hom ; 𝓁𝒾𝒻𝓉 ; 𝓁ℴ𝓌ℯ𝓇 )
+  open import Base.Homomorphisms.Properties  {𝑆 = 𝑆} using ( Lift-hom )
+
+.. _basic-homomorphisms-images-of-a-single-algebra:
 
 Images of a single algebra
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -47,19 +51,19 @@ class of *homomorphic images* of an algebra in dependent type theory.
 
   module _ {α β : Level } where
 
-   _IsHomImageOf_ : (𝑩 : Algebra β 𝑆)(𝑨 : Algebra α 𝑆) → Type _
+   _IsHomImageOf_ : (𝑩 : Algebra β)(𝑨 : Algebra α) → Type _
    𝑩 IsHomImageOf 𝑨 = Σ[ φ ∈ hom 𝑨 𝑩 ] IsSurjective ∣ φ ∣
 
-   HomImages : Algebra α 𝑆 → Type(𝓞 ⊔ 𝓥 ⊔ α ⊔ lsuc β)
-   HomImages 𝑨 = Σ[ 𝑩 ∈ Algebra β 𝑆 ] 𝑩 IsHomImageOf 𝑨
+   HomImages : Algebra α → Type(𝓞 ⊔ 𝓥 ⊔ α ⊔ suc β)
+   HomImages 𝑨 = Σ[ 𝑩 ∈ Algebra β ] 𝑩 IsHomImageOf 𝑨
 
 These types should be self-explanatory, but just to be sure, let's describe the
 Sigma type appearing in the second definition. Given an ``𝑆``-algebra
-``𝑨 : Algebra α 𝑆``, the type ``HomImages 𝑨`` denotes the class of algebras
-``𝑩 : Algebra β 𝑆`` with a map ``φ : ∣ 𝑨 ∣ → ∣ 𝑩 ∣`` such that ``φ`` is a
+``𝑨 : Algebra α``, the type ``HomImages 𝑨`` denotes the class of algebras
+``𝑩 : Algebra β`` with a map ``φ : ∣ 𝑨 ∣ → ∣ 𝑩 ∣`` such that ``φ`` is a
 surjective homomorphism. 
 
-.. _images-of-a-class-of-algebras:
+.. _basic-homomorphisms-images-of-a-class-of-algebras:
 
 Images of a class of algebras
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -72,13 +76,13 @@ as a type that represents all such homomorphic images.
 
   module _ {α : Level} where
 
-   IsHomImageOfClass : {𝒦 : Pred (Algebra α 𝑆)(lsuc α)} → Algebra α 𝑆 → Type(ov α)
-   IsHomImageOfClass {𝒦 = 𝒦} 𝑩 = Σ[ 𝑨 ∈ Algebra α 𝑆 ] ((𝑨 ∈ 𝒦) × (𝑩 IsHomImageOf 𝑨))
+   IsHomImageOfClass : {𝒦 : Pred (Algebra α)(suc α)} → Algebra α → Type(ov α)
+   IsHomImageOfClass {𝒦 = 𝒦} 𝑩 = Σ[ 𝑨 ∈ Algebra α ] ((𝑨 ∈ 𝒦) × (𝑩 IsHomImageOf 𝑨))
 
-   HomImageOfClass : Pred (Algebra α 𝑆) (lsuc α) → Type(ov α)
-   HomImageOfClass 𝒦 = Σ[ 𝑩 ∈ Algebra α 𝑆 ] IsHomImageOfClass{𝒦} 𝑩
+   HomImageOfClass : Pred (Algebra α) (suc α) → Type(ov α)
+   HomImageOfClass 𝒦 = Σ[ 𝑩 ∈ Algebra α ] IsHomImageOfClass{𝒦} 𝑩
 
-.. _lifting-tools:
+.. _basic-homomorphisms-lifting-tools:
 
 Lifting tools
 ^^^^^^^^^^^^^
@@ -94,8 +98,8 @@ of an epimorphism is an epimorphism.
    open Level
    open ≡-Reasoning
 
-   Lift-epi-is-epi : {𝑨 : Algebra α 𝑆}(ℓᵃ : Level){𝑩 : Algebra β 𝑆}(ℓᵇ : Level)(h : hom 𝑨 𝑩)
-    →                IsSurjective ∣ h ∣ → IsSurjective ∣ Lift-hom ℓᵃ {𝑩} ℓᵇ h ∣
+   Lift-epi-is-epi :  {𝑨 : Algebra α}(ℓᵃ : Level){𝑩 : Algebra β}(ℓᵇ : Level)(h : hom 𝑨 𝑩)
+    →                 IsSurjective ∣ h ∣ → IsSurjective ∣ Lift-hom ℓᵃ {𝑩} ℓᵇ h ∣
 
    Lift-epi-is-epi {𝑨 = 𝑨} ℓᵃ {𝑩} ℓᵇ h hepi y = eq (lift a) η
     where
@@ -109,17 +113,17 @@ of an epimorphism is an epimorphism.
      a = Inv ∣ h ∣ ζ
 
      ν : lift (∣ h ∣ a) ≡ ∣ Lift-hom ℓᵃ {𝑩} ℓᵇ h ∣ (Level.lift a)
-     ν = cong (λ - → lift (∣ h ∣ (- a))) (lower∼lift {Level-of-Carrier 𝑨}{β})
+     ν = ≡.cong (λ - → lift (∣ h ∣ (- a))) (lower∼lift {Level-of-Carrier 𝑨}{β})
 
-     η : y ≡ ∣ lh ∣ (lift a)
-     η = y               ≡⟨ (cong-app lift∼lower) y ⟩
-         lift (lower y)  ≡⟨ cong lift (sym (InvIsInverseʳ ζ)) ⟩
-         lift (∣ h ∣ a)  ≡⟨ ν ⟩
-         ∣ lh ∣ (lift a) ∎
+     η :  y ≡ ∣ lh ∣ (lift a)
+     η =  y                ≡⟨ (≡.cong-app lift∼lower) y              ⟩
+          lift (lower y)   ≡⟨ ≡.cong lift (≡.sym (InvIsInverseʳ ζ))  ⟩
+          lift (∣ h ∣ a)   ≡⟨ ν                                      ⟩
+          ∣ lh ∣ (lift a)  ∎
 
-   Lift-Alg-hom-image : {𝑨 : Algebra α 𝑆}(ℓᵃ : Level){𝑩 : Algebra β 𝑆}(ℓᵇ : Level)
-    →                   𝑩 IsHomImageOf 𝑨
-    →                   (Lift-Alg 𝑩 ℓᵇ) IsHomImageOf (Lift-Alg 𝑨 ℓᵃ)
+   Lift-Alg-hom-image :  {𝑨 : Algebra α}(ℓᵃ : Level){𝑩 : Algebra β}(ℓᵇ : Level)
+    →                    𝑩 IsHomImageOf 𝑨
+    →                    (Lift-Alg 𝑩 ℓᵇ) IsHomImageOf (Lift-Alg 𝑨 ℓᵃ)
 
    Lift-Alg-hom-image {𝑨 = 𝑨} ℓᵃ {𝑩} ℓᵇ ((φ , φhom) , φepic) = Goal
     where
@@ -130,4 +134,3 @@ of an epimorphism is an epimorphism.
     lφepic = Lift-epi-is-epi ℓᵃ {𝑩} ℓᵇ (φ , φhom) φepic
     Goal : (Lift-Alg 𝑩 ℓᵇ) IsHomImageOf _
     Goal = lφ , lφepic
-

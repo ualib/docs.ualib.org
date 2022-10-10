@@ -1,10 +1,12 @@
 .. FILE      : Base/Complexity.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 26 Jul 2021
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _complexity:
+.. highlight:: agda
+.. role:: code
+
+.. _base-complexity:
 
 Complexity
 ----------
@@ -15,6 +17,7 @@ This is the `Base.Complexity`_ module of the `Agda Universal Algebra Library`_.
    :maxdepth: 2
 
    Complexity/Basic
+   Complexity/CSP
 
 ::
 
@@ -23,5 +26,6 @@ This is the `Base.Complexity`_ module of the `Agda Universal Algebra Library`_.
   module Base.Complexity where
 
   open import Base.Complexity.Basic public
+  open import Base.Complexity.CSP public
 
 

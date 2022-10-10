@@ -1,8 +1,12 @@
 .. FILE      : Base/Adjunction.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 30 Aug 2021
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
+
+.. highlight:: agda
+.. role:: code
+
+.. _base-adjunction:
 
 Adjunction
 ----------

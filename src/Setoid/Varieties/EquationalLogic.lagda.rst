@@ -1,12 +1,12 @@
 .. FILE      : Setoid/Varieties/EquationalLogic.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 24 Jul 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _equational-logic-and-varieties-of-setoid-algebras:
+.. _setoid-varieties-equational-logic-and-varieties-of-setoid-algebras:
 
 Equational logic and varieties of setoid algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +54,7 @@ relation. To reiterate, if 𝒦 is a class of 𝑆-algebras, we write
   private variable χ α ρᵃ ℓ ι : Level
 
 
-.. _the-models-relation:
+.. _setoid-varieties-the-models-relation:
 
 The models relation
 ^^^^^^^^^^^^^^^^^^^
@@ -92,7 +92,7 @@ is simply an assignment of values in the domain to variable symbols).
 
 
 
-.. _equational-theories-and-models-over-setoids:
+.. _setoid-varieties-equational-theories-and-models-over-setoids:
 
 Equational theories and models over setoids
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

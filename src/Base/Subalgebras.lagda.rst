@@ -1,9 +1,12 @@
 .. FILE      : Base/Subalgebras.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 14 Jan 2021
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _subalgebras:
+.. highlight:: agda
+.. role:: code
+
+.. _base-subalgebras:
 
 Subalgebras
 -----------
@@ -14,11 +17,13 @@ This is the `Base.Subalgebras`_ module of the `Agda Universal Algebra Library`_.
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Subalgebras where
+  open import Overture using ( Signature ; 𝓞 ; 𝓥 )
 
-  open import Base.Subalgebras.Subuniverses  public
-  open import Base.Subalgebras.Subalgebras   public
-  open import Base.Subalgebras.Properties    public
+  module Base.Subalgebras {𝑆 : Signature 𝓞 𝓥} where
+
+  open import Base.Subalgebras.Subuniverses  {𝑆 = 𝑆} public
+  open import Base.Subalgebras.Subalgebras   {𝑆 = 𝑆} public
+  open import Base.Subalgebras.Properties    {𝑆 = 𝑆} public
 
 .. toctree::
    :maxdepth: 2

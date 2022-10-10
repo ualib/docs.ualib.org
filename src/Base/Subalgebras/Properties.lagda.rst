@@ -1,10 +1,12 @@
 .. FILE      : Base/Subalgebras/Properties.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 18 Jul 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _properties-of-the-subalgebra-inclusion-relation:
+.. highlight:: agda
+.. role:: code
+
+.. _base-subalgebras-properties-of-the-subalgebra-inclusion-relation:
 
 Properties of the Subalgebra Inclusion Relation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -13,31 +15,31 @@ Properties of the Subalgebra Inclusion Relation
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature )
+  open import Overture using (𝓞 ; 𝓥 ; Signature )
 
   module Base.Subalgebras.Properties {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library -------------------------------
-  open import Agda.Primitive   using ( _⊔_ ; lsuc ; Level ) renaming ( Set to Type )
   open import Data.Product     using ( _,_ ) renaming ( proj₁ to fst ; proj₂ to snd )
-  open import Function.Base    using ( _∘_ ; id ; flip )
-  open import Function.Bundles using ( Injection )
+  open import Function         using ( _∘_ ; id ; flip ; Injection )
+  open import Level            using ( Level; _⊔_ )
   open import Relation.Unary   using ( Pred ; _⊆_ )
-  open import Relation.Binary.Definitions
-                               using ( _Respectsʳ_ ; _Respectsˡ_ )
-  open import Relation.Binary.PropositionalEquality
-                               using ( _≡_ ; refl ; module ≡-Reasoning ; cong )
+  open import Relation.Binary  using ( _Respectsʳ_ ; _Respectsˡ_ )
+
+  open  import Relation.Binary.PropositionalEquality as ≡
+        using ( _≡_ ; module ≡-Reasoning )
 
   -- Imports from the Agda Universal Algebra Library --------------------
-  open import Base.Overture.Preliminaries             using ( ∣_∣ ; ∥_∥ ; _⁻¹ )
-  open import Base.Overture.Injective                 using (  id-is-injective ; IsInjective ; ∘-injective )
-  open import Base.Algebras.Basic                     using ( Algebra ; Lift-Alg )
-  open import Base.Algebras.Products          {𝑆 = 𝑆} using ( ov )
-  open import Base.Homomorphisms.Basic        {𝑆 = 𝑆} using ( is-homomorphism )
-  open import Base.Homomorphisms.Properties   {𝑆 = 𝑆} using ( ∘-hom ; ∘-is-hom )
-  open import Base.Homomorphisms.Isomorphisms {𝑆 = 𝑆} using ( _≅_ ; ≅toInjective ; ≅fromInjective ; ≅-refl
-                                                       ; ≅-sym ; ≅-trans ; Lift-≅ ; mkiso )
-  open import Base.Subalgebras.Subalgebras    {𝑆 = 𝑆} using ( _≤_ ; _≥_ ; _IsSubalgebraOfClass_ )
+  open  import Overture        using ( ∣_∣ ; ∥_∥ ; _⁻¹ )
+  open  import Base.Functions  using ( id-is-injective ; IsInjective ; ∘-injective )
+
+  open  import Base.Algebras       {𝑆 = 𝑆}  using ( Algebra ; Lift-Alg ; ov )
+  open  import Base.Homomorphisms  {𝑆 = 𝑆}  using ( is-homomorphism ; ∘-hom )
+                                            using ( ∘-is-hom ; _≅_ ; ≅toInjective )
+                                            using ( ≅fromInjective ; ≅-refl ; ≅-sym )
+                                            using ( ≅-trans ; Lift-≅ ; mkiso )
+  open  import Base.Subalgebras.Subalgebras
+                                   {𝑆 = 𝑆}  using  ( _≤_ ; _≥_ ; _IsSubalgebraOfClass_ )
 
   private variable α β γ 𝓧 : Level
 
@@ -45,25 +47,28 @@ Properties of the Subalgebra Inclusion Relation
 
   open _≅_
 
-  ≤-refl : {𝑨 : Algebra α 𝑆}{𝑩 : Algebra β 𝑆} → 𝑨 ≅ 𝑩 → 𝑨 ≤ 𝑩
+  ≤-refl : {𝑨 : Algebra α}{𝑩 : Algebra β} → 𝑨 ≅ 𝑩 → 𝑨 ≤ 𝑩
   ≤-refl φ = (to φ) , ≅toInjective φ
 
-  ≥-refl : {𝑨 : Algebra α 𝑆}{𝑩 : Algebra β 𝑆} → 𝑨 ≅ 𝑩 → 𝑨 ≥ 𝑩
+  ≥-refl : {𝑨 : Algebra α}{𝑩 : Algebra β} → 𝑨 ≅ 𝑩 → 𝑨 ≥ 𝑩
   ≥-refl φ = (from φ) , ≅fromInjective φ
 
-  ≤-reflexive : (𝑨 : Algebra α 𝑆) → 𝑨 ≤ 𝑨
-  ≤-reflexive 𝑨 = (id , λ 𝑓 𝑎 → refl) , Injection.injective id-is-injective
+  ≤-reflexive : (𝑨 : Algebra α) → 𝑨 ≤ 𝑨
+  ≤-reflexive 𝑨 = (id , λ 𝑓 𝑎 → ≡.refl) , Injection.injective id-is-injective
 
-  ≤-trans : (𝑨 : Algebra α 𝑆){𝑩 : Algebra β 𝑆}(𝑪 : Algebra γ 𝑆)
-   →        𝑨 ≤ 𝑩 → 𝑩 ≤ 𝑪 → 𝑨 ≤ 𝑪
+  ≤-trans :  (𝑨 : Algebra α){𝑩 : Algebra β}(𝑪 : Algebra γ)
+   →         𝑨 ≤ 𝑩 → 𝑩 ≤ 𝑪 → 𝑨 ≤ 𝑪
+
   ≤-trans 𝑨 𝑪 A≤B B≤C = (∘-hom 𝑨 𝑪 ∣ A≤B ∣ ∣ B≤C ∣) , ∘-injective ∥ A≤B ∥ ∥ B≤C ∥
 
 
-  ≥-trans : (𝑨 : Algebra α 𝑆){𝑩 : Algebra β 𝑆}(𝑪 : Algebra γ 𝑆)
-   →        𝑨 ≥ 𝑩 → 𝑩 ≥ 𝑪 → 𝑨 ≥ 𝑪
+  ≥-trans :  (𝑨 : Algebra α){𝑩 : Algebra β}(𝑪 : Algebra γ)
+   →         𝑨 ≥ 𝑩 → 𝑩 ≥ 𝑪 → 𝑨 ≥ 𝑪
+
   ≥-trans 𝑨 𝑪 A≥B B≥C = ≤-trans 𝑪 𝑨 B≥C A≥B
 
-.. _relations-between-subalgebra-supalgebra-and-isomorphism:
+
+.. _base-subalgebras-relations-between-subalgebra-supalgebra-and-isomorphism:
 
 Relations between ≤, ≥, and ≅
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -115,21 +120,21 @@ so is the other.
    ≅-resp-≤ : _≤_ Respectsˡ _≅_
    ≅-resp-≤ {𝑨} = ≥-resp-≅ {𝑨}
 
-.. _relations-between-leq-geq-and-iso-universe-polymorphic-versions:
+.. _base-subalgebras-relations-between-leq-geq-and-iso-universe-polymorphic-versions:
 
 Relations between ≤, ≥, and ≅ (universe-polymorphic versions)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
-  module _ {𝑨 : Algebra α 𝑆}{𝑩 : Algebra β 𝑆}{𝑪 : Algebra γ 𝑆} where
+  module _ {𝑨 : Algebra α}{𝑩 : Algebra β}{𝑪 : Algebra γ} where
    ≤-RESP-≅ : 𝑨 ≤ 𝑩 → 𝑩 ≅ 𝑪 → 𝑨 ≤ 𝑪
    ≤-RESP-≅ a<b bc = ≤-trans 𝑨 𝑪 a<b (≤-refl bc)
 
    ≥-RESP-≅ : 𝑨 ≥ 𝑩 → 𝑩 ≅ 𝑪 → 𝑨 ≥ 𝑪
    ≥-RESP-≅ a<b ac = ≤-trans 𝑪 𝑨 (≤-refl (≅-sym ac)) a<b
 
-  module _ {𝑨 : Algebra α 𝑆}{𝑩 : Algebra β 𝑆}{𝑪 : Algebra γ 𝑆} where
+  module _ {𝑨 : Algebra α}{𝑩 : Algebra β}{𝑪 : Algebra γ} where
 
    ≅-RESP-≤ : 𝑨 ≅ 𝑩 → 𝑩 ≤ 𝑪 → 𝑨 ≤ 𝑪
    ≅-RESP-≤ ab b<c = ≥-RESP-≅{𝑨 = 𝑪} b<c (≅-sym ab)
@@ -139,42 +144,41 @@ Relations between ≤, ≥, and ≅ (universe-polymorphic versions)
 
 
   open ≡-Reasoning
-  iso→injective : {𝑨 : Algebra α 𝑆}{𝑩 : Algebra β 𝑆}
-   →              (φ : 𝑨 ≅ 𝑩) → IsInjective ∣ to φ ∣
+  iso→injective :  {𝑨 : Algebra α}{𝑩 : Algebra β}
+   →               (φ : 𝑨 ≅ 𝑩) → IsInjective ∣ to φ ∣
+
   iso→injective {𝑨 = 𝑨} (mkiso f g f∼g g∼f) {x} {y} fxfy =
    x                  ≡⟨ (g∼f x)⁻¹ ⟩
-   (∣ g ∣ ∘ ∣ f ∣) x  ≡⟨ cong ∣ g ∣ fxfy ⟩
+   (∣ g ∣ ∘ ∣ f ∣) x  ≡⟨ ≡.cong ∣ g ∣ fxfy ⟩
    (∣ g ∣ ∘ ∣ f ∣) y  ≡⟨ g∼f y ⟩
    y                  ∎
 
-  ≤-mono : (𝑩 : Algebra β 𝑆){𝒦 𝒦' : Pred (Algebra α 𝑆) γ}
-   →       𝒦 ⊆ 𝒦' → 𝑩 IsSubalgebraOfClass 𝒦 → 𝑩 IsSubalgebraOfClass 𝒦'
+  ≤-mono :  (𝑩 : Algebra β){𝒦 𝒦' : Pred (Algebra α) γ}
+   →        𝒦 ⊆ 𝒦' → 𝑩 IsSubalgebraOfClass 𝒦 → 𝑩 IsSubalgebraOfClass 𝒦'
 
   ≤-mono 𝑩 KK' KB = ∣ KB ∣ , fst ∥ KB ∥ , KK' (∣ snd ∥ KB ∥ ∣) , ∥ (snd ∥ KB ∥) ∥
 
-.. _lifts-of-subalgebras:
+.. _base-subalgebras-lifts-of-subalgebras:
 
 Lifts of subalgebras
 ^^^^^^^^^^^^^^^^^^^^
 
 ::
 
-  module _ {𝒦 : Pred (Algebra α 𝑆)(ov α)}{𝑩 : Algebra α 𝑆} where
+  module _ {𝒦 : Pred (Algebra α)(ov α)}{𝑩 : Algebra α} where
 
    Lift-is-sub : 𝑩 IsSubalgebraOfClass 𝒦 → (Lift-Alg 𝑩 α) IsSubalgebraOfClass 𝒦
    Lift-is-sub (𝑨 , (sa , (KA , B≅sa))) = 𝑨 , sa , KA , ≅-trans (≅-sym Lift-≅) B≅sa
 
-  ≤-Lift : {𝑨 : Algebra α 𝑆}(𝑩 : Algebra β 𝑆){ℓ : Level} → 𝑨 ≤ 𝑩 → 𝑨 ≤ Lift-Alg 𝑩 ℓ
+  ≤-Lift : {𝑨 : Algebra α}(𝑩 : Algebra β){ℓ : Level} → 𝑨 ≤ 𝑩 → 𝑨 ≤ Lift-Alg 𝑩 ℓ
   ≤-Lift 𝑩 a<b = ≤-RESP-≅{𝑩 = 𝑩} a<b Lift-≅
 
-  ≥-Lift : (𝑨 : Algebra α 𝑆){𝑩 : Algebra β 𝑆}{ℓ : Level} → 𝑨 ≥ 𝑩 → 𝑨 ≥ Lift-Alg 𝑩 ℓ
+  ≥-Lift : (𝑨 : Algebra α){𝑩 : Algebra β}{ℓ : Level} → 𝑨 ≥ 𝑩 → 𝑨 ≥ Lift-Alg 𝑩 ℓ
   ≥-Lift 𝑨 a>b = ≥-RESP-≅{𝑨 = 𝑨} a>b Lift-≅
 
-  Lift-≤-Lift : {𝑨 : Algebra α 𝑆}(ℓᵃ : Level){𝑩 : Algebra β 𝑆}(ℓᵇ : Level)
-   →            𝑨 ≤ 𝑩 → Lift-Alg 𝑨 ℓᵃ ≤ Lift-Alg 𝑩 ℓᵇ
+  Lift-≤-Lift :  {𝑨 : Algebra α}(ℓᵃ : Level){𝑩 : Algebra β}(ℓᵇ : Level)
+   →             𝑨 ≤ 𝑩 → Lift-Alg 𝑨 ℓᵃ ≤ Lift-Alg 𝑩 ℓᵇ
 
   Lift-≤-Lift ℓᵃ {𝑩} ℓᵇ a<b = ≥-Lift (Lift-Alg 𝑩 ℓᵇ) (≤-Lift 𝑩 a<b)
-
---------------
 
 

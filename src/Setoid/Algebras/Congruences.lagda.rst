@@ -1,11 +1,12 @@
-.. FILE      : Setoid/Algebras/Congruences.lagda.rst
-.. AUTHOR    : William DeMeo
-.. DATE      : 15 Sep 2021
-.. UPDATED   : 09 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. FILE     : Setoid/Algebras/Congruences.lagda.rst
+.. AUTHOR   : William DeMeo
+.. DATE     : 15 Sep 2021
+.. UPDATED  : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
+
+.. _setoid-algebras-congruences-of-setoid-algebras:
 
 Congruences of setoid algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,23 +17,25 @@ This is the `Setoid.Algebras.Congruences`_ module of the `Agda Universal Algebra
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature)
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
   module Setoid.Algebras.Congruences {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from the Agda Standard Library ---------------------------------------
-  open import Function                       using ( id )
-  open import Function.Bundles               using ( Func )
-  open import Agda.Primitive                 using ( _⊔_ ; Level )             renaming ( Set to Type )
-  open import Data.Product                   using ( _,_ ; Σ-syntax )
-  open import Relation.Binary                using ( Setoid ; IsEquivalence )  renaming ( Rel to BinRel )
-  open import Relation.Binary.PropositionalEquality  using ( refl )
+  open import Agda.Primitive   using () renaming ( Set to Type )
+  open import Data.Product     using ( _,_ ; Σ-syntax )
+  open import Function         using ( id ; Func )
+  open import Level            using ( Level ; _⊔_ )
+  open import Relation.Binary  using ( Setoid ; IsEquivalence )
+                               renaming ( Rel to BinRel )
+
+  open import Relation.Binary.PropositionalEquality using ( refl )
 
   -- Imports from the Agda Universal Algebras Library ------------------------------
-  open import Base.Overture                  using ( ∣_∣  ; ∥_∥  )
-  open import Base.Relations                 using ( 0[_] ; _|:_ ; Equivalence )
-  open import Setoid.Algebras.Basic {𝑆 = 𝑆}  using ( ov ; Algebra ; 𝕌[_] ; _̂_ )
-  open import Setoid.Relations               using ( ⟪_⟫ ; _/_ ; ⟪_∼_⟫-elim )
+  open import Overture          using ( ∣_∣  ; ∥_∥  )
+  open import Base.Relations    using ( 0[_] ; _|:_ ; Equivalence )
+  open import Setoid.Relations  using ( ⟪_⟫ ; _/_ ; ⟪_∼_⟫-elim )
+  open import Setoid.Algebras.Basic {𝑆 = 𝑆} using ( ov ; Algebra ; 𝕌[_] ; _̂_ )
 
   private variable α ρ ℓ : Level
 
@@ -65,15 +68,15 @@ the underying setoid equality (and not just with respect to ``_≡_``).)
 ::
 
   module _ (𝑨 : Algebra α ρ) where
-
    open Algebra 𝑨  using ()  renaming (Domain to A )
-   open Setoid A using ( _≈_ )
+   open Setoid A   using ( _≈_ )
 
    record IsCongruence (θ : BinRel 𝕌[ 𝑨 ] ℓ) : Type (𝓞 ⊔ 𝓥 ⊔ ρ ⊔ ℓ ⊔ α)  where
     constructor mkcon
-    field       reflexive : ∀ {a₀ a₁} → a₀ ≈ a₁ → θ a₀ a₁
-                is-equivalence : IsEquivalence θ
-                is-compatible  : 𝑨 ∣≈ θ
+    field
+     reflexive : ∀ {a₀ a₁} → a₀ ≈ a₁ → θ a₀ a₁
+     is-equivalence : IsEquivalence θ
+     is-compatible  : 𝑨 ∣≈ θ
 
     Eqv : Equivalence 𝕌[ 𝑨 ] {ℓ}
     Eqv = θ , is-equivalence
@@ -95,8 +98,7 @@ equivalent in the sense that each implies the other. One implication is the
   Con→IsCongruence : {𝑨 : Algebra α ρ}((θ , _) : Con 𝑨 {ℓ}) → IsCongruence 𝑨 θ
   Con→IsCongruence θ = ∥ θ ∥
 
-
-.. _quotient-algebras:
+.. _setoid-algebras-quotient-algebras:
 
 Quotient algebras
 ^^^^^^^^^^^^^^^^^
@@ -108,9 +110,9 @@ express quotients using this standard notation.
 
 ::
 
-  open Algebra using ( Domain ; Interp )
-  open Setoid using ( Carrier )
-  open Func using ( cong ) renaming ( f to _⟨$⟩_  )
+  open Algebra  using ( Domain ; Interp )
+  open Setoid   using ( Carrier )
+  open Func     using ( cong ) renaming ( f to _⟨$⟩_  )
 
   _╱_ : (𝑨 : Algebra α ρ) → Con 𝑨 {ℓ} → Algebra α ℓ
   Domain (𝑨 ╱ θ) = 𝕌[ 𝑨 ] / (Eqv ∥ θ ∥)
@@ -118,12 +120,14 @@ express quotients using this standard notation.
   cong (Interp (𝑨 ╱ θ)) {f , u} {.f , v} (refl , a) = is-compatible ∥ θ ∥ f a
 
   module _ (𝑨 : Algebra α ρ) where
-   open Algebra 𝑨   using ( )                      renaming (Domain to A )
-   open Setoid A using ( _≈_ ) renaming (refl to refl₁)
+   open Algebra 𝑨  using ( )      renaming (Domain to A )
+   open Setoid A   using ( _≈_ )  renaming (refl to refl₁)
 
    _/∙_ : 𝕌[ 𝑨 ] → (θ : Con 𝑨{ℓ}) → Carrier (Domain (𝑨 ╱ θ))
    a /∙ θ = a
 
-   /-≡ : (θ : Con 𝑨{ℓ}){u v : 𝕌[ 𝑨 ]} → ⟪ u ⟫{Eqv ∥ θ ∥} ≈ ⟪ v ⟫{Eqv ∥ θ ∥} → ∣ θ ∣ u v
+   /-≡ :  (θ : Con 𝑨{ℓ}){u v : 𝕌[ 𝑨 ]}
+    →     ⟪ u ⟫{Eqv ∥ θ ∥} ≈ ⟪ v ⟫{Eqv ∥ θ ∥} → ∣ θ ∣ u v
+
    /-≡ θ {u}{v} uv = reflexive ∥ θ ∥ uv
 

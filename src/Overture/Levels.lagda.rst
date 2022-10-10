@@ -1,8 +1,12 @@
 .. FILE      : Overture/Levels.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 06 Jan 2022
-.. UPDATED   : 17 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
-.. _levels:
+.. highlight:: agda
+.. role:: code
+
+.. _overture-type-universes:
 
 Type Universes
 --------------
@@ -41,7 +45,7 @@ sometimes make for a non-fun proof assistant. Specifically, in certain situation
 non-cumulativity makes it unduly difficult to convince Agda that a program or proof is correct.
 
 
-.. _universe-level-casting:
+.. _overture-universe-level-casting:
 
 Universe level casting
 ~~~~~~~~~~~~~~~~~~~~~~

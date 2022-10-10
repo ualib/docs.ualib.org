@@ -1,10 +1,12 @@
 .. FILE      : Base/Terms.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 14 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _basic-definitions:
+.. highlight:: agda
+.. role:: code
+
+.. _base-terms-basic-definitions:
 
 Basic Definitions
 ~~~~~~~~~~~~~~~~~
@@ -15,22 +17,22 @@ This is the `Base.Terms.Basic`_ module of the `Agda Universal Algebra Library`_.
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic
+  open import Overture using (Signature ; 𝓞 ; 𝓥 )
 
   module Base.Terms.Basic {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library ----------------
-  open import Agda.Primitive using ( Level ) renaming ( Set to Type )
-  open import Data.Product   using ( _,_ )
+  open import Agda.Primitive         using () renaming ( Set to Type )
+  open import Data.Product           using ( _,_ )
+  open import Level                  using ( Level )
 
   -- Imports from the Agda Universal Algebra Library ----------------
-  open import Base.Overture.Preliminaries    using ( ∣_∣ ; ∥_∥ )
-  open import Base.Algebras.Products {𝑆 = 𝑆} using ( ov )
+  open import Overture          using ( ∣_∣ ; ∥_∥ )
+  open import Base.Algebras {𝑆 = 𝑆}  using ( Algebra ; ov )
 
   private variable χ : Level
 
-
-.. _the-type-of-terms:
+.. _base-terms-the-type-of-terms:
 
 The type of terms
 ^^^^^^^^^^^^^^^^^
@@ -73,9 +75,9 @@ operation symbol at each ``node`` and a variable symbol at each leaf (``generato
 
 **Notation**. As usual, the type ``X`` represents an arbitrary collection of
 variable symbols. Recall, ``ov χ`` is our shorthand notation for the universe
-level ``𝓞 ⊔ 𝓥 ⊔ lsuc χ``.
+level ``𝓞 ⊔ 𝓥 ⊔ suc χ``.
 
-.. _the-term-algebra:
+.. _base-terms-the-term-algebra:
 
 The term algebra
 ^^^^^^^^^^^^^^^^
@@ -96,9 +98,8 @@ In Agda_ the term algebra can be defined as simply as one could hope.
 
 ::
 
-  𝑻 : (X : Type χ ) → Algebra (ov χ) 𝑆
+  𝑻 : (X : Type χ ) → Algebra (ov χ)
   𝑻 X = Term X , node
 
---------------
 
 

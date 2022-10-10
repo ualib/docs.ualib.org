@@ -1,30 +1,40 @@
 .. FILE      : Preface.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 14 Jan 2021
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. UPDATED   : 17 Jun 2022
 
+.. highlight:: agda
+.. role:: code
+
+.. _overture-preface:
 
 Preface
-=======
+-------
+
+This is the `Overture.Preface`_ module of the agda-algebras_ library.
+
+::
+
+  {-# OPTIONS --without-K --exact-split --safe #-}
+
+  module Overture.Preface where
+
 
 To support formalization in type theory of research level mathematics in
-universal algebra and related fields, we present the `Agda Universal
-Algebra Library <https://github.com/ualib/agda-algebras>`__ (or
-`agda-algebras <https://github.com/ualib/agda-algebras>`__ for short), a
-library for the
-`Agda <https://wiki.portal.chalmers.se/agda/pmwiki.php>`__ proof
-assistant which contains definitions, theorems and proofs from the
-foundations of universal algebra. In particular, the library formalizes
-the First (Noether) Isomorphism Theorem and the `Birkhoff HSP
-Theorem <https://ualib.org/Setoid.Varieties.HSP.html#proof-of-the-hsp-theorem>`__
+universal algebra and related fields, we present the
+`Agda Universal Algebra Library`_ (or `agda-algebras`_ for short), a
+library for the Agda_ proof assistant which contains definitions, theorems and
+proofs from the foundations of universal algebra. In particular, the library
+formalizes the First (Noether) Isomorphism Theorem and the
+`Birkhoff HSP Theorem <https://ualib.org/Setoid.Varieties.HSP.html>`__
 asserting that every variety is an equational class.
 
-Vision and goals
------------------
+.. _overture-vision-and-goals:
 
-The idea for the
-`agda-algebras <https://github.com/ualib/agda-algebras>`__ project
+Vision and goals
+~~~~~~~~~~~~~~~~
+
+The idea for the agda-algebras_ project
 originated with the observation that, on the one hand a number of basic
 and important constructs in universal algebra can be defined
 recursively, and theorems about them proved inductively, while on the
@@ -37,10 +47,10 @@ These observations suggest that there is much to gain from implementing
 universal algebra in a language that facilitates working with dependent
 and inductive types.
 
-.. _primary-goals:
+.. _overture-primary-goals:
 
 Primary goals
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 The first goal of
 `agda-algebras <https://github.com/ualib/agda-algebras>`__ is to
@@ -63,10 +73,10 @@ presentation of its foundations. Our new presentation expresses the
 foundations of universal algebra in the language of type theory, and
 uses the Agda proof assistant to codify and formally verify everything.
 
-.. _secondary-goals:
+.. _overture-secondary-goals:
 
 Secondary goals
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 We wish to emphasize that our ultimate objective is not merely to
 translate existing results into a more modern and formal language.
@@ -90,23 +100,22 @@ extremely useful research tool. Thus, a secondary goal is to demonstrate
 (to ourselves and colleagues) the utility of such technologies for
 discovering new mathematics.
 
-.. _logical-foundations:
+.. _overture-logical-foundations:
 
 Logical foundations
--------------------
+~~~~~~~~~~~~~~~~~~~
 
-The `Agda Universal Algebra
-Library <https://ualib.github.io/agda-algebras>`__ is based on a minimal
-version of `Martin-Löf dependent type
-theory <https://ncatlab.org/nlab/show/Martin-L%C3%B6f+dependent+type+theory>`__
+The `Agda Universal Algebra Library`_ is based on a minimal
+version of
+`Martin-Löf dependent type theory <https://ncatlab.org/nlab/show/Martin-L%C3%B6f+dependent+type+theory>`__
 (MLTT) as implemented in Agda. More details on this type theory can be
 read at `ncatlab entry on Martin-Löf dependent type
 theory <https://ncatlab.org/nlab/show/Martin-L%C3%B6f+dependent+type+theory>`__.
 
-.. _intended-audience:
+.. _overture-intended-audience:
 
 Intended audience
------------------
+~~~~~~~~~~~~~~~~~
 
 The comments and source code in the library should provide enough detail
 so that people familiar with functional programming and proof assistants
@@ -122,22 +131,21 @@ or `McKenzie, McNulty, Taylor
 or category theory, as presented in, say, `Riehl
 (2017) <http://www.math.jhu.edu/~eriehl/context/>`__.
 
-Some prior exposure to `type
-theory <https://en.wikipedia.org/wiki/Type_theory>`__ and Agda would be
-helpful, but even without this background one might still be able to get
-something useful out of this by referring to one or more of the
-resources mentioned in the references section below to fill in gaps as
-needed.
+Some prior exposure to
+`type theory <https://en.wikipedia.org/wiki/Type_theory>`__
+and Agda_ would be helpful, but even without this background one might still be
+able to get something useful out of this by referring to one or more of the
+resources mentioned in the references section below to fill in gaps as needed.
 
-.. _attributions:
+.. _overture-attributions:
 
 Attributions
-------------
+~~~~~~~~~~~~
 
-.. _the-agda-algebras-development-team:
+.. _overture-the-agda-algebras-development-team:
 
 The agda-algebras development team
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The `agda-algebras <https://github.com/ualib/agda-algebras>`__ library
 is developed and maintained by the *Agda Algebras Development Team* led
@@ -145,10 +153,10 @@ by `William DeMeo <https://williamdemeo.gitlab.io/>`__ with major
 contributions by senior advisor `Jacques
 Carette <http://www.cas.mcmaster.ca/~carette/>`__ (McMaster University).
 
-.. _acknowledgements:
+.. _overture-contributors:
 
-Acknowledgements
-~~~~~~~~~~~~~~~~
+Contributors
+^^^^^^^^^^^^
 
 We thank `Andreas Abel <http://www.cse.chalmers.se/~abela/>`__, `Andrej
 Bauer <http://www.andrej.com/index.html>`__, `Clifford
@@ -166,10 +174,10 @@ known. Regarding the source code in the
 `agda-algebras <https://github.com/ualib/agda-algebras>`__ library, this
 is mainly due to the contributors listed above.
 
-.. _references:
+.. _overture-references:
 
 References
-~~~~~~~~~~
+^^^^^^^^^^
 
 The following Agda documentation and tutorials helped inform and improve
 the `agda-algebras <https://github.com/ualib/agda-algebras>`__ library,
@@ -194,14 +202,18 @@ Reference <https://agda.readthedocs.io/en/v2.6.1.3/language>`__, and the
 Library <https://agda.github.io/agda-stdlib/>`__ source code are also
 quite useful.
 
-.. _citing-the-agda-algebras-library:
+.. _overture-citation:
+
+Citation
+~~~~~~~~
+
+.. _overture-citing-the-agda-algebras-library:
 
 Citing the agda-algebras library
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you find the
-`agda-algebras <https://github.com/ualib/agda-algebras>`__ library
-useful, please cite it using the following BibTeX entry:
+If you find the agda-algebras_ library useful, please cite it using the following
+BibTeX entry:
 
 .. code:: bibtex
 
@@ -219,17 +231,16 @@ useful, please cite it using the following BibTeX entry:
                      \href{https://github.com/ualib/agda-algebras}{github.com/ualib/agda-algebras}}
    }
 
-.. _citing-the-formalization-of-birkhoffs-theorem:
+.. _overture-citing-the-formalization-of-birkhoffs-theorem:
 
-Citing the formalization of Birkhoff’s Theorem 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Citing the formalization of Birkhoff's Theorem 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To cite the `formalization of Birkhoff’s HSP
 Theorem <https://ualib.org/Setoid.Varieties.HSP.html#proof-of-the-hsp-theorem>`__,
 please use the following BibTeX entry for our paper,
 `A Machine-checked proof of Birkhoff’s Variety Theorem in Martin-Löf
 Type Theory <https://arxiv.org/abs/2101.10166>`__
-
 
 .. code:: bibtex
 
@@ -249,16 +260,13 @@ Type Theory <https://arxiv.org/abs/2101.10166>`__
                      {https://github.com/ualib/agda-algebras/blob/master/src/Demos/HSP.lagda}}
    }
 
-.. _contributions-welcomed:
+.. _overture-contributions-welcomed:
 
 Contributions welcomed
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Readers and users are encouraged to suggest improvements to the Agda
-`agda-algebras <https://github.com/ualib/agda-algebras>`__ library
-and/or its documentation by submitting a `new
+agda-algebras_ library and/or its documentation by submitting a `new
 issue <https://github.com/ualib/agda-algebras/issues/new/choose>`__ or
 `merge request <https://github.com/ualib/agda-algebras/compare>`__ to
 `github.com/ualib/agda-algebras/ <https://github.com/ualib/agda-algebras>`__.
-
---------------

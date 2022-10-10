@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Varieties/FreeAlgebras.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 29 Jun 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-
-.. _free-setoid-algebras:
+.. _setoid-varieties-free-setoid-algebras:
 
 Free setoid algebras
 ~~~~~~~~~~~~~~~~~~~~
@@ -65,6 +64,7 @@ Alternatively, we could let ``X`` be the product of all algebras in the
 class ``𝒦``, like so.
 
 .. code:: agda
+
    𝕏 : Type oα
    𝕏 = Carrier ( Domain (⨅ (𝔄{𝒦 = S 𝒦})) )
 

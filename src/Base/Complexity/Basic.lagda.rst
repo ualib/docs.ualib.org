@@ -1,10 +1,12 @@
 .. FILE      : Base/Complexity/Basic.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 13 Jul 2021
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _complexity-theory:
+.. highlight:: agda
+.. role:: code
+
+.. _base-complexity-theory:
 
 Complexity Theory
 ~~~~~~~~~~~~~~~~~
@@ -15,7 +17,7 @@ Complexity Theory
 
   module Base.Complexity.Basic where
 
-.. _words:
+.. _base-complexity-words:
 
 Words
 ^^^^^
@@ -37,5 +39,5 @@ algorithm stops in at most (size 𝑥) 𝑐 + 𝑑 steps and computes 𝑓 𝑥.
 
 At first we will simplify by assuming 𝑇ₙ is ``Fin n``.
 
---------------
+
 

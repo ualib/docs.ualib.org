@@ -1,10 +1,12 @@
 .. FILE      : Base/Structures/Graphs.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 04 Jun 2022
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 22 Jun 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _graph-structures:
+.. highlight:: agda
+.. role:: code
+
+.. _base-structures-graph-structures:
 
 Graph Structures
 ~~~~~~~~~~~~~~~~
@@ -15,7 +17,7 @@ This is the `Base.Structures.Graphs`_ module of the `Agda Universal Algebra Libr
 N.B. This module differs from `Base.Structures.0Graphs0`_ in that this module is universe
 polymorphic; i.e., we do not restrict universe levels (to, e.g., ``ℓ₀``). This
 complicates some things; e.g., we must use lift and lower in some places (cf.
-[Base/Structures/Graphs0.lagda][]). 
+`Base.Structures.Graphs0`_). 
 
 **Definition** (Graph of a structure). Let ``𝑨`` be an ``(𝑅, 𝐹)``-structure
 (relations from ``𝑅`` and operations from ``𝐹``). The *graph* of ``𝑨`` is the
@@ -31,32 +33,29 @@ together with a (``k+1``)-ary relation symbol ``G 𝑓`` for each ``𝑓 ∈ �
   module Base.Structures.Graphs where
 
   -- imports from Agda and the Agda Standard Library -------------------------------------------
-  open import Agda.Primitive                         using     ( _⊔_ ; lsuc )
-                                                     renaming  ( Set to Type ; lzero  to ℓ₀ )
-  open import Data.Product                           using     ( _,_ ; Σ-syntax ; _×_ )
-  open import Data.Sum.Base                          using     ( _⊎_ )
-                                                     renaming  ( inj₁ to inl ; inj₂ to inr )
-  open import Data.Unit.Base                         using     ( ⊤ ; tt )
-  open import Level                                  using     ( Level ; Lift ; lift ; lower )
-  open import Function.Base                          using     ( _∘_  )
-  open import Relation.Binary.PropositionalEquality  using     ( _≡_ ; refl ; module ≡-Reasoning ; cong ; sym )
+  open import Agda.Primitive  using () renaming  ( Set to Type ; lzero  to ℓ₀ )
+  open import Data.Product    using ( _,_ ; Σ-syntax ; _×_ )
+  open import Data.Sum.Base   using ( _⊎_ ) renaming  ( inj₁ to inl ; inj₂ to inr )
+  open import Data.Unit.Base  using ( ⊤ ; tt )
+  open import Level           using (  _⊔_ ; Level ; Lift ; lift ; lower )
+  open import Function.Base   using ( _∘_  )
+  open import Relation.Binary.PropositionalEquality as ≡
+                              using ( _≡_ ; module ≡-Reasoning )
 
   -- Imports from the Agda Universal Algebra Library ---------------------------------------------
-  open import Base.Overture.Preliminaries     using ( ∣_∣ ; _≈_ ; ∥_∥ ; _∙_ ; lower∼lift ; lift∼lower )
-  open import Base.Relations.Continuous       using ( Rel )
-  open import Base.Structures.Basic           using ( signature ; structure )
-  open import Base.Structures.Homs            using ( hom ; 𝒾𝒹 ; ∘-hom ; 𝓁𝒾𝒻𝓉 ; 𝓁ℴ𝓌ℯ𝓇 ; is-hom-rel; is-hom-op)
+  open import Overture               using ( ∣_∣ ; ∥_∥ )
+  open import Base.Relations         using ( Rel )
+  open import Base.Structures.Basic  using ( signature ; structure )
+  open import Base.Structures.Homs   using ( hom ; ∘-hom ; is-hom-rel ; is-hom-op)
   open import Examples.Structures.Signatures  using ( S∅ )
 
-  open signature
-  open structure
-  open _⊎_
-
+  open signature ; open structure ; open _⊎_
 
   Gr-sig : signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀ → signature ℓ₀ ℓ₀
 
-  Gr-sig 𝐹 𝑅 = record { symbol = symbol 𝑅 ⊎ symbol 𝐹
-                      ; arity  = ar }
+  Gr-sig 𝐹 𝑅 = record  { symbol = symbol 𝑅 ⊎ symbol 𝐹
+                       ; arity  = ar
+                       }
    where
    ar : symbol 𝑅 ⊎ symbol 𝐹 → Type _
    ar (inl 𝑟) = (arity 𝑅) 𝑟
@@ -73,14 +72,11 @@ together with a (``k+1``)-ary relation symbol ``G 𝑓`` for each ``𝑓 ∈ �
     split (inl 𝑟) arg = Lift α (rel 𝑨 𝑟 arg)
     split (inr 𝑓) args = Lift ρ (op 𝑨 𝑓 (args ∘ inl) ≡ args (inr tt))
 
-
   open ≡-Reasoning
 
-  private variable
-   ρᵃ β ρᵇ : Level
+  private variable ρᵃ β ρᵇ : Level
 
-  module _ {𝑨 : structure 𝐹 𝑅 {α} {ρᵃ}}
-           {𝑩 : structure 𝐹 𝑅 {β} {ρᵇ}} where
+  module _ {𝑨 : structure 𝐹 𝑅 {α} {ρᵃ}} {𝑩 : structure 𝐹 𝑅 {β} {ρᵇ}} where
 
    hom→Grhom : hom 𝑨 𝑩 → hom (Gr 𝑨) (Gr 𝑩)
    hom→Grhom (h , hhom) = h , (i , ii)
@@ -93,9 +89,9 @@ together with a (``k+1``)-ary relation symbol ``G 𝑓`` for each ``𝑓 ∈ �
      homop = ∥ hhom ∥ 𝑓 (a ∘ inl)
 
      goal : op 𝑩 𝑓 (h ∘ (a ∘ inl)) ≡ h (a (inr tt))
-     goal = op 𝑩 𝑓 (h ∘ (a ∘ inl)) ≡⟨ sym homop ⟩
-            h (op 𝑨 𝑓 (a ∘ inl))   ≡⟨ cong h (lower x) ⟩
-            h (a (inr tt))         ∎
+     goal =  op 𝑩 𝑓 (h ∘ (a ∘ inl))  ≡⟨ ≡.sym homop ⟩
+             h (op 𝑨 𝑓 (a ∘ inl))    ≡⟨ ≡.cong h (lower x) ⟩
+             h (a (inr tt))          ∎
 
     ii : is-hom-op (Gr 𝑨) (Gr 𝑩) h
     ii = λ ()
@@ -106,14 +102,11 @@ together with a (``k+1``)-ary relation symbol ``G 𝑓`` for each ``𝑓 ∈ �
     i : is-hom-rel 𝑨 𝑩 h
     i R a x = lower (∣ hhom ∣ (inl R) a (lift x))
     ii : is-hom-op 𝑨 𝑩 h
-    ii f a = goal -- goal
+    ii f a = goal
      where
      split : arity 𝐹 f ⊎ ⊤ → carrier 𝑨
      split (inl x) = a x
      split (inr y) = op 𝑨 f a
      goal : h (op 𝑨 f a) ≡ op 𝑩 f (λ x → h (a x))
-     goal = sym (lower (∣ hhom ∣ (inr f) split (lift refl)))
-
-----------------------
-
+     goal = ≡.sym (lower (∣ hhom ∣ (inr f) split (lift ≡.refl)))
 

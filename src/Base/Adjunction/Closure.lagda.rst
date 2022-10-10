@@ -2,9 +2,11 @@
 .. AUTHOR    : William DeMeo
 .. DATE      : 30 Aug 2021
 .. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
 
-.. _closure-systems-and-operators:
+.. highlight:: agda
+.. role:: code
+
+.. _base-adjunction-closure-systems-and-operators:
 
 Closure Systems and Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +36,7 @@ This is the `Base.Adjunction.Closure`_ module of the `Agda Universal Algebra Lib
    a : Type α
 
 
-.. _closure-systems:
+.. _base-adjunction-closure-systems:
 
 Closure Systems
 ^^^^^^^^^^^^^^^
@@ -70,8 +72,6 @@ Some examples of closure systems are the following:
    ClosureSystem : Type _
    ClosureSystem = Σ[ C ∈ Pred (Pred X ℓ) ρ ] IntersectClosed C
 
-.. _closure-operators:
-
 Closure Operators
 ^^^^^^^^^^^^^^^^^
 
@@ -96,7 +96,7 @@ Thus, a closure operator is an extensive, idempotent poset endomorphism.
     isOrderPreserving  : C Preserves _≤_ ⟶ _≤_
     isIdempotent       : IdempotentFun C
 
-.. _basic-properties-of-closure-operators:
+.. _base-adjunction-basic-properties-of-closure-operators:
 
 Basic properties of closure operators
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

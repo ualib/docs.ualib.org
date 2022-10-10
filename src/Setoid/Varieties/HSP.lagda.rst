@@ -6,7 +6,7 @@
 .. highlight:: agda
 .. role:: code
 
-.. _the-hsp-theorem:
+.. _setoid-varieties-the-hsp-theorem:
 
 The HSP Theorem
 ~~~~~~~~~~~~~~~
@@ -189,6 +189,8 @@ is a subalgebra of the *lift* of ``ℭ``, denoted ``ℓℭ``.
     SSP𝔽 : 𝔽[ X ] ∈ S ι (S ι (P ℓ ι 𝒦))
     SSP𝔽 = ℭ , (SPℭ , 𝔽≤ℭ)
 
+
+.. _setoid-varieties-proof-of-the-hsp-theorem:
 
 Proof of the HSP theorem
 ^^^^^^^^^^^^^^^^^^^^^^^^

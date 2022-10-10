@@ -1,10 +1,12 @@
 .. FILE      : Base/Equality/index.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 26 Jul 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _equality:
+.. highlight:: agda
+.. role:: code
+
+.. _base-equality:
 
 Equality
 --------

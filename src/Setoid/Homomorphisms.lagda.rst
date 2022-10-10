@@ -2,7 +2,6 @@
 .. AUTHOR    : William DeMeo
 .. DATE      : 17 Sep 2021
 .. UPDATED   : 09 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
 
 .. highlight:: agda
 .. role:: code
@@ -17,27 +16,28 @@ This is the `Setoid.Homomorphisms`_ module of the `Agda Universal Algebra Librar
 .. toctree::
    :maxdepth: 2
 
-   Setoid/Homomorphisms/Basic
-   Setoid/Homomorphisms/Properties
-   Setoid/Homomorphisms/Kernels
-   Setoid/Homomorphisms/Products
-   Setoid/Homomorphisms/Noether
-   Setoid/Homomorphisms/Factor
-   Setoid/Homomorphisms/Isomorphisms
-   Setoid/Homomorphisms/HomomorphicImages
-
+   Homomorphisms/Basic
+   Homomorphisms/Properties
+   Homomorphisms/Kernels
+   Homomorphisms/Products
+   Homomorphisms/Noether
+   Homomorphisms/Factor
+   Homomorphisms/Isomorphisms
+   Homomorphisms/HomomorphicImages
 
 ::
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Setoid.Homomorphisms where
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
-  open import Setoid.Homomorphisms.Basic              public
-  open import Setoid.Homomorphisms.Properties         public
-  open import Setoid.Homomorphisms.Kernels            public
-  open import Setoid.Homomorphisms.Products           public
-  open import Setoid.Homomorphisms.Noether            public
-  open import Setoid.Homomorphisms.Factor             public
-  open import Setoid.Homomorphisms.Isomorphisms       public
-  open import Setoid.Homomorphisms.HomomorphicImages  public
+  module Setoid.Homomorphisms {𝑆 : Signature 𝓞 𝓥} where
+
+  open import Setoid.Homomorphisms.Basic              {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Properties         {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Kernels            {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Products           {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Noether            {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Factor             {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.Isomorphisms       {𝑆 = 𝑆} public
+  open import Setoid.Homomorphisms.HomomorphicImages  {𝑆 = 𝑆} public

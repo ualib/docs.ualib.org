@@ -1,13 +1,12 @@
 .. FILE      : Base/Algebras.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 12 Jan 2021
+.. UPDATED   : 18 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _algebras:
+.. _base-algebras:
 
 Algebras
 --------
@@ -20,11 +19,13 @@ and Agda_ to codify the most basic objects of universal algebra, such as *signat
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Algebras where
+  open import Overture  using ( 𝓞 ; 𝓥 ; Signature )
 
-  open import Base.Algebras.Basic        public
-  open import Base.Algebras.Products     public
-  open import Base.Algebras.Congruences  public
+  module Base.Algebras {𝑆 : Signature 𝓞 𝓥 } where
+
+  open import Base.Algebras.Basic        {𝑆 = 𝑆} public
+  open import Base.Algebras.Products     {𝑆 = 𝑆} public
+  open import Base.Algebras.Congruences  {𝑆 = 𝑆} public
 
 .. toctree::
    :maxdepth: 2

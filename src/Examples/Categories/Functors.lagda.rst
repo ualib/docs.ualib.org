@@ -1,7 +1,6 @@
 .. FILE      : Examples/Categories/Functors.lagda.rst
 .. DATE      : 31 Aug 2021
 .. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
 
 .. _examples-of-functors:
 
@@ -107,7 +106,4 @@ Some examples of lists using the option type.
   l₃[0]≢some2 : l₃ ⟦ 0 ⟧ ≢ some 2
   l₃[0]≢some2 = λ ()
 
---------------
-
-.. include:: hyperlink_references.rst
 

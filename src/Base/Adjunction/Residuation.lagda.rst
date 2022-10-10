@@ -1,10 +1,12 @@
 .. FILE      : Base/Adjunction/Residuation.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 30 Aug 2021
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _residuation:
+.. highlight:: agda
+.. role:: code
+
+.. _base-adjunction-residuation:
 
 Residuation
 ~~~~~~~~~~~
@@ -43,7 +45,7 @@ This is the `Base.Adjunction.Residuation`_ module of the `Agda Universal Algebra
      fg≤id  : ∀ b → f (g b) ≤B b
 
 
-.. _basic-properties-of-residual-pairs:
+.. _base-adjunction-basic-properties-of-residual-pairs:
 
 Basic properties of residual pairs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

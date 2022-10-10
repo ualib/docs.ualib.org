@@ -1,10 +1,12 @@
 .. FILE      : Base/Homomorphisms.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 12 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _homomorphism:
+.. highlight:: agda
+.. role:: code
+
+.. _base-homomorphisms:
 
 Homomorphisms
 -------------
@@ -27,14 +29,15 @@ This is the `Base.Homomorphisms`_ module of the `Agda Universal Algebra Library`
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Homomorphisms where
+  open import Overture using (Signature ; 𝓞 ; 𝓥 )
 
-  open import Base.Homomorphisms.Basic              public
-  open import Base.Homomorphisms.Properties         public
-  open import Base.Homomorphisms.Kernels            public
-  open import Base.Homomorphisms.Products           public
-  open import Base.Homomorphisms.Noether            public
-  open import Base.Homomorphisms.Factor             public
-  open import Base.Homomorphisms.Isomorphisms       public
-  open import Base.Homomorphisms.HomomorphicImages  public
+  module Base.Homomorphisms {𝑆 : Signature 𝓞 𝓥} where
 
+  open import Base.Homomorphisms.Basic              {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Properties         {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Kernels            {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Products           {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Noether            {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Factor             {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.Isomorphisms       {𝑆 = 𝑆} public
+  open import Base.Homomorphisms.HomomorphicImages  {𝑆 = 𝑆} public

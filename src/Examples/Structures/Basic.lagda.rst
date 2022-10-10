@@ -1,12 +1,14 @@
 .. FILE      : Examples/Structures/Basic.lagda.rst
-.. DATE      : 04 Jun 2022
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. DATE      : 29 Jul 2021
+.. UPDATED   : 18 Jun 2022
 
 .. _examples-of-structures:
 
 Examples of Structures
 ~~~~~~~~~~~~~~~~~~~~~~
+
+This is the `Examples.Structures.Basic`_ module of the agda-algebras_ library.
+
 
 ::
 
@@ -18,15 +20,15 @@ Examples of Structures
   open import Data.Product                    using ( _,_ ; _×_  )
   open import Relation.Unary                  using ( Pred ; _∈_ )
 
-  open import Base.Overture.Preliminaries     using ( 𝟚 ; 𝟛 )
-  open import Base.Structures.Basic           using ( signature ; structure )
+  open import Overture                        using ( 𝟚 ; 𝟛 )
+  open import Base.Structures                 using ( signature ; structure )
   open import Examples.Structures.Signatures  using ( S001 ; S∅ ; S0001 )
 
   -- An example of a (purely) algebraic structure is a 3-element meet semilattice.
 
-  SL : structure S001   -- (one binary operation symbol)
-                 S∅     -- (no relation symbols)
-                 {ρ = ℓ₀}
+  SL : structure  S001   -- (one binary operation symbol)
+                  S∅     -- (no relation symbols)
+                  {ρ = ℓ₀}
 
   SL = record { carrier = 𝟛
               ; op = λ _ x → meet (x 𝟚.𝟎) (x 𝟚.𝟏)
@@ -63,7 +65,3 @@ the ternary NAE-3-SAT relation, R = S³ - {(0,0,0), (1,1,1)} (where S = {0, 1}).
                    ; op = λ ()
                    ; rel = λ _ x → ((x 𝟛.𝟎) , (x 𝟛.𝟏) , (x 𝟛.𝟐)) ∈ NAE3SAT
                    }
-
---------------
-
-.. include:: hyperlink_references.rst

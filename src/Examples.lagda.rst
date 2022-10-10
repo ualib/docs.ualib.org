@@ -1,9 +1,10 @@
 .. FILE      : Examples.lagda.rst
-.. DATE      : 04 Jun 2022
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. DATE      : 18 Jun 2022
 
-   .. _examples:
+.. highlight:: agda
+.. role:: code
+
+.. _examples-examples:
 
 Examples
 ========
@@ -19,6 +20,8 @@ This is the Examples_ module of the `Agda Universal Algebra Library`_.
   open import Examples.Categories
   open import Examples.Structures
 
---------------
+.. toctree::
+   :maxdepth: 2
 
-.. include:: hyperlink_references.rst
+   Examples/Categories
+   Examples/Structures

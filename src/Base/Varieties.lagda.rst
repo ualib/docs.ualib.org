@@ -1,10 +1,12 @@
 .. FILE      : Base/Varieties.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 14 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _varieties:
+.. highlight:: agda
+.. role:: code
+
+.. _base-varieties:
 
 Varieties
 ---------
@@ -17,13 +19,20 @@ and we prove properties of these types.
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Varieties where
+  open import Overture using ( Signature ; 𝓞 ; 𝓥 )
 
-  open import Base.Varieties.EquationalLogic  public
-  open import Base.Varieties.Closure          public
-  open import Base.Varieties.Properties       public
-  open import Base.Varieties.Preservation     public
-  open import Base.Varieties.FreeAlgebras     public
+  module Base.Varieties {𝑆 : Signature 𝓞 𝓥} where
+
+  open import Base.Varieties.EquationalLogic  {𝑆 = 𝑆} public
+  open import Base.Varieties.Closure          {𝑆 = 𝑆} public
+  open import Base.Varieties.Properties       {𝑆 = 𝑆} public
+  open import Base.Varieties.Preservation     {𝑆 = 𝑆} public
+
+  open import Level using ( Level )
+
+  module _ {α : Level} where
+
+   open import Base.Varieties.FreeAlgebras  {α = α} {𝑆 = 𝑆} public
 
 .. toctree::
    :maxdepth: 2

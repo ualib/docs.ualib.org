@@ -1,10 +1,12 @@
 .. FILE      : Base/Relations/Discrete.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 02 Jun 2022
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _discrete-relations:
+.. highlight:: agda
+.. role:: code
+
+.. _base-relations-discrete-relations:
 
 Discrete Relations
 ~~~~~~~~~~~~~~~~~~
@@ -29,13 +31,13 @@ This is the `Base.Relations.Discrete`_ module of the agda-algebras_ library.
   open import Relation.Binary.PropositionalEquality using ( _≡_ )
 
   -- Imports from agda-algebras -------------------------------------------------------------------
-  open import Base.Overture.Preliminaries using (_≈_ ; Π-syntax)
+  open import Overture using (_≈_ ; Π-syntax)
 
   private variable α β ρ 𝓥 : Level
 
 Here is a function that is useful for defining poitwise equality of
 functions wrt a given equality (see, e.g., the definition of ``_≈̇_`` in
-the `Residuation.Properties`_ module).
+the `Base.Adjunction.Residuation`_ module).
 
 ::
 
@@ -58,7 +60,7 @@ is contained in a predicate, the second argument (a "subset" of the codomain).
   Im f ⊆ S = ∀ x → f x ∈ S
 
 
-.. _operation-symbols-unary-relations-binary-relations
+.. _base-relations-operation-symbols-unary-relations-binary-relations:
 
 Operation symbols, unary relations, binary relations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -105,8 +107,7 @@ library and renamed BinRel.
   Level-of-Rel {A = A}{ℓ} _ = ℓ
 
 
-
-.. _kernels:
+.. _base-relations-kernels:
 
 Kernels
 ^^^^^^^
@@ -163,7 +164,7 @@ inhabitant of a (binary) relation type, or a (unary) predicate type.
 
 
 
-.. _operation-type-and-compatibility:
+.. _base-relations-operation-type-and-compatibility:
 
 Operation type and compatibility
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -234,7 +235,5 @@ If ``f : Op I`` and ``R : Rel A β``, then we say ``f`` and ``R`` are
    compatibility-agreement c {x}{y} Rxy = c x y Rxy
    compatibility-agreement' : f |: R → f preserves R
    compatibility-agreement' c = λ u v x → c x
-
---------------
 
 

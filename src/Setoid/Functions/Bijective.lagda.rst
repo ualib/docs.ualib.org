@@ -1,15 +1,15 @@
 .. FILE      : Setoid/Functions/Bijective.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 08 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. DATE      : 13 Sep 2021
+.. UPDATE    : 18 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _bijective-functions-on-setoids:
+.. _setoid-functions-bijective-setoid-functions:
 
-Bijective functions on setoids
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Bijective setoid functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is the `Setoid.Functions.Bijective`_ module of the agda-algebras_ library.
 
@@ -33,8 +33,8 @@ A setoid function from ``𝑨`` to ``𝑩`` is called **bijective** provided it 
 
   -- Imports from agda-algebras -----------------------------------------------
   open import Setoid.Functions.Inverses    using ( Image_∋_ ; Inv )
-  open import Setoid.Functions.Injective   using ( IsInjective )
   open import Setoid.Functions.Surjective  using ( IsSurjective )
+  open import Setoid.Functions.Injective   using ( IsInjective )
 
   open Image_∋_
 

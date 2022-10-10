@@ -1,33 +1,42 @@
+.. FILE      : Setoid/Homomorphisms/Products.lagda.rst
+.. AUTHOR    : William DeMeo
+.. DATE      : 21 Sep 2021
+.. UPDATED   : 18 Jun 2022
+
+.. highlight:: agda
+.. role:: code
+
+.. _products-of-homomorphisms-of-algebras:
+
 Products of Homomorphisms of Algebras
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the [Setoid.Homomorphisms.Products] module of the [Agda
-Universal Algebra Library][].
+This is the `Setoid.Homomorphisms.Products`_ module of the `Agda Universal Algebra Library`_.
 
-\\begin{code}
+::
 
-{-# OPTIONS –without-K –exact-split –safe #-}
+  {-# OPTIONS --without-K --exact-split --safe #-}
 
-open import Base.Algebras.Basic using ( 𝓞 ; 𝓥 ; Signature )
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
-module Setoid.Homomorphisms.Products {𝑆 : Signature 𝓞 𝓥} where
+  module Setoid.Homomorphisms.Products {𝑆 : Signature 𝓞 𝓥} where
 
-– Imports from Agda and the Agda Standard Library ————————– open import
-Agda.Primitive using ( *⊔* ; lsuc ) renaming ( Set to Type ) open import
-Function.Bundles using () renaming ( Func to *⟶* ) open import
-Data.Product using ( *,* ) open import Level using ( Level ) open import
-Relation.Binary using ( Setoid ) open import
-Relation.Binary.PropositionalEquality as ≡ using ( *≡* )
+  -- Imports from Agda and the Agda Standard Library --------------------------
+  open import Agda.Primitive   using () renaming ( Set to Type )
+  open import Function         using () renaming ( Func to _⟶_ )
+  open import Data.Product     using ( _,_ )
+  open import Level            using ( Level )
+  open import Relation.Binary  using ( Setoid )
+  open import Relation.Binary.PropositionalEquality as ≡ using ( _≡_ )
 
-– Imports from the Agda Universal Algebras Library ———————- open import
-Base.Overture.Preliminaries using ( ∣\ *∣ ; ∥*\ ∥) open import
-Setoid.Algebras.Basic {𝑆 = 𝑆} using ( Algebra ) open import
-Setoid.Algebras.Products {𝑆 = 𝑆} using ( ⨅ ) open import
-Setoid.Homomorphisms.Basic {𝑆 = 𝑆} using ( hom ; IsHom ; epi )
+  -- Imports from the Agda Universal Algebras Library ----------------------
+  open import Overture         using ( ∣_∣ ; ∥_∥)
+  open import Setoid.Algebras {𝑆 = 𝑆}
+                               using ( Algebra ; _̂_ ; ⨅ )
+  open import Setoid.Homomorphisms.Basic {𝑆 = 𝑆}
+                               using ( hom ; IsHom ; epi )
 
-private variable α ρᵃ β ρᵇ 𝓘 : Level
-
-\\end{code}
+  private variable α ρᵃ β ρᵇ 𝓘 : Level
 
 Suppose we have an algebra ``𝑨``, a type ``I : Type 𝓘``, and a family
 ``ℬ : I → Algebra β 𝑆`` of algebras. We sometimes refer to the
@@ -38,20 +47,23 @@ If in addition we have a family ``𝒽 : (i : I) → hom 𝑨 (ℬ i)`` of
 homomorphisms, then we can construct a homomorphism from ``𝑨`` to the
 product ``⨅ ℬ`` in the natural way.
 
-\\begin{code}
+::
 
-module \_ {I : Type 𝓘}{𝑨 : Algebra α ρᵃ}(ℬ : I → Algebra β ρᵇ) where
-open Algebra 𝑨 using () renaming ( Domain to A ) open Setoid A using ()
-renaming ( refl to refl₁ ) open Algebra (⨅ ℬ) using () renaming ( Domain
-to ⨅B ) open *⟶* using ( cong ) renaming ( f to *⟨$⟩* ) open Algebra
-using ( Domain ) open Setoid using ( refl ) open IsHom
+  module _ {I : Type 𝓘}{𝑨 : Algebra α ρᵃ}(ℬ : I → Algebra β ρᵇ)  where
+   open Algebra 𝑨      using ()        renaming ( Domain to A )
+   open Algebra (⨅ ℬ)  using ()        renaming ( Domain to ⨅B )
+   open _⟶_            using ( cong )  renaming ( f to _⟨$⟩_ )
+   open IsHom
 
-⨅-hom-co : (∀(i : I) → hom 𝑨 (ℬ i)) → hom 𝑨 (⨅ ℬ) ⨅-hom-co 𝒽 = h , hhom
-where h : A ⟶ ⨅B \_⟨\ :math:`⟩_ h = λ a i → ∣ 𝒽 i ∣ ⟨`\ ⟩ a cong h xy i
-= cong ∣ 𝒽 i ∣ xy hhom : IsHom 𝑨 (⨅ ℬ) h compatible hhom = λ i →
-compatible ∥ 𝒽 i ∥
+   ⨅-hom-co : (∀(i : I) → hom 𝑨 (ℬ i)) → hom 𝑨 (⨅ ℬ)
+   ⨅-hom-co 𝒽 = h , hhom
+    where
+    h : A ⟶ ⨅B
+    (h ⟨$⟩ a) i = ∣ 𝒽 i ∣ ⟨$⟩ a
+    cong h xy i = cong ∣ 𝒽 i ∣ xy
 
-\\end{code}
+    hhom : IsHom 𝑨 (⨅ ℬ) h
+    compatible hhom = λ i → compatible ∥ 𝒽 i ∥
 
 The family ``𝒽`` of homomorphisms inhabits the dependent type
 ``Π i ꞉ I , hom 𝑨 (ℬ i)``. The syntax we use to represent this type is
@@ -71,14 +83,21 @@ a product of a family of algebras. That is, if we are given
 homomorphisms), then we can construct a homomorphism from ``⨅ 𝒜`` to
 ``⨅ ℬ`` in the following natural way.
 
-.. raw:: latex
+::
 
-   \begin{code}
+   ⨅-hom : (𝒜 : I → Algebra α ρᵃ) → (∀ (i : I) → hom (𝒜 i) (ℬ i)) → hom (⨅ 𝒜)(⨅ ℬ)
+   ⨅-hom 𝒜 𝒽 = F , isHom
+    where
+    open Algebra (⨅ 𝒜) using () renaming ( Domain to ⨅A )
 
-    -- ⨅-hom : (𝒜 : I → Algebra α ρᵃ) → (∀ (i : I) → hom (𝒜 i) (ℬ i)) → hom (⨅ 𝒜)(⨅ ℬ)
-    -- ⨅-hom 𝒜 𝒽 = {!!} -- (λ x i → ∣ 𝒽 i ∣ (x i)) , (λ 𝑓 𝒶 → λ i → ∥ 𝒽 i ∥ 𝑓 (λ x → 𝒶 x i))
+    F : ⨅A ⟶ ⨅B
+    (F ⟨$⟩ x) i = ∣ 𝒽 i ∣ ⟨$⟩ x i
+    cong F xy i = cong ∣ 𝒽 i ∣ (xy i)
 
-   \end{code}
+    isHom : IsHom (⨅ 𝒜) (⨅ ℬ) F
+    compatible isHom i = compatible ∥ 𝒽 i ∥
+
+.. _projection-out-of-products:
 
 Projection out of products
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -86,19 +105,21 @@ Projection out of products
 Later we will need a proof of the fact that projecting out of a product
 algebra onto one of its factors is a homomorphism.
 
-\\begin{code}
+::
 
-– ⨅-projection-hom : (i : I) → hom (⨅ ℬ) (ℬ i) – ⨅-projection-hom = {!!}
-– λ x → (λ z → z x) , λ \_ \_ → ≡.refl
+   ⨅-projection-hom : (i : I) → hom (⨅ ℬ) (ℬ i)
+   ⨅-projection-hom i = F , isHom
+    where
+    open Algebra (ℬ i)  using () renaming ( Domain to Bi )
+    open Setoid Bi      using () renaming ( refl to reflᵢ )
 
-\\end{code}
+    F : ⨅B ⟶ Bi
+    F ⟨$⟩ x = x i
+    cong F xy = xy i
+
+    isHom : IsHom (⨅ ℬ) (ℬ i) F
+    compatible isHom {f} {a} = reflᵢ
 
 We could prove a more general result involving projections onto multiple
 factors, but so far the single-factor result has sufficed.
 
---------------
-
-`← Setoid.Homomorphisms.Kernels <Setoid.Homomorphisms.Kernels.html>`__
-`Setoid.Homomorphisms.Noether → <Setoid.Homomorphisms.Noether.html>`__
-
-{% include UALib.Links.md %}

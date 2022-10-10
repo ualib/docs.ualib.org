@@ -1,12 +1,12 @@
 .. FILE      : Setoid/Terms/Operations.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 25 Sep 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _term-operations-for-setoid-algebras:
+.. _setoid-terms-term-operations-for-setoid-algebras:
 
 Term Operations for Setoid Algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +85,7 @@ extensionality).
    term-agreement (ℊ x) = refl
    term-agreement (node f t) = cong Interp (≡.refl , (λ i → term-agreement (t i)))
 
-.. _interpretation-in-product-algebras:
+.. _setoid-terms-interpretation-in-product-algebras:
 
 Interpretation in product algebras
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -105,7 +105,7 @@ Interpretation in product algebras
    interp-prod (node f t) = λ ρ i → cong Interp (≡.refl , (λ j k → interp-prod (t j) ρ k)) i
 
 
-.. _compatibility-of-terms:
+.. _setoid-terms-compatibility-of-terms:
 
 Compatibility of terms
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -143,7 +143,7 @@ is used very often in the sequel, asserts that every term commutes with every ho
      (⟦ node f t ⟧₂ ⟨$⟩ (h ∘ a))         ∎
 
 
-.. _substitution:
+.. _setoid-terms-substitution:
 
 Substitution
 ^^^^^^^^^^^^

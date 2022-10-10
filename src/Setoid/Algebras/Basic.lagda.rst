@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Algebras/Basic.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 23 Mar 2021
-.. UPDATED   : 09 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. DATE      : 23 Apr 2021
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _basic-definitions:
+.. _setoid-algebras-basic-definitions:
 
 Basic definitions
 ~~~~~~~~~~~~~~~~~
@@ -18,32 +17,26 @@ This is the `Setoid.Algebras.Basic`_ module of the `Agda Universal Algebra Libra
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature )
+  open import Overture using (𝓞 ; 𝓥 ; Signature )
 
   module Setoid.Algebras.Basic {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from the Agda and the Agda Standard Library --------------------
-  open import Agda.Primitive    using ( _⊔_ ; lsuc ) renaming ( Set to Type )
-  open import Data.Product      using ( _,_ ; _×_ ; Σ-syntax )
-  open import Function          using ( _∘_ )
-  open import Function.Bundles  using ( Func )
-  open import Level             using ( Level )
-  open import Relation.Binary   using ( Setoid ; IsEquivalence )
-  open import Relation.Binary.PropositionalEquality as ≡
-                                using ( _≡_ ; refl )
+  open import Agda.Primitive   using ( _⊔_ ; lsuc ) renaming ( Set to Type )
+  open import Data.Product     using ( _,_ ; _×_ ; Σ-syntax )
+  open import Function         using ( _∘_ ; Func )
+  open import Level            using ( Level )
+  open import Relation.Binary  using ( Setoid ; IsEquivalence )
+
+  open import Relation.Binary.PropositionalEquality as ≡ using ( _≡_ ; refl )
 
   -- Imports from the Agda Universal Algebra Library ----------------------
-  open import Base.Overture     using ( ∥_∥ ; ∣_∣ )
+  open import Overture    using ( ∥_∥ ; ∣_∣ )
 
   private variable α ρ ι : Level
 
   ov : Level → Level
   ov α = 𝓞 ⊔ 𝓥 ⊔ lsuc α
-
-.. _setoid-algebras:
-
-Setoid Algebras
-^^^^^^^^^^^^^^^
 
 Here we define algebras over a setoid, instead of a mere type with no equivalence on it.
 
@@ -59,14 +52,16 @@ signature over a setoid domain.
   open Setoid using (_≈_ ; Carrier ) renaming  ( refl   to reflS
                                                ; sym    to symS
                                                ; trans  to transS
-                                               ; isEquivalence  to isEqv )
+                                               ; isEquivalence to isEqv )
 
   open Func renaming ( f to _⟨$⟩_ ; cong to ≈cong )
+
 
   EqArgs :  {𝑆 : Signature 𝓞 𝓥}{ξ : Setoid α ρ}
    →        ∀{f g} → f ≡ g → (∥ 𝑆 ∥ f → Carrier ξ) → (∥ 𝑆 ∥ g → Carrier ξ) → Type _
 
   EqArgs {ξ = ξ} refl u v = ∀ i → (_≈_ ξ) (u i) (v i)
+
 
 
   ⟨_⟩ : Signature 𝓞 𝓥 → Setoid α ρ → Setoid _ _
@@ -107,10 +102,11 @@ for improving readability of our code.
 
   -- forgetful functor: returns the carrier of (the domain of) 𝑨, forgetting its structure
   𝕌[_] : Algebra α ρ →  Type α
-  𝕌[ 𝑨 ] = Carrier (Domain 𝑨)
+  𝕌[ 𝑨 ] = Carrier 𝔻[ 𝑨 ]
 
   -- interpretation of an operation symbol in an algebra
   _̂_ : (f : ∣ 𝑆 ∣)(𝑨 : Algebra α ρ) → (∥ 𝑆 ∥ f  →  𝕌[ 𝑨 ]) → 𝕌[ 𝑨 ]
+
   f ̂ 𝑨 = λ a → (Interp 𝑨) ⟨$⟩ (f , a)
 
 Sometimes we want to extract the universe level of a given algebra or its carrier.  The
@@ -126,8 +122,7 @@ following functions provide that information.
   Level-of-Carrier : {α ρ 𝓞 𝓥  : Level}{𝑆 : Signature 𝓞 𝓥} → Algebra α ρ → Level
   Level-of-Carrier {α = α} _ = α
 
-
-.. _level-lifting-of-setoid-algebras:
+.. _setoid-algebras-level-lifting-of-setoid-algebras:
 
 Level lifting of setoid algebras
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -155,9 +150,7 @@ Level lifting of setoid algebras
    Interp (Lift-Algˡ ℓ) ⟨$⟩ (f , la) = lift ((f ̂ 𝑨) (lower ∘ la))
    ≈cong (Interp (Lift-Algˡ ℓ)) (refl , la=lb) = ≈cong (Interp 𝑨) ((refl , la=lb))
 
-
    Lift-Algʳ : (ℓ : Level) → Algebra α (ρ ⊔ ℓ)
-
    Domain (Lift-Algʳ ℓ) =
     record  { Carrier = ∣A∣
             ; _≈_ = λ x y → Lift ℓ (x ≈₁ y)
@@ -172,3 +165,4 @@ Level lifting of setoid algebras
 
   Lift-Alg : (𝑨 : Algebra α ρ)(ℓ₀ ℓ₁ : Level) → Algebra (α ⊔ ℓ₀) (ρ ⊔ ℓ₁)
   Lift-Alg 𝑨 ℓ₀ ℓ₁ = Lift-Algʳ (Lift-Algˡ 𝑨 ℓ₀) ℓ₁
+ 

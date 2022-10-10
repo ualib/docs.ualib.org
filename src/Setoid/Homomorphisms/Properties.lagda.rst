@@ -1,12 +1,10 @@
 .. FILE      : Setoid/Homomorphisms/Properties.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 13 Sep 2021
-.. UPDATED   : 13 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 18 Jun 2022
 
 .. highlight:: agda
 .. role:: code
-
 
 .. _properties-of-homomorphisms:
 
@@ -19,25 +17,27 @@ This is the `Setoid.Homomorphisms.Properties`_ module of the `Agda Universal Alg
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature )
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
   module Setoid.Homomorphisms.Properties {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library ------------------------------------------
-  open import Agda.Primitive    using () renaming ( lzero to ℓ₀ )
-  open import Data.Product      using ( _,_ ) renaming ( proj₁ to fst ; proj₂ to snd )
-  open import Function          using ( id )
-  open import Function.Bundles  using () renaming ( Func to _⟶_ )
-  open import Level             using ( Level )
-  open import Relation.Binary   using (  Setoid )
+  open import Data.Product     using ( _,_ ) renaming ( proj₁ to fst ; proj₂ to snd )
+  open import Function         using ( id ) renaming ( Func to _⟶_ )
+  open import Level            using ( Level )
+  open import Relation.Binary  using ( Setoid )
 
   open import Relation.Binary.PropositionalEquality as ≡ using ( _≡_ )
 
   -- Imports from the Agda Universal Algebra Library ------------------------------------------
-  open import Base.Overture.Preliminaries    using ( ∣_∣ ; ∥_∥ )
-  open import Setoid.Algebras.Basic {𝑆 = 𝑆}  using ( Algebra ; _̂_ ; Lift-Algˡ ; Lift-Algʳ ; Lift-Alg ; 𝕌[_] )
-  open import Setoid.Functions               using ( _∘_ ; 𝑖𝑑 ; Image_∋_ ; eq ; ∘-IsSurjective )
-  open import Setoid.Homomorphisms.Basic {𝑆 = 𝑆} using ( hom ; IsHom ; epi ; IsEpi ; compatible-map )
+  open import Overture          using ( ∣_∣ ; ∥_∥ )
+  open import Setoid.Functions  using ( _∘_ ; 𝑖𝑑 ; Image_∋_ ; eq ; ∘-IsSurjective )
+
+  open  import Setoid.Algebras {𝑆 = 𝑆}
+        using ( Algebra ; _̂_; Lift-Algˡ; Lift-Algʳ; Lift-Alg; 𝕌[_])
+  open  import Setoid.Homomorphisms.Basic {𝑆 = 𝑆}
+        using ( hom ; IsHom ; epi ; IsEpi ; compatible-map )
+
   open _⟶_ using ( cong ) renaming (f to _⟨$⟩_ )
 
   private variable α β γ ρᵃ ρᵇ ρᶜ ℓ : Level
@@ -50,7 +50,6 @@ Composition of homs
 ::
 
   module _  {𝑨 : Algebra α ρᵃ} {𝑩 : Algebra β ρᵇ} {𝑪 : Algebra γ ρᶜ} where
-
     open Algebra 𝑨  renaming (Domain to A )   using ()
     open Algebra 𝑩  renaming (Domain to B )   using ()
     open Algebra 𝑪  renaming (Domain to C )   using ()
@@ -92,7 +91,6 @@ Composition of homs
     ∘-epi : epi 𝑨 𝑩 → epi 𝑩 𝑪  → epi 𝑨 𝑪
     ∘-epi (h , hepi) (g , gepi) = (g ∘ h) , ∘-is-epi hepi gepi
 
-
 .. _lifting-and-lowering-of-homs:
 
 Lifting and lowering of homs
@@ -112,16 +110,17 @@ are homomorphisms.
    𝒾𝒹 = 𝑖𝑑 , record { compatible = reflexive ≡.refl }
 
   module _ {𝑨 : Algebra α ρᵃ}{ℓ : Level} where
-   open Algebra 𝑨 using () renaming (Domain to A )
-   open Setoid A using ( reflexive ) renaming ( _≈_ to _≈₁_ ; refl to refl₁ )
+   open Algebra 𝑨  using ()             renaming (Domain to A )
+   open Setoid A   using ( reflexive )  renaming ( _≈_ to _≈₁_ ; refl to refl₁ )
 
    open Algebra  using ( Domain )
-   open Setoid (Domain (Lift-Algˡ 𝑨 ℓ)) using () renaming ( _≈_ to _≈ˡ_ ; refl to reflˡ)
-   open Setoid (Domain (Lift-Algʳ 𝑨 ℓ)) using () renaming ( _≈_ to _≈ʳ_ ; refl to reflʳ)
+   open Setoid (Domain (Lift-Algˡ 𝑨 ℓ))  using () renaming ( _≈_ to _≈ˡ_ ; refl to reflˡ)
+   open Setoid (Domain (Lift-Algʳ 𝑨 ℓ))  using () renaming ( _≈_ to _≈ʳ_ ; refl to reflʳ)
 
    open Level
    ToLiftˡ : hom 𝑨 (Lift-Algˡ 𝑨 ℓ)
-   ToLiftˡ = record { f = lift ; cong = id } , record { compatible = reflexive ≡.refl }
+   ToLiftˡ =  record { f = lift ; cong = id } ,
+              record { compatible = reflexive ≡.refl }
 
    FromLiftˡ : hom (Lift-Algˡ 𝑨 ℓ) 𝑨
    FromLiftˡ = record { f = lower ; cong = id } , record { compatible = reflˡ }
@@ -133,10 +132,11 @@ are homomorphisms.
    FromToLiftˡ a = refl₁
 
    ToLiftʳ : hom 𝑨 (Lift-Algʳ 𝑨 ℓ)
-   ToLiftʳ = record { f = id ; cong = lift } , record { compatible = lift (reflexive ≡.refl) }
+   ToLiftʳ =  record { f = id ; cong = lift } ,
+              record { compatible = lift (reflexive ≡.refl) }
 
    FromLiftʳ : hom (Lift-Algʳ 𝑨 ℓ) 𝑨
-   FromLiftʳ = record { f = id ; cong = lower } , record { compatible = reflˡ }
+   FromLiftʳ =  record { f = id ; cong = lower } , record { compatible = reflˡ }
 
    ToFromLiftʳ : ∀ b → (∣ ToLiftʳ ∣ ⟨$⟩ (∣ FromLiftʳ ∣ ⟨$⟩ b)) ≈ʳ b
    ToFromLiftʳ b = lift refl₁
@@ -161,8 +161,10 @@ are homomorphisms.
 
 
    ToLift-epi : epi 𝑨 (Lift-Alg 𝑨 ℓ r)
-   ToLift-epi = ∣ ToLift ∣ , record  { isHom = ∥ ToLift ∥
-                                     ; isSurjective = λ {y} → eq (∣ FromLift ∣ ⟨$⟩ y) (ToFromLift y) }
+   ToLift-epi = ∣ ToLift ∣ ,
+                record  { isHom = ∥ ToLift ∥
+                        ; isSurjective = λ {y} → eq (∣ FromLift ∣ ⟨$⟩ y) (ToFromLift y)
+                        }
 
 Next we formalize the fact that a homomorphism from ``𝑨`` to ``𝑩`` can
 be lifted to a homomorphism from ``Lift-Alg 𝑨 ℓᵃ`` to ``Lift-Alg 𝑩 ℓᵇ``.
@@ -222,7 +224,10 @@ be lifted to a homomorphism from ``Lift-Alg 𝑨 ℓᵃ`` to ``Lift-Alg 𝑩 ℓ
    lift-hom-lemma h a ℓᵃ ℓᵇ = Setoid.refl (Domain 𝑩)
 
   module _ {𝑨 : Algebra α ρᵃ} {𝑩 : Algebra β ρᵇ} where
-   Lift-hom : hom 𝑨 𝑩  → (ℓᵃ rᵃ ℓᵇ rᵇ : Level) →  hom (Lift-Alg 𝑨 ℓᵃ rᵃ) (Lift-Alg 𝑩 ℓᵇ rᵇ)
+
+   Lift-hom :  hom 𝑨 𝑩  → (ℓᵃ rᵃ ℓᵇ rᵇ : Level)
+    →          hom (Lift-Alg 𝑨 ℓᵃ rᵃ) (Lift-Alg 𝑩 ℓᵇ rᵇ)
+
    Lift-hom φ ℓᵃ rᵃ ℓᵇ rᵇ = Lift-homʳ (Lift-homˡ φ ℓᵃ ℓᵇ) rᵃ rᵇ
 
    Lift-hom-fst : hom 𝑨 𝑩  → (ℓ r : Level) →  hom (Lift-Alg 𝑨 ℓ r) 𝑩
@@ -230,4 +235,3 @@ be lifted to a homomorphism from ``Lift-Alg 𝑨 ℓᵃ`` to ``Lift-Alg 𝑩 ℓ
 
    Lift-hom-snd : hom 𝑨 𝑩  → (ℓ r : Level) →  hom 𝑨 (Lift-Alg 𝑩 ℓ r)
    Lift-hom-snd φ _ _ = ∘-hom φ ToLift 
-

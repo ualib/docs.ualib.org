@@ -98,9 +98,9 @@ polymorphism algebra, 𝑨(R) := (A , ∣: ⃖ R).
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using ( 𝓞 ; 𝓥 ; Signature )
+  open import Overture using ( 𝓞 ; 𝓥 ; Signature )
 
-  module Base.Complexity.CSP {𝑆 : Signature 𝓞 𝓥} where
+  module Setoid.Complexity.CSP {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library ------------------------------
   open import Agda.Primitive   using ( _⊔_ ; lsuc ; Level) renaming ( Set to Type )
@@ -194,6 +194,3 @@ An instance of a constraint satisfaction problem is a triple 𝑃 = (𝑉, 𝐷,
     isSolution : (∀ v → Carrier (Domain (𝒜 v))) → Type _  -- An assignment *solves* the instance
     isSolution f = ∀ i → (Constraint.satisfies (cs i)) f  -- if it satisfies all the constraints.
 
---------------
-
-.. include:: hyperlink_references.rst

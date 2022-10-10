@@ -1,7 +1,13 @@
 .. FILE      : Examples/Structures/Signatures.lagda.rst
 .. DATE      : 16 Jul 2021
 .. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+
+.. _examples-of-finite-signatures:
+
+Examples of finite signatures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the `Examples.Structures.Signatures`_ module of the agda-algebras_ library.
 
 ::
 
@@ -9,17 +15,12 @@
 
   module Examples.Structures.Signatures where
 
-  open import Agda.Primitive               using () renaming ( lzero to ℓ₀ )
-  open import Data.Unit.Base               using () renaming ( ⊤ to 𝟙 ; tt to 𝟎 )
-  open import Data.Empty                   using () renaming ( ⊥ to 𝟘 )
-  open import Base.Overture.Preliminaries  using ( 𝟚 ; 𝟛 )
-  open import Base.Structures.Basic        using ( signature ; structure )
+  open import Agda.Primitive         using () renaming ( lzero to ℓ₀ )
+  open import Data.Unit.Base         using () renaming ( ⊤ to 𝟙 ; tt to 𝟎 )
+  open import Data.Empty             using () renaming ( ⊥ to 𝟘 )
+  open import Overture               using ( 𝟚 ; 𝟛 )
+  open import Base.Structures.Basic  using ( signature ; structure )
 
-
-.. _examples-of-finite-signatures:
-
-Examples of finite signatures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The signature with no symbols (used for, e.g., sets).
 
@@ -77,6 +78,3 @@ The signature with one nullary, one unary, and one binary (used for, e.g., group
   S111 : signature ℓ₀ ℓ₀
   S111 = record { symbol = 𝟛 ; arity = λ{ 𝟛.𝟎 → 𝟘 ; 𝟛.𝟏 → 𝟙 ; 𝟛.𝟐 → 𝟚 } }
 
---------------------------------
-
-.. include:: hyperlink_references.rst

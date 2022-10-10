@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Varieties/Closure.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 14 Jan 2021
-.. UPDATED   : 18 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-
-.. _closure-operators-for-setoid-algebras:
+.. _setoid-varieties-closure-operators-for-setoid-algebras:
 
 Closure Operators for Setoid Algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,8 +102,7 @@ formally what it means to be a variety of algebras as follows.
    variety : Type (ov (α ⊔ ρᵃ ⊔ ov ℓ ⊔ ι))
    variety = Σ[ 𝒱 ∈ (Pred (Algebra α ρᵃ) (α ⊔ ρᵃ ⊔ ov ℓ)) ] is-variety 𝒱
 
-
-.. _closure-properties-of-s:
+.. _setoid-varieties-closure-properties-of-s:
 
 Closure properties of S
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -124,8 +122,7 @@ idempotence of ``S``.
 
    S-mono kk {𝑩} (𝑨 , (kA , B≤A)) = 𝑨 , ((kk kA) , B≤A)
 
-We say ``S`` is *idempotent* provided :raw-latex:`\af{S}` (:raw-latex:`\af{S}`
-:raw-latex:`\ab{𝒦}`) :raw-latex:`\as{=}` :raw-latex:`\af{S}` :raw-latex:`\ab{𝒦}`.
+We say ``S`` is *idempotent* provided ``S (S 𝒦) = S 𝒦``.
 Of course, this is proved by establishing two inclusions, but one of them is
 trivial, so only the other need be formalized, which we do as follows.
 
@@ -137,7 +134,7 @@ trivial, so only the other need be formalized, which we do as follows.
    S-idem (𝑨 , (𝑩 , sB , A≤B) , x≤A) = 𝑩 , (sB , ≤-trans x≤A A≤B)
 
 
-.. _closure-properties-of-p:
+.. _setoid-varieties-closure-properties-of-p:
 
 Closure properties of P
 ^^^^^^^^^^^^^^^^^^^^^^^

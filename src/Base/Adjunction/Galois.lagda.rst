@@ -2,9 +2,11 @@
 .. AUTHOR    : William DeMeo
 .. DATE      : 30 Aug 2021
 .. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
 
-.. _galois-connections:
+.. highlight:: agda
+.. role:: code
+
+.. _base-adjunction-galois-connections:
 
 Galois Connections
 ~~~~~~~~~~~~~~~~~~
@@ -84,7 +86,7 @@ In other terms, ``F`` is a *left adjoint* of ``G`` and ``G`` is a *right adjoint
    →←Closed : ∀ {ρᵇ ρʳ} {B : Pred ℬ ρᵇ}{R : REL 𝒜 ℬ ρʳ} → Type _
    →←Closed {B = B}{R} = (R ⃖ B) ⃗ R ⊆ B
 
-.. _the-poset-of-subsets-of-a-set:
+.. _base-adjunction-the-poset-of-subsets-of-a-set:
 
 The poset of subsets of a set
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,8 +1,7 @@
-.. FILE      : Setoid/Homomorphisms/Basic.lagda.rst
+.. FILE      : Setoid/Homomorphisms/Factor.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 13 Sep 2021
 .. UPDATED   : 09 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
 
 .. highlight:: agda
 .. role:: code
@@ -16,7 +15,7 @@ This is the `Setoid.Homomorphisms.Factor`_ module of the `Agda Universal Algebra
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature )
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
   module Setoid.Homomorphisms.Factor {𝑆 : Signature 𝓞 𝓥} where
 
@@ -31,13 +30,13 @@ This is the `Setoid.Homomorphisms.Factor`_ module of the `Agda Universal Algebra
   import Relation.Binary.Reasoning.Setoid            as SReasoning  using ( begin_ ; step-≈˘; step-≈; _∎)
 
   -- Imports from the Agda Universal Algebra Library ------------------------------------------------
-  open import Base.Overture.Preliminaries          using ( ∣_∣ ; ∥_∥ )
-  open import Setoid.Functions.Inverses             using ( Image_∋_ )
-  open import Setoid.Functions.Surjective           using ( IsSurjective ; SurjInv )
-                                                   using ( SurjInvIsInverseʳ ; epic-factor )
-  open import Base.Relations.Discrete                   using ( kernelRel )
-  open import Setoid.Algebras.Basic       {𝑆 = 𝑆}  using ( Algebra ; 𝕌[_] ; _̂_ )
-  open import Setoid.Homomorphisms.Basic  {𝑆 = 𝑆}  using ( hom ; IsHom ; compatible-map ; epi ; IsEpi)
+  open import Overture         using ( ∣_∣ ; ∥_∥ )
+  open import Setoid.Functions using ( Image_∋_ ; IsSurjective ; SurjInv )
+                               using ( SurjInvIsInverseʳ ; epic-factor )
+  open import Base.Relations   using ( kernelRel )
+
+  open import Setoid.Algebras {𝑆 = 𝑆}             using ( Algebra ; 𝕌[_] ; _̂_ )
+  open import Setoid.Homomorphisms.Basic {𝑆 = 𝑆}  using ( hom ; IsHom ; compatible-map ; epi ; IsEpi)
 
   private variable α ρᵃ β ρᵇ γ ρᶜ : Level
 
@@ -150,4 +149,3 @@ If, in addition, ``g`` is surjective, then so will be the factor ``φ``.
     φepi = record  { isHom = φhom
                    ; isSurjective = epic-factor gfunc hfunc φmap gE gφh
                    }
-

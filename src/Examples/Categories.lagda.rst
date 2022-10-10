@@ -1,7 +1,6 @@
 .. FILE      : Examples/Categories.lagda.rst
-.. DATE      : 04 Jun 2022
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. DATE      : 18 Jun 2022
+.. UPDATED   : 18 Jun 2022
 
 .. _examples-of-categories:
 
@@ -10,14 +9,16 @@ Examples of Categories
 
 This is the `Examples.Categories`_ module of the `Agda Universal Algebra Library`_.
 
+.. toctree::
+   :maxdepth: 2
+
+   Categories/Functors
+
 ::
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
   module Examples.Categories where
 
-   open import Examples.Categories.Functors
+   open import Examples.Categories.Functors  public
 
---------------
-
-.. include:: hyperlink_references.rst

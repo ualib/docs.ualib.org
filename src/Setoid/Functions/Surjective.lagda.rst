@@ -1,12 +1,12 @@
 .. FILE      : Setoid/Functions/Surjective.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 07 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. DATE      : 13 Sep 2022
+.. upDATE    : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _surjective-setoid-functions:
+.. _setoid-functions-surjective-setoid-functions:
 
 Surjective setoid functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,37 +25,43 @@ function* from ``𝑨`` to ``𝑩`` is a setoid function ``f : 𝑨 ⟶ 𝑩`` s
   module Setoid.Functions.Surjective where
 
   -- Imports from Agda and the Agda Standard Library --------------------------
-  open import Agda.Primitive    using ( _⊔_ ; Level )  renaming ( Set to Type )
-  open import Data.Product      using ( _,_ ; Σ-syntax )
-  open import Function.Bundles  using ( Surjection )   renaming ( Func to _⟶_ )
-  open import Function          using ( IsSurjection )
-  open import Relation.Binary   using ( Setoid )
+  open import Agda.Primitive   using () renaming ( Set to Type )
+  open import Data.Product     using ( _,_ ; Σ-syntax )
+  open import Function         using ( Surjection ; IsSurjection )
+                               renaming ( Func to _⟶_ )
+  open import Level            using ( _⊔_ ; Level )
+  open import Relation.Binary  using ( Setoid )
 
-  open import Function.Construct.Composition using ()  renaming ( isSurjection to isOnto )
+  open import Function.Construct.Composition renaming ( isSurjection to isOnto )
+   using ()
+
   import Function.Definitions as FD
 
   -- Imports from agda-algebras -----------------------------------------------
-  open import Base.Overture              using ( ∣_∣ ; ∥_∥ ; ∃-syntax ; transport )
+  open import Overture                   using ( ∣_∣ ; ∥_∥ ; ∃-syntax ; transport )
   open import Setoid.Functions.Basic     using ( _∘_ )
   open import Setoid.Functions.Inverses  using ( Img_∋_ ; Image_∋_ ; Inv ; InvIsInverseʳ )
 
-  private variable α ρᵃ β ρᵇ γ ρᶜ : Level
+
+  private variable
+   α ρᵃ β ρᵇ γ ρᶜ : Level
 
   open Image_∋_
 
   module _ {𝑨 : Setoid α ρᵃ}{𝑩 : Setoid β ρᵇ} where
 
-   open Setoid 𝑨  using ()               renaming (Carrier to A; _≈_ to _≈₁_; isEquivalence to isEqA )
-   open Setoid 𝑩  using ( trans ; sym )  renaming (Carrier to B; _≈_ to _≈₂_; isEquivalence to isEqB )
+   open Setoid 𝑨  renaming (Carrier to A; _≈_ to _≈₁_; isEquivalence to isEqA ) using ()
+   open Setoid 𝑩  renaming (Carrier to B; _≈_ to _≈₂_; isEquivalence to isEqB )
+                  using ( trans ; sym )
 
    open Surjection {a = α}{ρᵃ}{β}{ρᵇ}{From = 𝑨}{To = 𝑩}  renaming (f to _⟨$⟩_)
    open _⟶_ {a = α}{ρᵃ}{β}{ρᵇ}{From = 𝑨}{To = 𝑩}         renaming (f to _⟨$⟩_ )
    open FD _≈₁_ _≈₂_
 
-   isSurj : (A → B) →  Type (α ⊔ β ⊔ ρᵇ)
+   isSurj : (A → B) → Type (α ⊔ β ⊔ ρᵇ)
    isSurj f = ∀ {y} → Img_∋_ {𝑨 = 𝑨}{𝑩 = 𝑩} f y
 
-   IsSurjective : (𝑨 ⟶ 𝑩) →  Type (α ⊔ β ⊔ ρᵇ)
+   IsSurjective : (𝑨 ⟶ 𝑩) → Type (α ⊔ β ⊔ ρᵇ)
    IsSurjective F = ∀ {y} → Image F ∋ y
 
    isSurj→IsSurjective : (F : 𝑨 ⟶ 𝑩) → isSurj (_⟨$⟩_ F) → IsSurjective F
@@ -80,7 +86,10 @@ function* from ``𝑨`` to ``𝑩`` is a setoid function ``f : 𝑨 ⟶ 𝑩`` s
     g : 𝑨 ⟶ 𝑩
     g = (record { f = _⟨$⟩_ s ; cong = cong s })
     gE : IsSurjection _≈₁_ _≈₂_ (_⟨$⟩_ g)
-    IsSurjection.isCongruent gE = record { cong = cong g ; isEquivalence₁ = isEqA ; isEquivalence₂ = isEqB }
+    IsSurjection.isCongruent gE = record  { cong = cong g
+                                          ; isEquivalence₁ = isEqA
+                                          ; isEquivalence₂ = isEqB
+                                          }
     IsSurjection.surjective gE y = ∣ (surjective s) y ∣ , ∥ (surjective s) y ∥
 
 With the next definition we represent a *right-inverse* of a surjective setoid function.
@@ -96,7 +105,9 @@ give the right-inverse.
 
 ::
 
-   SurjInvIsInverseʳ : (f : 𝑨 ⟶ 𝑩)(fE : IsSurjective f) → ∀ {b} → (f ⟨$⟩ ((SurjInv f fE) b)) ≈₂ b
+   SurjInvIsInverseʳ :  (f : 𝑨 ⟶ 𝑩)(fE : IsSurjective f)
+    →                   ∀ {b} → (f ⟨$⟩ ((SurjInv f fE) b)) ≈₂ b
+
    SurjInvIsInverseʳ f fE = InvIsInverseʳ fE
 
 We conclude this module by giving a formal proof of the fact that composition of two surjective surjective
@@ -115,7 +126,9 @@ setoid functions is again a surjective setoid function.
    open FD _≈₁_ _≈₂_
 
 
-   ∘-IsSurjective : {G : 𝑨 ⟶ 𝑪}{H : 𝑪 ⟶ 𝑩} → IsSurjective G → IsSurjective H → IsSurjective (H ∘ G)
+   ∘-IsSurjective :  {G : 𝑨 ⟶ 𝑪}{H : 𝑪 ⟶ 𝑩}
+    →                IsSurjective G → IsSurjective H → IsSurjective (H ∘ G)
+
    ∘-IsSurjective {G} {H} gE hE {y} = Goal
     where
     mp : Image H ∋ y → Image H ∘ G ∋ y

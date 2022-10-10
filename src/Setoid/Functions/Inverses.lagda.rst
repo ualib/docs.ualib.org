@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Functions/Inverses.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 06 Jun 2021
-.. UPDATED   : 05 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. DATE      : 13 Sep 2021
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. .._inverses-of-setoid-functions:
+.. _setoid-functions-inverses-of-setoid-functions:
 
 Inverses of setoid functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,22 +21,24 @@ This is the `Setoid.Functions.Inverses`_ module of the `Agda Universal Algebra L
 
   -- Imports from Agda and the Agda Standard Library --------------------
   open import Agda.Primitive    using ( _⊔_ ; Level ) renaming ( Set to Type )
-  open import Function          using ( id )
-  open import Function.Bundles  using () renaming ( Func to _⟶_ )
+  open import Function          using ( id )   renaming ( Func to _⟶_ )
   open import Data.Product      using ( _,_ ; Σ-syntax )
                                 renaming ( proj₁ to fst ; proj₂ to snd ; _×_ to _∧_)
   open import Relation.Unary    using ( Pred ; _∈_ )
-  open import Relation.Binary   using ( _Preserves_⟶_ ; Setoid )
+  open import Relation.Binary   using ( Setoid ; _Preserves_⟶_ )
 
   -- Imports from agda-algebras -----------------------------------------
-  open import Base.Overture     using ( ∣_∣ ; ∥_∥ ; ∃-syntax )
+  open import Overture using ( ∣_∣ ; ∥_∥ ; ∃-syntax )
 
   private variable α ρᵃ β ρᵇ : Level
 
   module _ {𝑨 : Setoid α ρᵃ}{𝑩 : Setoid β ρᵇ} where
 
-   open Setoid 𝑨  renaming( Carrier to A ; _≈_ to _≈₁_ ; refl to refl₁ ; sym to sym₁ ; trans to trans₁ ) using()
-   open Setoid 𝑩  renaming( Carrier to B ; _≈_ to _≈₂_ ; refl to refl₂ ; sym to sym₂ ; trans to trans₂ ) using()
+   open Setoid 𝑨 using()  renaming ( Carrier to A ; _≈_ to _≈₁_ )
+                          renaming ( refl to refl₁ ; sym to sym₁ ; trans to trans₁ )
+   open Setoid 𝑩 using()  renaming ( Carrier to B ; _≈_ to _≈₂_ )
+                          renaming ( refl to refl₂ ; sym to sym₂ ; trans to trans₂ )
+
    open _⟶_ {a = α}{ρᵃ}{β}{ρᵇ}{From = 𝑨}{To = 𝑩} renaming (f to _⟨$⟩_ )
 
 We begin by defining two data types that represent the semantic concept of the
@@ -48,6 +49,7 @@ the second is for functions on setoids.
 
    data Img_∋_ (f : A → B) : B → Type (α ⊔ β ⊔ ρᵇ) where
     eq : {b : B} → (a : A) → b ≈₂ (f a) → Img f ∋ b
+
 
    data Image_∋_ (F : 𝑨 ⟶ 𝑩) : B → Type (α ⊔ β ⊔ ρᵇ) where
     eq : {b : B} → (a : A) → b ≈₂ (F ⟨$⟩ a) → Image F ∋ b
@@ -67,6 +69,8 @@ the second is for functions on setoids.
    Imagef∋f = eq _ refl₂
 
    -- Alternative representation of the range of a Func as a setoid
+
+   -- the carrier
    _range : (𝑨 ⟶ 𝑩) → Type (α ⊔ β ⊔ ρᵇ)
    F range = Σ[ b ∈ B ] ∃[ a ∈ A ](F ⟨$⟩ a) ≈₂ b
 
@@ -85,25 +89,35 @@ the second is for functions on setoids.
    Ran : (𝑨 ⟶ 𝑩) → Setoid (α ⊔ β ⊔ ρᵇ) ρᵇ
    Ran F = record  { Carrier = F range
                    ; _≈_ = λ x y → ((F image) x) ≈₂ ((F image) y)
-                   ; isEquivalence = record { refl = refl₂ ; sym = sym₂ ; trans = trans₂ }
+                   ; isEquivalence = record  { refl = refl₂
+                                             ; sym = sym₂
+                                             ; trans = trans₂
+                                             }
                    }
 
    RRan : (𝑨 ⟶ 𝑩) → Setoid (α ⊔ β ⊔ ρᵇ) (ρᵃ ⊔ ρᵇ)
    RRan F = record  { Carrier = F range
-                    ; _≈_ = λ x y →  ((F preimage) x) ≈₁ ((F preimage) y) ∧ ((F image) x) ≈₂ ((F image) y)
-                    ; isEquivalence = record  { refl = refl₁ , refl₂
-                                              ; sym = λ x → (sym₁ ∣ x ∣) , (sym₂ ∥ x ∥)
-                                              ; trans = λ x y → (trans₁ ∣ x ∣ ∣ y ∣) , (trans₂ ∥ x ∥ ∥ y ∥)
-                                              }
+                    ; _≈_ = λ x y →  ( (F preimage) x ) ≈₁ ( (F preimage) y )
+                                     ∧ ( (F image) x) ≈₂ ( (F image) y )
+
+                    ; isEquivalence =
+                       record  { refl = refl₁ , refl₂
+                               ; sym = λ x → (sym₁ ∣ x ∣) , (sym₂ ∥ x ∥)
+                               ; trans = λ x y → (trans₁ ∣ x ∣ ∣ y ∣) , (trans₂ ∥ x ∥ ∥ y ∥)
+                               }
                     }
 
    _preimage≈image : ∀ F r → F ⟨$⟩ (F preimage) r ≈₂ (F image) r
    (F preimage≈image) (_ , (_ , p)) = p
 
+
    Dom : (𝑨 ⟶ 𝑩) → Setoid α ρᵇ
    Dom F = record  { Carrier = A
                    ; _≈_ = λ x y → F ⟨$⟩ x ≈₂ F ⟨$⟩ y
-                   ; isEquivalence = record { refl = refl₂ ; sym = sym₂ ; trans = trans₂ }
+                   ; isEquivalence = record  { refl = refl₂
+                                             ; sym = sym₂
+                                             ; trans = trans₂
+                                             }
                    }
 
 
@@ -154,9 +168,9 @@ We can prove that ``Inv f`` is the range-restricted right-inverse of
    ⁻¹IsInverseʳ : {F : 𝑨 ⟶ 𝑩}{bap : F range} → (F ⟨$⟩ ([ F ]⁻¹ bap )) ≈₂ ∣ bap ∣
    ⁻¹IsInverseʳ {bap = (_ , (_ , p))} = p
 
-The "range-restricted" qualifier is of course due to ``Inf f`` being undefined outside the range of ``f``.
+Of course, the "range-restricted" qualifier is needed because ``Inf f`` is not defined outside the range of ``f``.
 
-In a certain sense, ``Inv f`` is also a (range-restricted) *left-inverse*.
+In the following sense, ``Inv f`` is also a (range-restricted) *left-inverse*.
 
 ::
 
@@ -165,4 +179,3 @@ In a certain sense, ``Inv f`` is also a (range-restricted) *left-inverse*.
 
    ⁻¹IsInverseˡ : ∀ {F a} → [ F ]⁻¹ (f∈range{F} a) ≈₁ a
    ⁻¹IsInverseˡ = refl₁
-

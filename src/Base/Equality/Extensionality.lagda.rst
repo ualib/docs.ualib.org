@@ -1,10 +1,12 @@
 .. FILE      : Base/Equality/Extensionality.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 23 Feb 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _extensionality:
+.. highlight:: agda
+.. role:: code
+
+.. _base-equality-extensionality:
 
 Extensionality
 ~~~~~~~~~~~~~~
@@ -18,25 +20,23 @@ This is the `Base.Equality.Extensionality`_ module of the `Agda Universal Algebr
   module Base.Equality.Extensionality where
 
   -- imports from Agda and the Agda Standard Library ------------------------------------
-  open import Axiom.Extensionality.Propositional
-                                     using () renaming ( Extensionality to funext )
-  open import Agda.Primitive         using ( _⊔_ ; lsuc ; Level )
-                                     renaming ( Set to Type ; Setω to Typeω )
-  open import Data.Product           using ( _,_ ) renaming ( _×_ to _∧_ )
-  open import Relation.Binary        using ( IsEquivalence ) renaming ( Rel to BinRel )
-  open import Relation.Unary         using ( Pred ; _⊆_ )
-  open import Relation.Binary.PropositionalEquality using ( _≡_ ; refl )
+  open import Agda.Primitive   using () renaming ( Set to Type ; Setω to Typeω )
+  open import Data.Product     using ( _,_ )   renaming ( _×_ to _∧_ )
+  open import Level            using ( _⊔_ ; Level )
+  open import Relation.Binary  using ( IsEquivalence ) renaming ( Rel to BinRel )
+  open import Relation.Unary   using ( Pred ; _⊆_ )
 
+  open  import Axiom.Extensionality.Propositional    using () renaming ( Extensionality to funext )
+  open import Relation.Binary.PropositionalEquality  using ( _≡_ ; refl )
 
   -- imports from agda-algebras --------------------------------------------------------------
-  open import Base.Overture.Preliminaries using ( transport )
-  open import Base.Relations.Quotients    using ( [_] ; []-⊆ ; []-⊇ ; IsBlock ; ⟪_⟫ )
-  open import Base.Equality.Truncation    using ( blk-uip ; to-Σ-≡ )
+  open import Overture        using ( transport )
+  open import Base.Relations  using ( [_] ; []-⊆ ; []-⊇ ; IsBlock ; ⟪_⟫ )
+  open import Base.Equality.Truncation using ( blk-uip ; to-Σ-≡ )
 
   private variable α β γ ρ 𝓥 : Level
 
-
-.. _function-extensionality:
+.. _base-equality-function-extensionality:
 
 Function Extensionality
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,7 +59,7 @@ and where needed.
   DFunExt : Typeω
   DFunExt = (𝓤 𝓥 : Level) → funext 𝓤 𝓥
 
-.. _an-alternative-way-to-express-function-extensionality:
+.. _base-equality-an-alternative-way-to-express-function-extensionality:
 
 An alternative way to express function extensionality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -79,7 +79,7 @@ formalize this notion for general predicates, rather than for propositions
   _≐_ : {α β : Level}{A : Type α}(P Q : Pred A β ) → Type _
   P ≐ Q = (P ⊆ Q) ∧ (Q ⊆ P)
 
-  pred-ext : (α β : Level) → Type (lsuc (α ⊔ β))
+  pred-ext : (α β : Level) → Type _
   pred-ext α β = ∀ {A : Type α}{P Q : Pred A β } → P ⊆ Q → Q ⊆ P → P ≡ Q
 
 Note that ``pred-ext`` merely defines an extensionality principle. It does not
@@ -87,7 +87,7 @@ postulate that the principle holds. If we wish to postulate ``pred-ext``, then
 we do so by assuming that type is inhabited (see ``block-ext`` below, for
 example).
 
-.. _quotient-extensionality:
+.. _base-equality-quotient-extensionality:
 
 Quotient extensionality
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -97,7 +97,7 @@ different presentations of the same block (e.g., using different
 representatives) may be identified. This requires two postulates: (1) *predicate
 extensionality*, manifested by the ``pred-ext`` type; (2) *equivalence class
 truncation* or “uniqueness of block identity proofs”, manifested by the
-``blk-uip`` type defined in the `Base.Relations.Truncation`_ module. We now use
+``blk-uip`` type defined in the `Base.Equality.Truncation`_ module. We now use
 ``pred-ext`` and ``blk-uip`` to define a type called ``block-ext|uip`` which we
 require for the proof of the First Homomorphism Theorem presented in
 `Base.Homomorphisms.Noether`_.
@@ -126,5 +126,4 @@ require for the proof of the First Homomorphism Theorem presented in
 
    block-ext|uip pe buip Req Ruv = to-subtype|uip buip (block-ext pe Req Ruv)
 
---------------
 

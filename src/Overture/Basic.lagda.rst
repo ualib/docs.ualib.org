@@ -1,9 +1,12 @@
 .. FILE      : Overture.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 13 Jan 2021
-.. UPDATED   : 17 Jun 2022
+.. UPDATED   : 23 Jun 2022
 
-.. _preliminaries:
+.. highlight:: agda
+.. role:: code
+
+.. _overture-preliminaries:
 
 Preliminaries
 -------------
@@ -11,7 +14,7 @@ Preliminaries
 This is the `Overture.Basic`_ module of the `Agda Universal Algebra Library`_.
 
 
-.. _logical-foundations:
+.. _overture-logical-foundations:
 
 Logical foundations
 ~~~~~~~~~~~~~~~~~~~
@@ -64,7 +67,7 @@ flag with ``--allow-unsolved-metas``, but this is never done in
 (publicly released versions of) the agda-algebras_.
 
 
-.. _agda-modules:
+.. _overture-agda-modules:
 
 Agda modules
 ~~~~~~~~~~~~
@@ -100,7 +103,7 @@ line, and then a list of imports of things used in the module.
   -- the three element type
   data 𝟛 : Type ℓ₀ where 𝟎 : 𝟛 ;  𝟏 : 𝟛 ;  𝟐 : 𝟛
 
-.. _projection-notation:
+.. _overture-projection-notation:
 
 Projection notation
 ~~~~~~~~~~~~~~~~~~~
@@ -157,7 +160,7 @@ easier to stomach.
   infixl 30 _∙_
 
 
-.. _sigma-types:
+.. _overture-sigma-types:
 
 Sigma types
 ~~~~~~~~~~~
@@ -172,7 +175,7 @@ Sigma types
   syntax ∃-syntax (λ x → B) = ∃[ x ∈ A ] B
 
 
-.. _pi-types:
+.. _overture-pi-types:
 
 Pi types
 ~~~~~~~~
@@ -198,7 +201,7 @@ In the modules that follow, we will see many examples of this syntax in
 action.
 
 
-.. _pointwise-equality-of-dependent-functions:
+.. _overture-pointwise-equality-of-dependent-functions:
 
 Pointwise equality of dependent functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,9 +1,12 @@
 .. FILE      : Base/Structures/Products.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 11 May 2021
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _products-for-structures-as-records:
+.. highlight:: agda
+.. role:: code
+
+.. _base-structures-products-for-structures-as-records:
 
 Products for structures as records
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -17,14 +20,14 @@ This is the `Base.Structures.Products`_  module of the `Agda Universal Algebra L
   module Base.Structures.Products where
 
   -- Imports from the Agda Standard Library ----------------------------------
-  open import Agda.Primitive  using ( _⊔_ ; lsuc ) renaming ( Set to Type )
+  open import Agda.Primitive  using () renaming ( Set to Type )
   open import Data.Product    using ( _,_ ; Σ-syntax )
-  open import Level           using ( Level )
+  open import Level           using ( Level ; suc ; _⊔_ )
   open import Relation.Unary  using ( _∈_ ; Pred )
 
   -- Imports from the Agda Universal Algebra Library -------------------------
-  open import Base.Overture.Preliminaries  using ( ∣_∣ ; Π-syntax )
-  open import Base.Structures.Basic        using ( signature ; structure )
+  open import Overture               using ( ∣_∣ ; Π-syntax )
+  open import Base.Structures.Basic  using ( signature ; structure )
 
 
   private variable
@@ -37,16 +40,15 @@ This is the `Base.Structures.Products`_  module of the `Agda Universal Algebra L
 
   ⨅ : {ℑ : Type ℓ}(𝒜 : ℑ → structure 𝐹 𝑅 {α}{ρ} ) → structure 𝐹 𝑅
   ⨅ {ℑ = ℑ} 𝒜 =
-   record { carrier = Π[ i ∈ ℑ ] carrier (𝒜 i)            -- domain of the product structure
-          ; op = λ 𝑓 a i → (op (𝒜 i) 𝑓) λ x → a x i       -- interpretation of  operations
-          ; rel = λ r a → ∀ i → (rel (𝒜 i) r) λ x → a x i -- interpretation of relations
-          }
+   record  { carrier = Π[ i ∈ ℑ ] carrier (𝒜 i)             -- domain of the product structure
+           ; op = λ 𝑓 a i → (op (𝒜 i) 𝑓) λ x → a x i        -- interpretation of  operations
+           ; rel = λ r a → ∀ i → (rel (𝒜 i) r) λ x → a x i  -- interpretation of relations
+           }
 
 
   module _ {𝒦 : Pred (structure 𝐹 𝑅 {α}{ρ}) ℓ} where
-
     ℓp : Level
-    ℓp = lsuc (α ⊔ ρ) ⊔ ℓ
+    ℓp = suc (α ⊔ ρ) ⊔ ℓ
 
     ℑ : Type _
     ℑ = Σ[ 𝑨 ∈ structure 𝐹 𝑅  {α}{ρ}] 𝑨 ∈ 𝒦
@@ -56,7 +58,5 @@ This is the `Base.Structures.Products`_  module of the `Agda Universal Algebra L
 
     class-product : structure 𝐹 𝑅
     class-product = ⨅ 𝔄
-
---------------
 
 

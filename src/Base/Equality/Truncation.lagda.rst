@@ -1,10 +1,12 @@
 .. FILE      : Base/Equality/Truncation.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 23 Feb 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _truncation:
+.. highlight:: agda
+.. role:: code
+
+.. _base-equality-truncation:
 
 Truncation
 ~~~~~~~~~~
@@ -34,20 +36,18 @@ or Section 7.1 of the `HoTT book`_.
   module Base.Equality.Truncation where
 
   -- Imports from Agda and the Agda Standard Library  -------------------------------------
-  open import Agda.Primitive   using ( _⊔_ ; lsuc ; Level ) renaming ( Set to Type )
-  open import Data.Product     using ( _,_ ; Σ ; Σ-syntax ; _×_ )
-                               renaming ( proj₁ to fst ; proj₂ to snd )
-  open import Function.Base    using ( _∘_ ; id )
-  open import Relation.Binary  using ( IsEquivalence ) renaming ( Rel to BinRel )
-  open import Relation.Unary   using ( Pred ; _⊆_ )
-  open import Relation.Binary.PropositionalEquality
-                               using ( _≡_ ; refl ; module ≡-Reasoning ; cong-app ; trans )
+  open import Agda.Primitive   renaming ( Set to Type )                  using ()
+  open import Data.Product     renaming ( proj₁ to fst ; proj₂ to snd )  using ( _,_ ; Σ ; Σ-syntax ; _×_ )
+  open import Function                                                   using ( _∘_ ; id )
+  open import Level                                                      using ( _⊔_ ; suc ; Level )
+  open import Relation.Binary  renaming ( Rel to BinRel )                using ( IsEquivalence )
+  open import Relation.Binary.PropositionalEquality as ≡                 using ( _≡_ ; module ≡-Reasoning )
+  open import Relation.Unary                                             using ( Pred ; _⊆_ )
 
   -- Imports from the Agda Universal Algebra Library --------------------------------------
-  open import Base.Overture.Preliminaries using ( ∣_∣ ; ∥_∥ ; _⁻¹ ; _≈_ ; transport)
-  open import Base.Overture.Injective     using ( IsInjective )
-  open import Base.Relations.Quotients    using ( IsBlock )
-  open import Base.Relations.Continuous   using ( Rel ; REL )
+  open import Overture         using ( _⁻¹ ; transport ; ∥_∥ ; _≈_ ; ∣_∣ )
+  open import Base.Functions    using ( IsInjective )
+  open import Base.Relations   using ( IsBlock ; Rel ; REL )
 
   private variable α β ρ 𝓥 : Level
 
@@ -90,13 +90,13 @@ represent inverse images of points in the codomain of the given function.
   is-equiv f = ∀ y → is-singleton (fiber f y)
 
   -- An alternative means of postulating function extensionality.
-  hfunext :  ∀ α β → Type (lsuc (α ⊔ β))
-  hfunext α β = {A : Type α}{B : A → Type β} (f g : (x : A) → B x) → is-equiv (cong-app{f = f}{g})
+  hfunext :  ∀ α β → Type (suc (α ⊔ β))
+  hfunext α β = {A : Type α}{B : A → Type β} (f g : (x : A) → B x) → is-equiv (≡.cong-app{f = f}{g})
 
 Thus, if ``R : Rel A β``, then ``is-subsingleton-valued R`` is the assertion that
 for each pair ``x y : A`` there can be at most one proof that ``R x y`` holds.
 
-.. _uniqueness-of-identity-proofs:
+.. _base-equality-uniqueness-of-identity-proofs:
 
 Uniqueness of identity proofs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -130,7 +130,7 @@ This is called
 `truncation <https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#truncation>`__
 (at level ``k``).
 
-.. _sets:
+.. _base-equality-sets:
 
 Sets
 ^^^^
@@ -142,7 +142,7 @@ type ``A``, along with it's equality type ``≡₀``, form a *set* if for all
 ``x y : A`` there is at most one proof of ``x ≡₀ y``.
 
 This notion is formalized in the `Type Topology`_ library, using the
-``is-subsingleton`` type that we saw earlier (`Base.Overture.Inverses`_), as follows.
+``is-subsingleton`` type that we saw earlier (`Base.Functions.Inverses`_), as follows.
 
 ::
 
@@ -161,9 +161,9 @@ which is part of Escardó's characterization of *equality in Sigma types*.
   module _ {A : Type α}{B : A → Type β} where
 
    to-Σ-≡ : {σ τ : Σ[ x ∈ A ] B x} → (Σ[ p ∈ (fst σ ≡ fst τ) ] (transport B p ∥ σ ∥) ≡ ∥ τ ∥) → σ ≡ τ
-   to-Σ-≡ (refl , refl) = refl
+   to-Σ-≡ (≡.refl , ≡.refl) = ≡.refl
 
-.. _embeddings:
+.. _base-equality-embeddings:
 
 Embeddings
 ^^^^^^^^^^
@@ -183,7 +183,7 @@ Thus, ``is-embedding f`` asserts that ``f`` is a function all of whose fibers ar
 subsingletons. Observe that an embedding is not simply an injective map. However,
 if we assume that the codomain ``B`` has *unique identity proofs* (UIP), then we
 can prove that a monic function into ``B`` is an embedding. We will do exactly that
-in the `Base.Relations.Truncation`_ module when we take up the topic of *sets*
+in the `Base.Equality.Truncation`_ module when we take up the topic of *sets*
 and the UIP.
 
 Finding a proof that a function is an embedding isn’t always easy, but
@@ -204,7 +204,7 @@ the function is invertible and then invoke the
 We will use ``is-embedding``, ``is-set``, and ``to-Σ-≡`` in the next
 subsection to prove that a monic function into a set is an embedding.
 
-.. _injective-functions-are-set-embeddings:
+.. _base-equality-injective-functions-are-set-embeddings:
 
 Injective functions are set embeddings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -212,8 +212,8 @@ Injective functions are set embeddings
 Before moving on to define
 `propositions <Base.Equality.Truncation.html#general-propositions>`__, we discharge
 an obligation we mentioned but left unfulfilled in the
-`embeddings <Base.Overture.Inverses.html#embeddings>`__ section of the
-`Base.Overture.Inverses`_ module. Recall, we described and imported the
+`embeddings <Base.Functions.Inverses.html#embeddings>`__ section of the
+`Base.Functions.Inverses`_ module. Recall, we described and imported the
 ``is-embedding`` type, and we remarked that an embedding is not simply a monic
 function. However, if we assume that the codomain is truncated so as to have
 unique identity proofs (i.e., is a set), then we can prove that any monic
@@ -230,7 +230,7 @@ are always monic, so we will end up with an equivalence.
   monic-is-embedding|Set f Bset fmon b (u , fu≡b) (v , fv≡b) = γ
    where
    fuv : f u ≡ f v
-   fuv = trans fu≡b (fv≡b ⁻¹)
+   fuv = ≡.trans fu≡b (fv≡b ⁻¹)
 
    uv : u ≡ v
    uv = fmon fuv
@@ -247,7 +247,7 @@ of the types involved is a *set* (in the sense defined above), then we add to
 the name of the theorem the suffix ``|Set``, which calls to mind the standard
 mathematical notation for the restriction of a function.
 
-.. _equivalence-class-truncation:
+.. _base-equality-equivalence-class-truncation:
 
 Equivalence class truncation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -267,7 +267,7 @@ and define it as follows.
 
 ::
 
-  blk-uip : (A : Type α)(R : BinRel A ρ ) → Type(α ⊔ lsuc ρ)
+  blk-uip : (A : Type α)(R : BinRel A ρ ) → Type(α ⊔ suc ρ)
   blk-uip A R = ∀ (C : Pred A _) → is-prop (IsBlock C {R})
 
 It might seem unreasonable to postulate that there is at most one inhabitant of
@@ -277,7 +277,7 @@ one of which could serve as a class representative. However, postulating
 and this is indeed the correct semantic interpretation of the elements of the
 quotient ``A / R``.
 
-.. _general-propositions:
+.. _base-equality-general-propositions:
 
 General propositions
 ^^^^^^^^^^^^^^^^^^^^
@@ -295,22 +295,21 @@ Naturally, we define the corresponding *truncated continuous relation type* and
 
   module _ {I : Type 𝓥} where
 
-   IsRelProp : {ρ : Level}(A : Type α) → Rel A I{ρ}  → Type (𝓥 ⊔ α ⊔ ρ)
+   IsRelProp : {ρ : Level}(A : Type α) → Rel A I{ρ} → Type (𝓥 ⊔ α ⊔ ρ)
    IsRelProp B P = ∀ (b : (I → B)) → is-prop (P b)
 
-   RelProp : Type α → (ρ : Level) → Type (𝓥 ⊔ α ⊔ lsuc ρ)
+   RelProp : Type α → (ρ : Level) → Type (𝓥 ⊔ α ⊔ suc ρ)
    RelProp A ρ = Σ[ P ∈ Rel A I{ρ} ] IsRelProp A P
 
-   RelPropExt : Type α → (ρ : Level) → Type (𝓥 ⊔ α ⊔ lsuc ρ)
+   RelPropExt : Type α → (ρ : Level) → Type (𝓥 ⊔ α ⊔ suc ρ)
    RelPropExt A ρ = {P Q : RelProp A ρ } → ∣ P ∣ ⊆ ∣ Q ∣ → ∣ Q ∣ ⊆ ∣ P ∣ → P ≡ Q
 
    IsRELProp : {ρ : Level} (𝒜 : I → Type α) → REL I 𝒜 {ρ}  → Type (𝓥 ⊔ α ⊔ ρ)
    IsRELProp 𝒜 P = ∀ (a : ((i : I) → 𝒜 i)) → is-prop (P a)
 
-   RELProp : (I → Type α) → (ρ : Level) → Type (𝓥 ⊔ α ⊔ lsuc ρ)
+   RELProp : (I → Type α) → (ρ : Level) → Type (𝓥 ⊔ α ⊔ suc ρ)
    RELProp 𝒜 ρ = Σ[ P ∈ REL I 𝒜 {ρ} ] IsRELProp 𝒜 P
 
-   RELPropExt : (I → Type α) → (ρ : Level) → Type (𝓥 ⊔ α ⊔ lsuc ρ)
+   RELPropExt : (I → Type α) → (ρ : Level) → Type (𝓥 ⊔ α ⊔ suc ρ)
    RELPropExt 𝒜 ρ = {P Q : RELProp 𝒜 ρ} → ∣ P ∣ ⊆ ∣ Q ∣ → ∣ Q ∣ ⊆ ∣ P ∣ → P ≡ Q
 
---------------

@@ -1,9 +1,12 @@
 .. FILE      : Base/Categories/Functors.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 30 Aug 2021
-.. UPDATED   : 04 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _functors:
+.. highlight:: agda
+.. role:: code
+
+.. _base-categories-functors:
 
 Functors
 ~~~~~~~~
@@ -17,7 +20,7 @@ the following *functor laws* are satisfied:
 -  ``∀ f g, F(f ∘ g) = F(f) ∘ F(g)``
 -  ``∀ A, F(id A) = id (F A)`` (where ``id X`` denotes the identity morphism on ``X``)
 
-.. _polynomial-functors:
+.. _base-categories-polynomial-functors:
 
 Polynomial functors
 ^^^^^^^^^^^^^^^^^^^
@@ -138,32 +141,4 @@ always exist, we first define the ``Option`` type.)
   (x ∷ l) ⟦ zero ⟧ = some x
   (x ∷ l) ⟦ suc n ⟧ = l ⟦ n ⟧
 
-
---------------
-
-   ..
-      @inproceedings{10.1145/2428116.2428120,
-      author = {Schwaab, Christopher and Siek, Jeremy G.},
-      title = {Modular Type-Safety Proofs in Agda},
-      year = {2013},
-      isbn = {9781450318600},
-      publisher = {Association for Computing Machinery},
-      address = {New York, NY, USA},
-      url = {https://doi.org/10.1145/2428116.2428120},
-      doi = {10.1145/2428116.2428120},
-      abstract = {Methods for reusing code are widespread and well researched, but methods for reusing
-      proofs are still emerging. We consider the use of dependent types for this purpose,
-      introducing a modular approach for composing mechanized proofs. We show that common
-      techniques for abstracting algorithms over data structures naturally translate to
-      abstractions over proofs. We introduce a language composed of a series of smaller
-      language components, each defined as functors, and tie them together by taking the
-      fixed point of their sum [Malcom, 1990]. We then give proofs of type preservation
-      for each language component and show how to compose these proofs into a proof for
-      the entire language, again by taking the fixed point of a sum of functors.},
-      booktitle = {Proceedings of the 7th Workshop on Programming Languages Meets Program Verification},
-      pages = {3–12},
-      numpages = {10},
-      keywords = {agda, meta-theory, modularity},
-      location = {Rome, Italy},
-      series = {PLPV '13}
 

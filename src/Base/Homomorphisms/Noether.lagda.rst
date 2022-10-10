@@ -1,11 +1,12 @@
 .. FILE      : Base/Homomorphisms/Noether.lagda.rst
 .. AUTHOR    : William DeMeo
-.. DATE      : 03 Jun 2022
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 William DeMeo
+.. DATE      : 13 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
+.. highlight:: agda
+.. role:: code
 
-.. _homomorphism-theorems:
+.. _base-homomorphisms-homomorphism-theorems:
 
 Homomorphism Theorems
 ~~~~~~~~~~~~~~~~~~~~~
@@ -16,33 +17,41 @@ This is the `Base.Homomorphisms.Noether`_ module of the `Agda Universal Algebra 
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using ( 𝓞 ; 𝓥 ; Signature )
+  open import Overture using ( 𝓞 ; 𝓥 ; Signature )
 
   module Base.Homomorphisms.Noether {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library ---------------------------------------
-  open import Agda.Primitive  using ( Level ) renaming ( Set to Type )
-  open import Data.Product    using ( Σ-syntax ; _,_ )
-                              renaming ( _×_ to _∧_ ; proj₁ to fst ; proj₂ to snd)
-  open import Function.Base   using ( _∘_ ; id )
-  open import Relation.Binary using ( IsEquivalence )
-  open import Relation.Binary.PropositionalEquality
-                              using ( module ≡-Reasoning ; _≡_ ; cong ; refl ; cong-app )
+  open  import Data.Product     using ( Σ-syntax ; _,_ ; _×_ )
+                                renaming ( proj₁ to fst ; proj₂ to snd )
+  open  import Function         using ( _∘_ ; id )
+  open  import Level            using (Level )
+  open  import Relation.Binary  using ( IsEquivalence )
+
+  open  import Relation.Binary.PropositionalEquality as ≡
+        using ( module ≡-Reasoning ; _≡_ )
 
   -- Imports from agda-algebras --------------------------------------------------------------
-  open import Base.Overture   using ( ∣_∣ ; ∥_∥ ; _⁻¹ ; Image_∋_ ; IsInjective ; IsSurjective )
-                              using ( SurjInv ; SurjInvIsInverseʳ )
-  open import Base.Relations  using ( ⌞_⌟ ; mkblk ; ⟪_⟫ )
-  open import Base.Equality   using ( swelldef ; is-set ; blk-uip ; is-embedding ; monic-is-embedding|Set )
-  open import Base.Equality.Extensionality       using ( pred-ext ; block-ext|uip )
-  open import Base.Algebras.Basic                using ( Algebra ; _̂_)
-  open import Base.Algebras.Congruences  {𝑆 = 𝑆} using ( Con ; IsCongruence )
-  open import Base.Homomorphisms.Basic   {𝑆 = 𝑆} using ( hom ; is-homomorphism ; epi ; epi→hom )
-  open import Base.Homomorphisms.Kernels {𝑆 = 𝑆} using ( kercon ; ker[_⇒_]_↾_ ; πker )
+  open  import Base.Relations         using ( ⌞_⌟ ; mkblk ; ⟪_⟫ )
+  open  import Overture               using ( ∣_∣ ; ∥_∥ ; _⁻¹ )
+  open  import Base.Functions         using ( Image_∋_ ; IsInjective ; SurjInv )
+                                      using ( IsSurjective ; SurjInvIsInverseʳ )
+  open  import Base.Algebras {𝑆 = 𝑆}  using ( Algebra ; _̂_ ; Con ; IsCongruence )
+
+  open  import Base.Homomorphisms.Kernels {𝑆 = 𝑆}
+        using ( kercon ; ker[_⇒_]_↾_ ; πker )
+
+  open  import Base.Equality
+        using ( swelldef ; is-set ; blk-uip ; is-embedding ; monic-is-embedding|Set )
+        using ( pred-ext ; block-ext|uip )
+
+  open  import Base.Homomorphisms.Basic {𝑆 = 𝑆}
+        using ( hom ; is-homomorphism ; epi ; epi→hom )
+
   private variable α β γ : Level
 
 
-.. _the-first-homomorphism-theorem:
+.. _base-homomorphisms-the-first-homomorphism-theorem:
 
 The First Homomorphism Theorem
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -84,16 +93,15 @@ Without further ado, we present our formalization of the first homomorphism theo
 
   open ≡-Reasoning
 
-  FirstHomTheorem|Set :
+  FirstHomTheorem|Set : (𝑨 : Algebra α)(𝑩 : Algebra β)(h : hom 𝑨 𝑩)
+   {- extensionality assumptions -}  (pe : pred-ext α β)(fe : swelldef 𝓥 β)
+   {- truncation assumptions -}      (Bset : is-set ∣ 𝑩 ∣)
+                                     (buip : blk-uip ∣ 𝑨 ∣ ∣ kercon fe {𝑩} h ∣)
+       -------------------------------------------------------------------------
+   →   Σ[ φ ∈ hom (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩  ]
+       ( ∣ h ∣ ≡ ∣ φ ∣ ∘ ∣ πker fe{𝑩}h ∣ × IsInjective ∣ φ ∣  ×  is-embedding ∣ φ ∣  )
 
-      (𝑨 : Algebra α 𝑆)(𝑩 : Algebra β 𝑆)(h : hom 𝑨 𝑩)
-      (pe : pred-ext α β)(fe : swelldef 𝓥 β)                          -- extensionality assumptions
-      (Bset : is-set ∣ 𝑩 ∣)(buip : blk-uip ∣ 𝑨 ∣ ∣ kercon fe {𝑩} h ∣) -- truncation assumptions
-      ----------------------------------------------------------------
-   →  Σ[ φ ∈ hom (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩  ]
-        ( ∣ h ∣ ≡ ∣ φ ∣ ∘ ∣ πker fe{𝑩}h ∣ ∧ IsInjective ∣ φ ∣  ∧  is-embedding ∣ φ ∣  )
-
-  FirstHomTheorem|Set 𝑨 𝑩 h pe fe Bset buip = (φ , φhom) , refl , φmon , φemb
+  FirstHomTheorem|Set 𝑨 𝑩 h pe fe Bset buip = (φ , φhom) , ≡.refl , φmon , φemb
    where
     θ : Con 𝑨
     θ = kercon fe{𝑩} h
@@ -104,15 +112,16 @@ Without further ado, we present our formalization of the first homomorphism theo
     φ a = ∣ h ∣ ⌞ a ⌟
 
     φhom : is-homomorphism (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩 φ
-    φhom 𝑓 a = ∣ h ∣ ( (𝑓 ̂ 𝑨) (λ x → ⌞ a x ⌟) ) ≡⟨ ∥ h ∥ 𝑓 (λ x → ⌞ a x ⌟)  ⟩
-               (𝑓 ̂ 𝑩) (∣ h ∣ ∘ (λ x → ⌞ a x ⌟))  ≡⟨ cong (𝑓 ̂ 𝑩) refl ⟩
-               (𝑓 ̂ 𝑩) (λ x → φ (a x))            ∎
+    φhom 𝑓 a =  ∣ h ∣ ( (𝑓 ̂ 𝑨) (λ x → ⌞ a x ⌟) )  ≡⟨ ∥ h ∥ 𝑓 (λ x → ⌞ a x ⌟)  ⟩
+                (𝑓 ̂ 𝑩) (∣ h ∣ ∘ (λ x → ⌞ a x ⌟))  ≡⟨ ≡.cong (𝑓 ̂ 𝑩) ≡.refl     ⟩
+                (𝑓 ̂ 𝑩) (λ x → φ (a x))            ∎
 
     φmon : IsInjective φ
-    φmon {_ , mkblk u refl} {_ , mkblk v refl} φuv = block-ext|uip pe buip ξ φuv
+    φmon {_ , mkblk u ≡.refl} {_ , mkblk v ≡.refl} φuv = block-ext|uip pe buip ξ φuv
 
     φemb : is-embedding φ
     φemb = monic-is-embedding|Set φ Bset φmon
+
 
 Below we will prove that the homomorphism ``φ``, whose existence we just proved,
 is unique (see ``NoetherHomUnique``), but first we show that if we add to the
@@ -122,18 +131,17 @@ we let ``FirstHomTheorem|Set`` do most of the work.
 
 ::
 
-  FirstIsoTheorem|Set :
-
-       (𝑨 : Algebra α 𝑆) (𝑩 : Algebra β 𝑆) (h : hom 𝑨 𝑩)
-       (pe : pred-ext α β) (fe : swelldef 𝓥 β)                        -- extensionality assumptions
-       (Bset : is-set ∣ 𝑩 ∣)(buip : blk-uip ∣ 𝑨 ∣ ∣ kercon fe{𝑩}h ∣)  -- truncation assumptions
-   →   IsSurjective ∣ h ∣
-       ---------------------------------------------------------------
-   →   Σ[ f ∈ (epi (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩)]
-         ( ∣ h ∣ ≡ ∣ f ∣ ∘ ∣ πker fe{𝑩}h ∣  ∧ IsInjective ∣ f ∣ ∧ is-embedding ∣ f ∣ )
+  FirstIsoTheorem|Set : (𝑨 : Algebra α) (𝑩 : Algebra β) (h : hom 𝑨 𝑩)
+   {- extensionality assumptions -}  (pe : pred-ext α β) (fe : swelldef 𝓥 β)
+   {- truncation assumptions -}      (Bset : is-set ∣ 𝑩 ∣)
+                                     (buip : blk-uip ∣ 𝑨 ∣ ∣ kercon fe{𝑩}h ∣)
+   →                                 IsSurjective ∣ h ∣
+   →                                 Σ[ f ∈ (epi (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩)]
+                                     ( ∣ h ∣ ≡ ∣ f ∣ ∘ ∣ πker fe{𝑩}h ∣
+                                     × IsInjective ∣ f ∣ × is-embedding ∣ f ∣ )
 
   FirstIsoTheorem|Set 𝑨 𝑩 h pe fe Bset buip hE =
-   (fmap , fhom , fepic) , refl , (snd ∥ FHT ∥)
+   (fmap , fhom , fepic) , ≡.refl , (snd ∥ FHT ∥)
     where
     FHT = FirstHomTheorem|Set 𝑨 𝑩 h pe fe Bset buip
 
@@ -159,17 +167,17 @@ Now we prove that the homomorphism ``φ``, whose existence is guaranteed by
 
 ::
 
-  module _ {fe : swelldef 𝓥 β}(𝑨 : Algebra α 𝑆)(𝑩 : Algebra β 𝑆)(h : hom 𝑨 𝑩) where
+  module _ {fe : swelldef 𝓥 β}(𝑨 : Algebra α)(𝑩 : Algebra β)(h : hom 𝑨 𝑩) where
 
    FirstHomUnique :  (f g : hom (ker[ 𝑨 ⇒ 𝑩 ] h ↾ fe) 𝑩)
     →                ∣ h ∣ ≡ ∣ f ∣ ∘ ∣ πker fe{𝑩}h ∣
     →                ∣ h ∣ ≡ ∣ g ∣ ∘ ∣ πker fe{𝑩}h ∣
     →                ∀ a  →  ∣ f ∣ a ≡ ∣ g ∣ a
 
-   FirstHomUnique f g hfk hgk (_ , mkblk a refl) =
-    ∣ f ∣ (_ , mkblk a refl)  ≡⟨ cong-app(hfk ⁻¹)a ⟩
-    ∣ h ∣ a                   ≡⟨ cong-app(hgk)a ⟩
-    ∣ g ∣ (_ , mkblk a refl)  ∎
+   FirstHomUnique f g hfk hgk (_ , mkblk a ≡.refl) =
+    ∣ f ∣ (_ , mkblk a ≡.refl)  ≡⟨ ≡.cong-app(hfk ⁻¹)a ⟩
+    ∣ h ∣ a                     ≡⟨ ≡.cong-app(hgk)a ⟩
+    ∣ g ∣ (_ , mkblk a ≡.refl)  ∎
 
 
 If, in addition, we postulate extensionality of functions defined on the domain

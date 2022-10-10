@@ -1,9 +1,12 @@
 .. FILE      : Base/Terms.lagda.rst
-.. DATE      : 26 Jul 2021
-.. UPDATED   : 03 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. AUTHOR    : William DeMeo
+.. DATE      : 14 Jan 2021
+.. UPDATED   : 23 Jun 2022
 
-.. _terms:
+.. highlight:: agda
+.. role:: code
+
+.. _base-terms:
 
 Terms
 -----
@@ -14,11 +17,13 @@ This is the `Base.Terms`_ module of the `Agda Universal Algebra Library`_
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Terms where
+  open import Overture using (Signature ; 𝓞 ; 𝓥 )
 
-  open import Base.Terms.Basic       public
-  open import Base.Terms.Properties  public
-  open import Base.Terms.Operations  public
+  module Base.Terms {𝑆 : Signature 𝓞 𝓥} where
+
+  open import Base.Terms.Basic       {𝑆 = 𝑆} public
+  open import Base.Terms.Properties  {𝑆 = 𝑆} public
+  open import Base.Terms.Operations  {𝑆 = 𝑆} public
 
 .. toctree::
    :maxdepth: 2

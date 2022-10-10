@@ -2,7 +2,10 @@
 .. AUTHOR    : William DeMeo
 .. DATE      : 17 Jun 2022
 
-.. _operations:
+.. highlight:: agda
+.. role:: code
+
+.. _overture-operations:
 
 Operations
 ----------

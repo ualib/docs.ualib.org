@@ -1,13 +1,12 @@
 .. FILE      : Setoid/Algebras/Congruences.lagda.rst
 .. AUTHOR    : William DeMeo
 .. DATE      : 03 Jul 2021
-.. UPDATED   : 09 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
+.. UPDATED   : 23 Jun 2022
 
 .. highlight:: agda
 .. role:: code
 
-.. _products-of-setoid-algebras:
+.. _setoid-algebras-products-of-setoid-algebras:
 
 Products of setoid algebras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,27 +17,32 @@ This is the `Setoid.Algebras.Products`_ module of the `Agda Universal Algebra Li
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using (𝓞 ; 𝓥 ; Signature)
+  open import Overture using (𝓞 ; 𝓥 ; Signature)
 
   module Setoid.Algebras.Products {𝑆 : Signature 𝓞 𝓥} where
 
   -- Imports from Agda and the Agda Standard Library --------------------------------
-  open import Agda.Primitive  renaming ( Set to Type )  using ( lsuc ; _⊔_ ; Level )
-  open import Data.Product                              using ( _,_ ; Σ-syntax )
-  open import Function                                  using ( flip ; Func )
-  open import Relation.Binary                           using ( Setoid ;  IsEquivalence ; Decidable )
-  open import Relation.Binary.PropositionalEquality     using ( refl ; _≡_ )
-  open import Relation.Unary                            using ( Pred ; _⊆_ ; _∈_ )
+  open import Agda.Primitive    using () renaming ( Set to Type )
+  open import Data.Product      using ( _,_ ; Σ-syntax )
+  open import Function          using ( flip ; Func )
+  open import Level             using( _⊔_ ; Level )
+  open import Relation.Binary   using ( Setoid ;  IsEquivalence ; Decidable )
+  open import Relation.Binary.PropositionalEquality  using ( refl ; _≡_ )
+  open import Relation.Unary                         using ( Pred ; _⊆_ ; _∈_ )
 
-  open Func                   renaming ( f to _⟨$⟩_ )    using ( cong )
-  open Setoid                 renaming ( isEquivalence to isEqv ) using ( Carrier ; _≈_ )
-  open IsEquivalence          renaming ( refl to reflE ; sym to symE ; trans to transE ) using ()
+  open Func           using ( cong )           renaming ( f to _⟨$⟩_ )
+  open Setoid         using ( Carrier ; _≈_ )  renaming ( isEquivalence to isEqv )
+  open IsEquivalence  using ()                 renaming ( refl to reflE ; sym to symE ; trans to transE )
+
 
   -- Imports from agda-algebras -----------------------------------------------------
-  open import Base.Overture   renaming ( IsSurjective to onto )  using ( ∣_∣ ; ∥_∥ ; proj ; projIsOnto )
-  open import Setoid.Algebras.Basic {𝑆 = 𝑆}                      using ( Algebra ; _̂_ ; ov ; 𝕌[_])
+  open import Overture        using ( ∣_∣; ∥_∥ )
+  open import Base.Functions  using ( proj ; projIsOnto ) renaming ( IsSurjective to onto )
+
+  open import Setoid.Algebras.Basic {𝑆 = 𝑆}  using ( Algebra ; _̂_ ; ov ; 𝕌[_])
 
   private variable α ρ ι : Level
+
   open Algebra
 
   ⨅ : {I : Type ι }(𝒜 : I → Algebra α ρ) → Algebra (α ⊔ ι) (ρ ⊔ ι)
@@ -57,7 +61,7 @@ This is the `Setoid.Algebras.Products`_ module of the `Agda Universal Algebra Li
   cong (Interp (⨅ {I} 𝒜)) (refl , f=g ) = λ i → cong  (Interp (𝒜 i)) (refl , flip f=g i )
 
 
-.. _products-of-classes-of-algebras:
+.. _setoid-algebras-products-of-classes-of-algebras:
 
 Products of classes of setoid algebras
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,7 +73,6 @@ Products of classes of setoid algebras
    ℑ : Type (ov(α ⊔ ρ))
    ℑ = Σ[ 𝑨 ∈ (Algebra α ρ) ] 𝑨 ∈ 𝒦
 
-
    𝔄 : ℑ → Algebra α ρ
    𝔄 i = ∣ i ∣
 
@@ -80,7 +83,7 @@ If ``p : 𝑨 ∈ 𝒦``, we view the pair ``(𝑨 , p) ∈ ℑ`` as an *index* 
 the class, so we can think of ``𝔄 (𝑨 , p)`` (which is simply ``𝑨``) as
 the projection of the product ``⨅ 𝔄`` onto the ``(𝑨 , p)``-th component.
 
-.. _surjectivity-of-coordinate-projections:
+.. _setoid-algebras-surjectivity-of-coordinate-projections:
 
 Surjectivity of coordinate projections
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -106,4 +109,3 @@ algebras over such an index type is surjective.
 
    ProjAlgIsOnto : ∀{i} → Σ[ h ∈ (𝕌[ ⨅ 𝒜 ] → 𝕌[ 𝒜 i ]) ] onto h
    ProjAlgIsOnto {i} = (proj _≟_ 𝒜I i) , projIsOnto _≟_ 𝒜I
-

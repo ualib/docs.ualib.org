@@ -2,16 +2,18 @@
 .. AUTHOR    : William DeMeo
 .. DATE      : 26 Jul 2021
 .. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette, William DeMeo
 
-.. _constraint-satisfaction-problems:
+.. highlight:: agda
+.. role:: code
+
+.. _base-complexity-constraint-satisfaction-problems:
 
 Constraint Satisfaction Problems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is the `Base.Complexity.CSP`_ module of the `Agda Universal Algebra Library`_.
 
-.. _the-relational-formulation-of-csp:
+.. _base-complexity-the-relational-formulation-of-csp:
 
 The relational formulation of CSP
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -47,7 +49,7 @@ subset CSP(𝒜) of 𝑅 structures having homomorphisms into 𝒜.
 That is, our algorithm must take as input an 𝑅-structure (a relational structure
 in the signature of 𝒜) and decide whether or not it belongs to the set CSP(𝒜).
 
-.. _connection-to-algebraic-csp:
+.. _base-complexity-connection-to-algebraic-csp:
 
 Connection to algebraic CSP
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -98,7 +100,7 @@ polymorphism algebra, 𝑨(R) := (A , ∣: ⃖ R).
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  open import Base.Algebras.Basic using ( 𝓞 ; 𝓥 ; Signature )
+  open import Overture using ( 𝓞 ; 𝓥 ; Signature )
 
   module Base.Complexity.CSP {𝑆 : Signature 𝓞 𝓥} where
 
@@ -111,7 +113,7 @@ polymorphism algebra, 𝑨(R) := (A , ∣: ⃖ R).
   open import Base.Relations.Continuous       using ( REL ; REL-syntax )
   open import Setoid.Algebras.Basic  {𝑆 = 𝑆}  using ( Algebra )
 
-.. _constraints:
+.. _base-complexity-constraints:
 
 Constraints
 ^^^^^^^^^^^
@@ -162,7 +164,7 @@ scope of "arity" I on "variables" V is simply a map from I to V, where,
     satisfies f = rel (f ∘ scope)      -- *satisfies* the constraint 𝐶 = (σ , 𝑅) provided
                                       -- 𝑓 ∘ σ ∈ 𝑅, where σ is the scope of the constraint.
 
-.. _csp-templates-and-instances:
+.. _base-complexity-csp-templates-and-instances:
 
 CSP templates and instances
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -194,4 +196,3 @@ An instance of a constraint satisfaction problem is a triple 𝑃 = (𝑉, 𝐷,
     isSolution : (∀ v → Carrier (Domain (𝒜 v))) → Type _  -- An assignment *solves* the instance
     isSolution f = ∀ i → (Constraint.satisfies (cs i)) f  -- if it satisfies all the constraints.
 
---------------

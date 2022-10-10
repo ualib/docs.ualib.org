@@ -1,37 +1,42 @@
-.. FILE      : Base/Overture/Transformers.lagda.rst
+.. FILE      : Base/Functions/Transformers.lagda.rst
+.. AUTHOR    : William DeMeo
 .. DATE      : 26 Jul 2021
-.. UPDATED   : 02 Jun 2022
-.. COPYRIGHT : (c) 2022 Jacques Carette and William DeMeo
+.. UPDATED   : 23 Jun 2022
 
-.. _type-transformers:
+.. highlight:: agda
+.. role:: code
+
+.. _base-functions-type-transformers:
 
 Type Transformers
 ~~~~~~~~~~~~~~~~~
 
-This is the `Base.Overture.Transformers`_ module of the agda-algebras_ library.
-Here we define functions for tanslating from one type to another.
+This is the `Base.Functions.Transformers`_ module of the agda-algebras_ library.
+Here we define functions for translating from one type to another.
 
 ::
 
   {-# OPTIONS --without-K --exact-split --safe #-}
 
-  module Base.Overture.Transformers where
+  module Base.Functions.Transformers where
 
-  -- Imports from Agda and the Agda Standard Library
-  open import Agda.Primitive  using ( _⊔_ ; lsuc ; Level ) renaming ( Set to Type )
+  -- Imports from Agda and the Agda Standard Library -------------------------------
+  open import Agda.Primitive  using () renaming ( Set to Type )
   open import Data.Product    using ( _,_ ; _×_ )
   open import Data.Fin.Base   using ( Fin )
   open import Function.Base   using ( _∘_ ; id )
+  open import Level           using ( _⊔_ ; Level )
 
-  open import Relation.Binary.PropositionalEquality using ( _≡_ ; refl ; module ≡-Reasoning )
+  open import Relation.Binary.PropositionalEquality
+                              using ( _≡_ ; refl ; module ≡-Reasoning )
 
-  -- Imports from agda-algebras
-  open import Base.Overture.Preliminaries using ( _≈_ )
+  -- Imports from agda-algebras ----------------------------------------------------
+  open import Overture using ( _≈_ )
 
   private variable α β : Level
 
 
-.. _bijections-of-nondependent-function-types:
+.. _base-functions-bijections-of-nondependent-function-types:
 
 Bijections of nondependent function types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,20 +47,20 @@ In set theory, these would simply be bijections between sets, or "set isomorphis
 
   record Bijection (A : Type α)(B : Type β) : Type (α ⊔ β) where
    field
-    to : A → B
-    from : B → A
-    to-from : to ∘ from ≡ id
-    from-to : from ∘ to ≡ id
+    to       : A → B
+    from     : B → A
+    to-from  : to ∘ from ≡ id
+    from-to  : from ∘ to ≡ id
 
   ∣_∣=∣_∣ : (A : Type α)(B : Type β) → Type (α ⊔ β)
   ∣ A ∣=∣ B ∣ = Bijection A B
 
   record PointwiseBijection (A : Type α)(B : Type β) : Type (α ⊔ β) where
    field
-    to : A → B
-    from : B → A
-    to-from : to ∘ from ≈ id
-    from-to : from ∘ to ≈ id
+    to       : A → B
+    from     : B → A
+    to-from  : to ∘ from ≈ id
+    from-to  : from ∘ to ≈ id
 
   ∣_∣≈∣_∣ : (A : Type α)(B : Type β) → Type (α ⊔ β)
   ∣ A ∣≈∣ B ∣ = PointwiseBijection A B
@@ -72,13 +77,11 @@ In set theory, these would simply be bijections between sets, or "set isomorphis
    Uncurry f (x , y) = f x y
 
    A×A→B≅A→A→B : ∣ (A × A → B) ∣=∣ (A → A → B) ∣
-   A×A→B≅A→A→B = record  { to = Curry
-                         ; from = Uncurry
-                         ; to-from = refl
-                         ; from-to = refl }
+   A×A→B≅A→A→B = record  { to = Curry ; from = Uncurry
+                         ; to-from = refl ; from-to = refl }
 
 
-.. _non-bijective-transformations:
+.. _base-functions-non-bijective-transformations:
 
 Non-bijective transformations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -86,7 +89,6 @@ Non-bijective transformations
 ::
 
   module _ {A : Type α} where
-
    open Fin renaming (zero to z ; suc to s)
 
    A×A→Fin2A : A × A → Fin 2 → A
@@ -131,16 +133,13 @@ Non-bijective transformations
    Fin2A≡ u z = refl
    Fin2A≡ u (s z) = refl
 
-
-Evidently we cannot establish a bijection between the two seemingly isomorphic
+Somehow we cannot establish a bijection between the two seemingly isomorphic
 function types, ``(Fin 2 → A) → B`` and ``A × A → B``, nor between the types
-``(Fin 2 → A) → B`` and ``A → A → B`` (at least we cannot do so using the
-foregoing approach).
+``(Fin 2 → A) → B`` and ``A → A → B``.
 
 ::
 
   module _ {A : Type α} {B : Type β} where
-
    open Fin renaming (zero to z ; suc to s)
 
    lemma : (u : Fin 2 → A) → u ≈ (λ {z → u z ; (s z) → u (s z)})
@@ -177,4 +176,3 @@ foregoing approach).
 
    Fin2A→B~A×A→B : Fin2A→B-to-A×A→B ∘ A×A→B-to-Fin2A→B ≡ id
    Fin2A→B~A×A→B = refl
-
